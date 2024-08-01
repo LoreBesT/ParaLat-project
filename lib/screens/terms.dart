@@ -88,7 +88,7 @@ class TermsPage extends StatelessWidget {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),
                 textAlign: TextAlign.center,
               ),
-              Text('bla bla bla'),
+              Text('bla bla bla bla bla bla'),
               Text(
                 'Parte 2.4: Condizioni e modalità d\'uso ParaLat Cards',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),
