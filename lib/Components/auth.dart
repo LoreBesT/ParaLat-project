@@ -1,0 +1,171 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
+
+class Auth {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  User? get currentUser => _firebaseAuth.currentUser;
+  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+
+  Future<void> signInWithEmailAndPassword(
+      {required String email, required String password}) async {
+    await _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
+  }
+
+  Future<void> createUserWithEmailAndPassword(
+      {required String email, required String password}) async {
+    await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
+  }
+
+  Future<void> setNameAndSurname(
+      {required String name, required String surname}) async {
+    try {
+      User? user = _firebaseAuth.currentUser;
+      if (user != null) {
+        await user.updateDisplayName('$name $surname');
+        await user.reload();
+        user = _firebaseAuth.currentUser; // Refresh user instance
+      }
+    } catch (e) {
+      // Handle error, e.g., print to console or show a message to the user
+    }
+  }
+
+  String? getUserDisplayName() {
+    String? nome = _firebaseAuth.currentUser?.displayName;
+    if (nome != null) {
+      return _firebaseAuth.currentUser?.displayName;
+    } else {
+      return 'Guest';
+    }
+  }
+
+  Future<void> signOut(context) async {
+    try{
+      await _firebaseAuth.currentUser?.reload();
+      await _firebaseAuth.signOut();
+    } on FirebaseException catch (e){
+            ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+              'Errore: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  Future<void> accediComeGuest(context) async {
+    try {
+      await _firebaseAuth.signInAnonymously();
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+              'Si è verificato un errore durante l\'accesso anonimo\nCodice errore ${e.message}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  Future<void> reimpostaPassword(context, bool isInAuth,
+      [String email = 'email']) async {
+    if (isInAuth == false) {
+      try {
+        User? utente = _firebaseAuth.currentUser;
+        await _firebaseAuth.sendPasswordResetEmail(
+            email: utente!.email.toString());
+      } on FirebaseAuthException catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+                'Errore nell\'invio della mail di password reset\nCodice errore ${e.message}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } else {
+      try {
+        await _firebaseAuth.sendPasswordResetEmail(email: email);
+      } on FirebaseAuthException catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+                'Errore nell\'invio della mail di password reset\nCodice errore ${e.message}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> deleteAccount(context) async {
+    try {
+      User? utente = _firebaseAuth.currentUser;
+      utente?.delete();
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+              'Errore nell\'eliminazione dell\'account\nCodice errore ${e.message}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  String? metaDatas(BuildContext context, int i) {
+    try {
+      User? utente = _firebaseAuth.currentUser;
+      int numero = utente!.metadata.creationTime!.minute.toInt();
+      int numeroLastSignIn = utente.metadata.lastSignInTime!.minute.toInt();
+      String numeroLastSignIn2 = numeroLastSignIn.toString();
+      String numero2 = numero.toString();
+      if (numero < 10) {
+        numero2 = '0$numero2';
+      }
+      if (numeroLastSignIn < 10) {
+        numeroLastSignIn2 = '0$numeroLastSignIn2';
+      }
+
+      String? creationTime =
+          '${utente.metadata.creationTime?.day.toString()}/${utente.metadata.creationTime?.month.toString()}/${utente.metadata.creationTime?.year.toString()} ${utente.metadata.creationTime?.hour.toString()}:$numero2';
+      String? lastSignIn =
+          '${utente.metadata.lastSignInTime?.day.toString()}/${utente.metadata.lastSignInTime?.month.toString()}/${utente.metadata.lastSignInTime?.year.toString()} ${utente.metadata.lastSignInTime?.hour.toString()}:$numeroLastSignIn2';
+      switch (i) {
+        case 0:
+          return creationTime;
+        case 1:
+          return lastSignIn;
+        case 2:
+          return utente.email.toString();
+        case 3:
+          return utente.uid.toString();
+        case 4:
+          return utente.providerData.toString();
+      }
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+              'Errore nell\'invio della mail di password reset\nCodice errore ${e.message}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+    return null;
+  }
+  String getInitials(String nomeUtente) {
+    List<String> nameParts = nomeUtente.split(' ');
+    if (nameParts.length < 2) {
+      return ''; // Se non ci sono due parole, ritorna una stringa vuota
+    }
+    String initials = nameParts[0][0] + nameParts[1][0];
+    return initials.toUpperCase(); // Rende le iniziali maiuscole
+  }
+}

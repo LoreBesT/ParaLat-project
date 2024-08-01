@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "319025793022",
+    "project_id": "paralat2-71b62",
+    "storage_bucket": "paralat2-71b62.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319025793022:android:685146e366ef2b5f32a2af",
+        "android_client_info": {
+          "package_name": "com.example.paralat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM9BZIVAmzYkkkpAzYTvpQEWaPwJ6w9Yw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
