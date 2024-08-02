@@ -1,3 +1,5 @@
+import 'package:paralat/Components/notifiche.dart';
+
 import 'Components/auth.dart';
 import 'screens/auth_page.dart';
 import 'package:flutter/material.dart';
@@ -14,17 +16,17 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  runApp(const MyApp());
-}
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  
+  setupFirebaseMessaging(navigatorKey);
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
+  runApp(MyApp(navigatorKey: navigatorKey,));
 }
 
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final GlobalKey<NavigatorState> navigatorKey;
+  const MyApp({super.key, required this.navigatorKey});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -35,7 +37,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'ParaLat',
+        navigatorKey: widget.navigatorKey, 
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,

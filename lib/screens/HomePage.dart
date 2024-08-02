@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                 testo: 'Notizie Principali'),
             if (verifiedUser == ofMember)
               Button(
-                  funzione: WorkPage(),
+                  funzione: NewsPage(),
                   icona: Icons.warning_amber,
                   testo: 'Scadenze'),
             Button(
