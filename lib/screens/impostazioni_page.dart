@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:paralat/Components/Drawer_buttons.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/screens/assistenza_page.dart';
-import 'package:paralat/screens/backgroungMusic_page.dart';
 import 'package:paralat/screens/info_page.dart';
 import 'package:paralat/screens/reputazione_page.dart';
 import 'package:paralat/screens/sub_page.dart';
@@ -57,13 +56,6 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
                     icona: Icons.format_paint_rounded,
                     funzione: WorkPage(),
                     testo: '   Modifica tema')),
-            SizedBox(
-              width: double.infinity,
-              child: Button(
-                  icona: Icons.music_note,
-                  funzione: MusicPage(),
-                  testo: '   Attiva background music'),
-            ),
             SizedBox(
               height: 20,
             ),

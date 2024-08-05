@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:paralat/Components/Drawer_buttons.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
+import 'package:paralat/Components/space.dart';
 import 'package:paralat/screens/dettagli.dart';
 import 'package:paralat/screens/impostazioni_page.dart';
 import 'package:paralat/screens/paralatAI_page.dart';
@@ -121,61 +122,64 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: <Widget>[
-          Padding(
-            padding:
-                const EdgeInsets.only(top: 2, bottom: 2, left: 16, right: 16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text('Versioni più recenti'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => WorkPage(),
-                      ),
-                    );
-                  },
-                  child: Text('Vedi tutte'),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            height: 130,
-            child: Card(
-              elevation: 4,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    for (var i = 0; i < 6; i++)
-                      const Padding(
-                        padding: EdgeInsets.only(right: 10),
-                        child: SizedBox(
-                          height: 100,
-                          width: 100,
-                          child: Card(
-                            color: Color.fromRGBO(225, 190, 231, 1),
-                            child: Column(
-                              children: [
-                                SizedBox(height: 30),
-                                Icon(Icons.note),
-                              ],
-                            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 15),
+                child: SizedBox(
+                  height: 160,
+                  width: 160,
+                  child: Card(
+                    elevation: 4,
+                    child: InkWell(
+                      onTap: () {},
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'ParaLat AI',
+                            style: TextStyle(fontSize: 20),
                           ),
-                        ),
+                          Icon(
+                            Icons.generating_tokens,
+                            size: 50,
+                          ),
+                        ],
                       ),
-                  ],
+                    ),
+                  ),
                 ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10, left: 15),
+                child: SizedBox(
+                  height: 160,
+                  width: 160,
+                  child: Card(
+                    elevation: 4,
+                    child: InkWell(
+                      onTap: () {},
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Archivio',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Icon(
+                            Icons.archive,
+                            size: 50,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           Padding(
             padding:
