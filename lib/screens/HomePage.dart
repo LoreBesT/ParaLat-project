@@ -126,14 +126,22 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 15),
+                padding: const EdgeInsets.only(
+                    top: 10, bottom: 10, left: 10, right: 15),
                 child: SizedBox(
                   height: 160,
                   width: 160,
                   child: Card(
                     elevation: 4,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => GeminiApiPage(),
+                          ),
+                        );
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
@@ -153,14 +161,17 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10, left: 15),
+                padding: const EdgeInsets.only(
+                    top: 10, bottom: 10, right: 10, left: 15),
                 child: SizedBox(
                   height: 160,
                   width: 160,
                   child: Card(
                     elevation: 4,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
