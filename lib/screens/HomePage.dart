@@ -7,6 +7,7 @@ import 'package:paralat/Components/space.dart';
 import 'package:paralat/screens/dettagli.dart';
 import 'package:paralat/screens/impostazioni_page.dart';
 import 'package:paralat/screens/paralatAI_page.dart';
+import 'package:paralat/screens/scadenze_page.dart';
 import 'package:paralat/screens/work_page.dart';
 import 'archivio_page.dart';
 import 'news_page.dart';
@@ -48,10 +49,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 elevation: 30,
               ),
-              Button(
-                  funzione: GeminiApiPage(),
-                  icona: Icons.generating_tokens_rounded,
-                  testo: 'ParaLat AI'),
+              // Button(
+              //     funzione: GeminiApiPage(),
+              //     icona: Icons.generating_tokens_rounded,
+              //     testo: 'ParaLat AI'),
               Button(
                 funzione: WorkPage(),
                 icona: Icons.badge,
@@ -60,10 +61,10 @@ class _HomePageState extends State<HomePage> {
               Button(
                   funzione: NewsPage(),
                   icona: Icons.newspaper,
-                  testo: 'Notizie Principali'),
+                  testo: 'Notizie'),
               if (verifiedUser == ofMember)
                 Button(
-                    funzione: WorkPage(),
+                    funzione: ScadenzePage(),
                     icona: Icons.warning_amber,
                     testo: 'Scadenze'),
               Button(
@@ -252,7 +253,7 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => NewsDetailPage(news: doc),
+                                builder: (context) => NewsDetailPage(news: doc, isNews: true,),
                               ),
                             );
                           },

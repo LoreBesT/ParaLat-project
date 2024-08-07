@@ -8,8 +8,27 @@ class NewsProperty {
       return Colors.yellow;
     } else if (newsImportance == 'min') {
       return Colors.green;
-    }  else {
+    } else {
       return Colors.green;
+    }
+  }
+
+  Color setScadColor(String colorScad) {
+    switch (colorScad) {
+      case 'red':
+        return Colors.red;
+      case 'yellow':
+        return Colors.yellow;
+      case 'orange':
+        return Colors.orange;
+      case 'green':
+        return Colors.green;
+      case 'blue':
+        return Colors.blue;
+      case 'purple':
+        return Colors.purple;
+      default:
+        return Colors.purple;
     }
   }
 }

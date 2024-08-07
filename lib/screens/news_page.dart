@@ -41,7 +41,7 @@ class NewsPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => NewsDetailPage(news: news),
+                          builder: (context) => NewsDetailPage(news: news, isNews: true,),
                         ),
                       );
                     },
