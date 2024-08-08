@@ -39,10 +39,13 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         title: 'ParaLat',
         navigatorKey: widget.navigatorKey, 
-        theme: ThemeData(
+        theme: ThemeData( 
+          //Ricorda implementare palette colori completa con i colori per ogni widget
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
+          appBarTheme: AppBarTheme(color: Theme.of(context).colorScheme.inversePrimary, toolbarHeight: 100),
         ),
+        darkTheme: ThemeData.dark(),
         // home: const HomePage(),
         home: StreamBuilder(
             stream: Auth().authStateChanges,

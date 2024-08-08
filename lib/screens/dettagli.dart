@@ -25,8 +25,6 @@ class NewsDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        toolbarHeight: 100,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

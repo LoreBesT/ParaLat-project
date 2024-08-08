@@ -9,8 +9,6 @@ class NewsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('News'),
-        toolbarHeight: 100,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance

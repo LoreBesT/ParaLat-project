@@ -8,6 +8,7 @@ import 'package:paralat/screens/dettagli.dart';
 import 'package:paralat/screens/impostazioni_page.dart';
 import 'package:paralat/screens/paralatAI_page.dart';
 import 'package:paralat/screens/scadenze_page.dart';
+import 'package:paralat/screens/sub_page.dart';
 import 'package:paralat/screens/work_page.dart';
 import 'archivio_page.dart';
 import 'news_page.dart';
@@ -117,9 +118,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
-        toolbarHeight: 100,
       ),
       body: Column(
         children: <Widget>[
@@ -171,7 +170,21 @@ class _HomePageState extends State<HomePage> {
                     elevation: 4,
                     child: InkWell(
                       onTap: () {
-                        
+                        if (Verify().isPremium(context) == true) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (context) => ArchivioPage(),
+                            ),
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (context) => SubPage(),
+                            ),
+                          );
+                        }
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -253,7 +266,10 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => NewsDetailPage(news: doc, isNews: true,),
+                                builder: (context) => NewsDetailPage(
+                                  news: doc,
+                                  isNews: true,
+                                ),
                               ),
                             );
                           },

@@ -13,8 +13,6 @@ class _FaqPageState extends State<FaqPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('FAQ'),
-        toolbarHeight: 100,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: const ExpansionPanelListExample(),
     );

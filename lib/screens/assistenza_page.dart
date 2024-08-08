@@ -20,8 +20,6 @@ class _AssistenzaPageState extends State<AssistenzaPage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Assistenza'),
-          toolbarHeight: 100,
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
         body: Padding(
           padding: EdgeInsets.all(8.0),

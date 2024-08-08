@@ -45,8 +45,6 @@ class _ArchivioPageState extends State<ArchivioPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Archivio Versioni'),
-        toolbarHeight: 100,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())

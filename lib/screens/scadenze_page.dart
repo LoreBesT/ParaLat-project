@@ -10,8 +10,6 @@ class ScadenzePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Scadenze'),
-        toolbarHeight: 100,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance

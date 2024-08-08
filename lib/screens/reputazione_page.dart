@@ -87,10 +87,8 @@ class _MyWidgetState extends State<ProfiloPage> {
     String verifiedUser = Verify().verifyUser(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(
             'Ciao ${Verify().nameUser(0)}'), //.animate(effects: [ ]), //RICORDA DI INSERIRE ANIMAZIONE AL NOME
-        toolbarHeight: 100,
       ),
       body: Align(
         child: Column(
@@ -130,111 +128,96 @@ class _MyWidgetState extends State<ProfiloPage> {
               ),
             ),
             if (verifiedUser == ofMember)
-            SizedBox(
-              height: 118,
-              width: double.infinity,
-              child: Card(
-                margin: const EdgeInsets.all(8),
-                elevation: 8,
-                child: ListTile(
-                  title: const Text('La tua Reputazione'),
-                  leading: const Icon(Icons.assessment),
-                  subtitle: GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            scrollable: true,
-                            title: const Text(
-                              'Dettaglio',
-                              textAlign: TextAlign.center,
+              SizedBox(
+                height: 118,
+                width: double.infinity,
+                child: Card(
+                  margin: const EdgeInsets.all(8),
+                  elevation: 8,
+                  child: ListTile(
+                    title: const Text('La tua Reputazione'),
+                    leading: const Icon(Icons.assessment),
+                    subtitle: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              scrollable: true,
+                              title: const Text(
+                                'Dettaglio',
+                                textAlign: TextAlign.center,
+                              ),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Text(
+                                    'Sanzioni:',
+                                    style: TextStyle(fontSize: 18),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                  Text(
+                                    sanzioni[sanzione],
+                                    textAlign: TextAlign.left,
+                                  ),
+                                  const Space(heigth: 5),
+                                  const Text(
+                                    'Premi di merito:',
+                                    style: TextStyle(fontSize: 18),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                  Text(
+                                    premiMerito[premio],
+                                    textAlign: TextAlign.left,
+                                  ),
+                                  const Space(heigth: 10),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Ok'))
+                                ],
+                              ),
                             ),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Text(
-                                  'Sanzioni:',
-                                  style: TextStyle(fontSize: 18),
-                                  textAlign: TextAlign.left,
-                                ),
-                                Text(
-                                  sanzioni[sanzione],
-                                  textAlign: TextAlign.left,
-                                ),
-                                const Space(heigth: 5),
-                                const Text(
-                                  'Premi di merito:',
-                                  style: TextStyle(fontSize: 18),
-                                  textAlign: TextAlign.left,
-                                ),
-                                Text(
-                                  premiMerito[premio],
-                                  textAlign: TextAlign.left,
-                                ),
-                                const Space(heigth: 10),
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Ok'))
-                              ],
-                            ),
+                          );
+                        },
+                        child: const Text(
+                            'Sazioni assegnate: 1\nPremi di merito: 0\nProvvedimenti in corso: 0')),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Tooltip(
+                          message: getMessage(sanzione),
+                          child: Icon(
+                            Icons.speed,
+                            color: getIconColor(sanzione),
+                            //sanzione == 0 ?  Colors.green : Colors.orange,
+                            size: 30,
                           ),
-                        );
-                      },
-                      child: const Text(
-                          'Sazioni assegnate: 1\nPremi di merito: 0\nProvvedimenti in corso: 0')),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Tooltip(
-                        message: getMessage(sanzione),
-                        child: Icon(
-                          Icons.speed,
-                          color: getIconColor(sanzione),
-                          //sanzione == 0 ?  Colors.green : Colors.orange,
-                          size: 30,
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            if(Verify().nameUser(0) != 'Guest')
-            Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(8),
-                child: ElevatedButton(
-                    onPressed: () {
-                      Auth().reimpostaPassword(context, false);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: const Text(
-                            'Email inviata con successo',
-                            style: TextStyle(color: Colors.black),
+            if (Verify().nameUser(0) != 'Guest')
+              Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(8),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        Auth().reimpostaPassword(context, false);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text(
+                              'Email inviata con successo',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.inversePrimary,
                           ),
-                          backgroundColor:
-                              Theme.of(context).colorScheme.inversePrimary,
-                        ),
-                      );
-                    },
-                    child: const Text('Reimposta Password'))),
-            if(Verify().nameUser(0) != 'Guest')
-            Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(8),
-                child: ElevatedButton(
-                    onPressed: () {
-                      Auth().deleteAccount(context);
-                      Auth().signOut(context);
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    },
-                    child: const Text(
-                      'Elimina account',
-                      style: TextStyle(color: Colors.red),
-                    ))),
+                        );
+                      },
+                      child: const Text('Reimposta Password'))),
             Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(8),
@@ -276,11 +259,21 @@ class _MyWidgetState extends State<ProfiloPage> {
                               )));
                     },
                     child: const Text('Visualizza dati account'))),
-            Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(8),
-                child: ElevatedButton(
-                    onPressed: () {}, child: const Text('Segnala un bug'))),
+            if (Verify().nameUser(0) != 'Guest')
+              Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(8),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        Auth().deleteAccount(context);
+                        Auth().signOut(context);
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'Elimina account',
+                        style: TextStyle(color: Colors.red),
+                      ))),
           ],
         ),
       ),
