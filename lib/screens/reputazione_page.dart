@@ -181,7 +181,7 @@ class _MyWidgetState extends State<ProfiloPage> {
                           );
                         },
                         child: const Text(
-                            'Sazioni assegnate: 1\nPremi di merito: 0\nProvvedimenti in corso: 0')),
+                            'Sanzioni assegnate: 1\nPremi di merito: 0\nProvvedimenti in corso: 0')),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -231,7 +231,7 @@ class _MyWidgetState extends State<ProfiloPage> {
                                 textAlign: TextAlign.center,
                               ),
                               content: SizedBox(
-                                height: 200,
+                                height: 278,
                                 child: Column(
                                   children: [
                                     Text(

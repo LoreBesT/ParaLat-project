@@ -4,6 +4,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
 import 'package:dio/dio.dart';
 import 'dart:io';
+// IL DOWNLOAD DEI FILE FUNZIONA COME CRISTO COMANDA
 
 class ArchivioPage extends StatefulWidget {
   const ArchivioPage({super.key});
@@ -30,7 +31,7 @@ class _ArchivioPageState extends State<ArchivioPage> {
       // print('Tentativo di listare le cartelle nella cartella Versioni...');
       final ListResult result = await storage.ref('Versioni').listAll();
       // print('Risultato ottenuto: ${result.prefixes.length} cartelle trovate.');
-      //  git remote add origin https://github.com/LoreBesT/ParaLat-App  
+      //  git remote add origin https://github.com/LoreBesT/ParaLat-App
       setState(() {
         folders = result.prefixes;
         isLoading = false;
@@ -105,7 +106,7 @@ class _FolderPageState extends State<FolderPage> {
         isLoading = false;
       });
     } catch (e) {
-      // print('Errore nel listare gli elementi: $e');
+        null;
       setState(() {
         isLoading = false;
       });
@@ -151,8 +152,7 @@ class _FolderPageState extends State<FolderPage> {
                     return ListTile(
                       title: Text(itemName),
                       trailing: item.name.contains('.')
-                          ? 
-                          IconButton(
+                          ? IconButton(
                               icon: const Icon(Icons.download),
                               onPressed: () async {
                                 final url = await item.getDownloadURL();

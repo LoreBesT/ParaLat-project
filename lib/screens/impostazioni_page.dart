@@ -5,6 +5,7 @@ import 'package:paralat/screens/assistenza_page.dart';
 import 'package:paralat/screens/info_page.dart';
 import 'package:paralat/screens/reputazione_page.dart';
 import 'package:paralat/screens/sub_page.dart';
+import 'package:paralat/screens/theme_page.dart';
 import 'package:paralat/screens/work_page.dart';
 
 class ImpostazioniPage extends StatefulWidget {
@@ -52,7 +53,7 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
                 width: double.infinity,
                 child: Button(
                     icona: Icons.format_paint_rounded,
-                    funzione: WorkPage(),
+                    funzione: ThemePage(),
                     testo: '   Modifica tema')),
             SizedBox(
               height: 20,

@@ -1,7 +1,7 @@
 ### Modificare Drawer eliminando pulsanti per ParaLat AI ed Archivio Versioni
 <!-- ### Implementare scadenze con firestore DONE-->
 ### Implementare sanzioni con firestore
-### Implementare funzione per il download dei file da Archivio Versioni
+<!-- ### Implementare funzione per il download dei file da Archivio Versioni -->
 ### Implementare l'arrivo di notizie solo ad un singolo utente o una porzione
 ### Implementare notifica per ogni nuova notizia
 ### Sostituire Hamburger Menu con bottom appbar con 3 opzioni: Impostazioni, Home, Altro

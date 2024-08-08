@@ -68,12 +68,12 @@ class _HomePageState extends State<HomePage> {
                     funzione: ScadenzePage(),
                     icona: Icons.warning_amber,
                     testo: 'Scadenze'),
-              Button(
-                funzione: ArchivioPage(),
-                icona: Icons.archive,
-                testo: 'Archivio Versioni',
-                isPremium: Verify().isPremium(context),
-              ),
+              // Button(
+              //   funzione: ArchivioPage(),
+              //   icona: Icons.archive,
+              //   testo: 'Archivio Versioni',
+              //   isPremium: Verify().isPremium(context),
+              // ),
               if (verifiedUser == ofMember)
                 Button(
                     funzione: WorkPage(),
@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, left: 10, right: 15),
+                    top: 10, bottom: 10, left: 10, right: 10),
                 child: SizedBox(
                   height: 160,
                   width: 160,
@@ -162,7 +162,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, right: 10, left: 15),
+                    top: 10, bottom: 10, right: 10, left: 10),
                 child: SizedBox(
                   height: 160,
                   width: 160,
@@ -246,7 +246,6 @@ class _HomePageState extends State<HomePage> {
                   }
 
                   return Scrollbar(
-                    thumbVisibility: true,
                     child: ListView(
                       children: snapshot.data!.docs.map((doc) {
                         var title = doc['title'];

@@ -23,17 +23,20 @@ class _SubPageState extends State<SubPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
+        alignment: AlignmentDirectional.center,
         children: [
           CustomScrollView(
             slivers: [
               SliverAppBar(
+                backgroundColor: Colors.white,
                 pinned: true,
                 expandedHeight: 250,
                 flexibleSpace: FlexibleSpaceBar(
                   title: Text('ParaLat Premium'),
+                  centerTitle: true,
                   background: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Space(heigth: 100),
                       Image.asset(
                         r'assets\images\ParaLat.png',
                         fit: BoxFit.cover,

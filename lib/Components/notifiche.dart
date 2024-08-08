@@ -34,7 +34,9 @@ void setupFirebaseMessaging(GlobalKey<NavigatorState> navigatorKey) {
             content: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [Text(notification.body ?? 'No Body')],
+                children: [
+                  Text(notification.body ?? 'No Body')
+                ],
               ),
             ),
           );

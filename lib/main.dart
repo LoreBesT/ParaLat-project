@@ -44,7 +44,7 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
           appBarTheme: AppBarTheme(color: Theme.of(context).colorScheme.inversePrimary, toolbarHeight: 100),
-        ),
+          scrollbarTheme: ScrollbarThemeData(thumbVisibility: WidgetStatePropertyAll(true),thumbColor: WidgetStatePropertyAll(Colors.deepPurple.shade100))),
         darkTheme: ThemeData.dark(),
         // home: const HomePage(),
         home: StreamBuilder(

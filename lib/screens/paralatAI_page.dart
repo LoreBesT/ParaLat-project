@@ -70,21 +70,18 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
       body: Column(
         children: [
           Expanded(
-            child: Scrollbar(
-              controller: _scrollController,
-              child: SingleChildScrollView(
-                // reverse:
-                //     true, // Scorri automaticamente verso il basso quando vengono aggiunti nuovi messaggi
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _messages
-                      .map((message) => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: _buildMessage(message),
-                          ))
-                      .toList(),
-                ),
+            child: SingleChildScrollView(
+              // reverse:
+              //     true, // Scorri automaticamente verso il basso quando vengono aggiunti nuovi messaggi
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: _messages
+                    .map((message) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          child: _buildMessage(message),
+                        ))
+                    .toList(),
               ),
             ),
           ),
