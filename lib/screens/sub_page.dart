@@ -28,6 +28,7 @@ class _SubPageState extends State<SubPage> {
           CustomScrollView(
             slivers: [
               SliverAppBar(
+                //Fixare il white e modificare il colore a seconda se ci si trova in dark mode o white mode
                 backgroundColor: Colors.white,
                 pinned: true,
                 expandedHeight: 250,
