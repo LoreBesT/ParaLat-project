@@ -16,6 +16,8 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
 
   Future<void> _fetchResponse(String text) async {
     final model = GenerativeModel(model: "gemini-1.5-flash", apiKey: apiKey);
+    final completeInput =
+        'Ciao ho questa versione. Creami una tabella in cui nella prima colonna metti la parola latina, nella seconda metti il complemento per i nomi, il modo per i verbi e la parte del discorso per i restanti. Nella terza colonna metti il caso per nomi, pronomi e aggettivi e il tempo per i verbi. Nella quarta metti il genere(per i verbi metti la persona 1,2,3). Nella quinta metti il genere(per i verbi il numero). Nella sesta metti il paradigma/derivazione ed infine nella settima la corrispettiva traduzione di ogni parola. N.B per parole che non hanno tutte le proprietà precedentemente descritte come una conginzione metti una \'/\' nelle caselle da non completare. Questa è la versione da analizzare: $text';
     setState(() {
       _messages.add({"sender": "user", "text": text});
       _isLoading = true;
@@ -23,7 +25,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
 
     try {
       final response = await model.generateContent([
-        Content.text(text),
+        Content.text(completeInput),
       ]);
       String? response2 = response.text?.replaceAll("*", "");
       setState(() {
@@ -44,18 +46,55 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
   Widget _buildMessage(Map<String, String> message) {
     bool isUserMessage = message["sender"] == "user";
     return Align(
-      alignment: isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
-      child: Card(
-        color: isUserMessage ? Colors.blue[100] : Colors.grey[300],
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            message["text"] ?? "",
-            style: const TextStyle(fontSize: 16),
+      alignment: isUserMessage ? Alignment.centerLeft : Alignment.centerRight,
+      child: SizedBox(
+        width: 300,
+        child: Card(
+          color: isUserMessage ? Colors.blue[100] : Colors.grey[300],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
+          child: Row(
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Allinea gli elementi all'inizio
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8), // Distanza tra l'icona e il testo
+                child: isUserMessage
+                    ? Icon(Icons.person)
+                    : Icon(Icons.generating_tokens),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8, right: 8),
+                      child: Text(
+                        isUserMessage ? 'User' : 'ParaLat AI',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    SizedBox(
+                        height: 2), // Distanza tra il titolo e il sottotitolo
+                    Text(
+                      message["text"] ?? "",
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.left,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          // child: //Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: Text(
+          //     message["text"] ?? "",
+          //     style: const TextStyle(fontSize: 16),
+          //   ),
+          // ),
         ),
       ),
     );
@@ -71,8 +110,8 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              // reverse:
-              //     true, // Scorri automaticamente verso il basso quando vengono aggiunti nuovi messaggi
+              reverse:
+                  true, // Scorri automaticamente verso il basso quando vengono aggiunti nuovi messaggi
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,7 +130,8 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
               children: [
                 Expanded(
                   child: Card(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100)),
                     child: TextField(
                       controller: _controller,
                       autocorrect: false,
@@ -111,12 +151,10 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                     ? const CircularProgressIndicator()
                     : ElevatedButton(
                         onPressed: () {
+                          FocusScope.of(context).unfocus();
                           if (_controller.text.isNotEmpty) {
-                            String completeInput =
-                                'Ciao ho questa versione. Creami una tabella in cui nella prima colonna metti la parola latina, nella seconda metti il complemento per i nomi, il modo per i verbi e la parte del discorso per i restanti. Nella terza colonna metti il caso per nomi, pronomi e aggettivi e il tempo per i verbi. Nella quarta metti il genere(per i verbi metti la persona 1,2,3). Nella quinta metti il genere(per i verbi il numero). Nella sesta metti il paradigma/derivazione ed infine nella settima la corrispettiva traduzione di ogni parola. N.B per parole che non hanno tutte le proprietà precedentemente descritte come una conginzione metti una \'/\' nelle caselle da non completare. Questa è la versione da analizzare: ${_controller.text}';
-                            _fetchResponse(completeInput);
-                            _controller
-                                .clear(); // Pulisci il campo di testo dopo aver inviato il messaggio
+                            _fetchResponse(_controller.text);
+                            _controller.clear();
                           }
                         },
                         child: const Icon(Icons.send),

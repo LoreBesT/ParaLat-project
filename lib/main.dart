@@ -43,6 +43,7 @@ class _MyAppState extends State<MyApp> {
           //Ricorda implementare palette colori completa con i colori per ogni widget
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
+          iconTheme: IconThemeData(color: Colors.deepPurple),
           appBarTheme: AppBarTheme(color: Theme.of(context).colorScheme.inversePrimary, toolbarHeight: 100),
           scrollbarTheme: ScrollbarThemeData(thumbVisibility: WidgetStatePropertyAll(true),thumbColor: WidgetStatePropertyAll(Colors.deepPurple.shade100))),
         darkTheme: ThemeData.dark(),

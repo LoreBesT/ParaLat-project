@@ -118,7 +118,8 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title, style: TextStyle(fontWeight: FontWeight.w500),),
+        toolbarHeight: 130,
       ),
       body: Column(
         children: <Widget>[
@@ -259,7 +260,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           leading: Icon(
                             Icons.newspaper,
-                            color: Colors.black,
+                            color: Colors.deepPurple,
                           ),
                           onTap: () {
                             Navigator.push(

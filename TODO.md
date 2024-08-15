@@ -1,7 +1,7 @@
-### Modificare Drawer eliminando pulsanti per ParaLat AI ed Archivio Versioni
+<!-- ### Modificare Drawer eliminando pulsanti per ParaLat AI ed Archivio Versioni DONE -->
 <!-- ### Implementare scadenze con firestore DONE-->
 ### Implementare sanzioni con firestore
-<!-- ### Implementare funzione per il download dei file da Archivio Versioni -->
+<!-- ### Implementare funzione per il download dei file da Archivio Versioni DONE-->
 ### Implementare l'arrivo di notizie solo ad un singolo utente o una porzione
 ### Implementare notifica per ogni nuova notizia
 ### Sostituire Hamburger Menu con bottom appbar con 3 opzioni: Impostazioni, Home, Altro
@@ -19,5 +19,6 @@
 ### Completare la stesura delle FAQ
 ### Implementare una più sicura gestione delle eccezioni
 ### Refator del codice
+## Verificare compatibilità badge con telefono tramite APP 'TAG Writer'
 
 

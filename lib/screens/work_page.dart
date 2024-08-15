@@ -30,8 +30,8 @@ class WorkPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.emoji_people, size: 100,color: Colors.purple,),
-                        Icon(Icons.settings, size: 100,color: Colors.purple,),
+                        Icon(Icons.emoji_people, size: 100, color: Colors.deepPurple,),
+                        Icon(Icons.settings, size: 100, color: Colors.deepPurple,),
                       ],
                     ),
                   ],
