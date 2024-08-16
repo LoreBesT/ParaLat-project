@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/space.dart';
+import 'package:paralat/screens/auth_page.dart';
 //import 'package:flutter_animate/flutter_animate.dart';
 
 class ProfiloPage extends StatefulWidget {
@@ -259,6 +260,19 @@ class _MyWidgetState extends State<ProfiloPage> {
                               )));
                     },
                     child: const Text('Visualizza dati account'))),
+            Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(8),
+                child: ElevatedButton(
+                    onPressed: () {
+                      Auth().signOut(context);
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      'Esci',
+                      style: TextStyle(color: Colors.red),
+                    ))),
             if (Verify().nameUser(0) != 'Guest')
               Container(
                   width: double.infinity,

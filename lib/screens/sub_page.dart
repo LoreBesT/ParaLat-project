@@ -33,7 +33,7 @@ class _SubPageState extends State<SubPage> {
                 pinned: true,
                 expandedHeight: 250,
                 flexibleSpace: FlexibleSpaceBar(
-                  title: Text('ParaLat Premium'),
+                  title: const Text('ParaLat Premium'),
                   centerTitle: true,
                   background: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -46,7 +46,7 @@ class _SubPageState extends State<SubPage> {
                   ),
                 ),
                 leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
+                  icon: const Icon(Icons.arrow_back),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -55,12 +55,12 @@ class _SubPageState extends State<SubPage> {
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
-                    Space(heigth: 10),
+                    const Space(heigth: 10),
                     RadioListTile<String>(
                       title: const Text('Abbonamento Annuale'),
-                      secondary: Text('2,08€/mese', style: TextStyle(fontSize: 14),),
+                      secondary: const Text('2,08€/mese', style: TextStyle(fontSize: 14),),
                       subtitle: RichText(
-                        text: TextSpan(
+                        text: const TextSpan(
                           children: [
                             TextSpan(
                               text: '35,88€',
@@ -85,49 +85,43 @@ class _SubPageState extends State<SubPage> {
                     ),
                     RadioListTile<String>(
                       title: const Text('Abbonamento Mensile'),
-                      secondary: Text('2,99€/mese', style: TextStyle(fontSize: 14),),
+                      secondary: const Text('2,99€/mese', style: TextStyle(fontSize: 14),),
                       value: 'Mensile',
                       groupValue: _abbonamentoScelto,
                       onChanged: _handleRadioValueChange,
                     ),
-                    ListTile(
+                    const ListTile(
                       leading: Icon(Icons.archive_outlined),
                       title: Text('Archivio Versioni'),
                       subtitle: Text('Sblocca l\'accesso a decine di versioni revisionate e corrette da esperti'),
                     ),
-                    ListTile(
+                    const ListTile(
                       leading: Icon(Icons.download),
                       title: Text('Download delle versioni'),
                       subtitle: Text('Scarica tutte le versioni dall\'archivio che desideri e sfruttale come meglio desideri*'),
                     ),
-                    ListTile(
+                    const ListTile(
                       leading: Icon(Icons.workspace_premium),
                       title: Text('Accesso al modello Pro di ParaLat AI'),
                       subtitle: Text('Versioni più corrette e generate in meno tempo grazie a ParaLat AI pro - based on Google Gemini 1.5 pro'),
                     ),
-                    ListTile(
-                      leading: Icon(Icons.badge),
-                      title: Text('Sblocca Badge unlimited'),
-                      subtitle: Text('Hai accesso illimitato a ParaLat Cards. Registra tutte le tessere,badge o carte che vuoi. Potrai usarle sempre e saranno sempre disponibili**.'),
-                    ),
-                    ListTile(
+                    const ListTile(
                       leading: Icon(Icons.ads_click),
                       title: Text('Niente inserzioni'),
                       subtitle: Text('Non vedrai mai alcuna inserzione di alcun tipo'),
                     ),
-                    ListTile(
+                    const ListTile(
                       leading: Icon(Icons.discord),
                       title: Text('Accesso al canale Discord esclusivo'),
                       subtitle: Text('Canale Discord esclusivo per i membri Premium con la possibilità di discutere e ricevere spoiler sul progetto esclusivi'),
                     ),
-                    ListTile(
+                    const ListTile(
                       leading: Icon(Icons.star),
                       title: Text('Badge sul profilo'),
                       subtitle: Text('Badge esclusivo per gli utenti premium'),
                     ),
-                    Text('*I file scaricati sono da considerarsi ad uso esclusivo personale. Una eventuale diffusione non autorizzata è punibile penalmente.', textAlign: TextAlign.center, style: TextStyle(color: Colors.grey, fontSize: 12),),
-                    Text('**ParaLat Cards è disponibile anche per i free users con il limite di 3 carte registrabili e massimo 1 utilizzabile al giorno.', textAlign: TextAlign.center, style: TextStyle(color: Colors.grey, fontSize: 12),),
-                    Space(heigth: 65),
+                    const Text('*I file scaricati sono da considerarsi ad uso esclusivo personale. Una eventuale diffusione non autorizzata è punibile penalmente.', textAlign: TextAlign.center, style: TextStyle(color: Colors.grey, fontSize: 12),),
+                    const Space(heigth: 65),
                   ],
                 ),
               ),
@@ -146,7 +140,7 @@ class _SubPageState extends State<SubPage> {
                   child: Text(_abbonamentoScelto == 'Annuale' 
                     ? 'Abbonati a 24,96€/anno' 
                     : 'Abbonati a 2,99€/mese'),
-                  style: ButtonStyle(backgroundColor: WidgetStateProperty.all<Color>(Color.fromARGB(255, 219, 116, 237)), foregroundColor: WidgetStateProperty.all(Colors.white)),
+                  style: ButtonStyle(backgroundColor: WidgetStateProperty.all<Color>(const Color.fromARGB(255, 219, 116, 237)), foregroundColor: WidgetStateProperty.all(Colors.white)),
                 ),
               ),
             ),
