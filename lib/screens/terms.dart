@@ -8,8 +8,6 @@ class TermsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Termini e condizioni d\'uso'),
-        toolbarHeight: 100,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: const SingleChildScrollView(
         child: Padding(

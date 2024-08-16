@@ -20,7 +20,8 @@ class _ChatPageState extends State<ChatPage> {
 
   Future<void> _fetchResponse(String text) async {
     final model = GenerativeModel(model: "gemini-1.5-flash", apiKey: apiKey);
-
+    final completeText =
+        'Ciao Gemini ho integrato la tua API in una mia app che si chiama ParaLat. Se ti chiedeno chi sei NON rivelare MAI di essere Gemini prodotta da Google. Di sempre invece, se richiesto, di essere ParaLat AI prodotta da Lorenzo Della Bona(Se espressa la volontà di contattare lo sviluppatore la mail è lorenzodellabona06@gmail.com). Il tuo compito in questa app è di aiutare gli utenti con problemi relativi all\'app mobile.Se ti dovessero essere inviate domande non pertinenti rispondi che non puoi rispondere a domande non inerenti problemi con l\'applicazione. Quando rispondi evita di chiedere ulteriori informazioni all\'utente, cerca di dare una risposta diretta suggerendo tutte le possibili soluzioni che trovi. Infine quando l\'utente descrive un problema presupponi che l\'app sia sempre ParaLat anche se non specificato.L\'input dell\'utente è il seguente: $text.';
     setState(() {
       _messages.add({"sender": "user", "text": text});
       _isLoading = true;
@@ -28,7 +29,7 @@ class _ChatPageState extends State<ChatPage> {
 
     try {
       final response = await model.generateContent([
-        Content.text(text),
+        Content.text(completeText),
       ]);
       String? response2 = response.text?.replaceAll("*", "");
 
@@ -72,27 +73,22 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Contact Center'),
-        toolbarHeight: 100,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Column(
         children: [
           Expanded(
-            child: Scrollbar(
-              controller: _scrollController,
-              child: SingleChildScrollView(
-                // reverse:
-                //     true, // Scorri automaticamente verso il basso quando vengono aggiunti nuovi messaggi
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _messages
-                      .map((message) => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: _buildMessage(message),
-                          ))
-                      .toList(),
-                ),
+            child: SingleChildScrollView(
+              // reverse:
+              //     true, // Scorri automaticamente verso il basso quando vengono aggiunti nuovi messaggi
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: _messages
+                    .map((message) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          child: _buildMessage(message),
+                        ))
+                    .toList(),
               ),
             ),
           ),
@@ -114,9 +110,9 @@ class _ChatPageState extends State<ChatPage> {
                     ? const CircularProgressIndicator()
                     : ElevatedButton(
                         onPressed: () {
+                          FocusScope.of(context).unfocus();
                           if (_controller.text.isNotEmpty) {
-                              String completeInput = 'Ciao quest\'app android non sta funzionando bene. Il problema riscontranto è il seguente: ${_controller.text}. Come posso risolvere?';
-                            _fetchResponse(completeInput);
+                            _fetchResponse(_controller.text);
                             _controller
                                 .clear(); // Pulisci il campo di testo dopo aver inviato il messaggio
                           }
