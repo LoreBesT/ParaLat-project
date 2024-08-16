@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+// Usare docx_template
+// Opzione 2: creare un file base salvato su firestore modificarlo ad ogni richiesta e scaricarlo con dio come in archivio
 
 class GeminiApiPage extends StatefulWidget {
   @override

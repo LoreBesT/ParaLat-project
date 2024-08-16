@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:paralat/Components/Drawer_buttons.dart';
 import 'package:paralat/Components/auth.dart';
@@ -30,6 +31,9 @@ class _HomePageState extends State<HomePage> {
   String nomeUtente = Verify().nameUser(4);
   String ofMember = 'Official Member ParaLat Team';
 
+  // Definisci un ScrollController
+  final ScrollController _listViewController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     String verifiedUser = Verify().verifyUser(context);
@@ -50,15 +54,6 @@ class _HomePageState extends State<HomePage> {
                 ),
                 elevation: 30,
               ),
-              // Button(
-              //     funzione: GeminiApiPage(),
-              //     icona: Icons.generating_tokens_rounded,
-              //     testo: 'ParaLat AI'),
-              Button(
-                funzione: WorkPage(),
-                icona: Icons.badge,
-                testo: 'ParaLat Cards',
-              ),
               Button(
                   funzione: NewsPage(),
                   icona: Icons.newspaper,
@@ -68,12 +63,6 @@ class _HomePageState extends State<HomePage> {
                     funzione: ScadenzePage(),
                     icona: Icons.warning_amber,
                     testo: 'Scadenze'),
-              // Button(
-              //   funzione: ArchivioPage(),
-              //   icona: Icons.archive,
-              //   testo: 'Archivio Versioni',
-              //   isPremium: Verify().isPremium(context),
-              // ),
               if (verifiedUser == ofMember)
                 Button(
                     funzione: WorkPage(),
@@ -118,171 +107,201 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       appBar: AppBar(
-        title: Text(widget.title, style: TextStyle(fontWeight: FontWeight.w500),),
+        title: Text(widget.title, style: TextStyle(fontWeight: FontWeight.w500)),
         toolbarHeight: 130,
       ),
-      body: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, left: 10, right: 10),
-                child: SizedBox(
-                  height: 160,
-                  width: 160,
-                  child: Card(
-                    elevation: 4,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => GeminiApiPage(),
-                          ),
-                        );
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'ParaLat AI',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Icon(
-                            Icons.generating_tokens,
-                            size: 50,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, right: 10, left: 10),
-                child: SizedBox(
-                  height: 160,
-                  width: 160,
-                  child: Card(
-                    elevation: 4,
-                    child: InkWell(
-                      onTap: () {
-                        if (Verify().isPremium(context) == true) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (context) => ArchivioPage(),
-                            ),
-                          );
-                        } else {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (context) => SubPage(),
-                            ),
-                          );
-                        }
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Archivio',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Icon(
-                            Icons.archive,
-                            size: 50,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.only(top: 2, bottom: 2, left: 16, right: 16),
-            child: Row(
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  child: Text('Ultime Notizie'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NewsPage(),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: SizedBox(
+                    height: 160,
+                    width: 160,
+                    child: Card(
+                      elevation: 4,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => GeminiApiPage(),
+                            ),
+                          );
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'ParaLat AI',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Icon(
+                              Icons.generating_tokens,
+                              size: 50,
+                            ),
+                          ],
+                        ),
                       ),
-                    );
-                  },
-                  child: Text('Vedi tutte'),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: SizedBox(
+                    height: 160,
+                    width: 160,
+                    child: Card(
+                      elevation: 4,
+                      child: InkWell(
+                        onTap: () {
+                          if (Verify().isPremium(context) == true) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (context) => ArchivioPage(),
+                              ),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (context) => SubPage(),
+                              ),
+                            );
+                          }
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Archivio',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Icon(
+                              Icons.archive,
+                              size: 50,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
-          ),
-          SizedBox(
-            height: 250,
-            child: Card(
-              elevation: 4,
-              child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('news') // Usa il nome della tua collezione
-                    .orderBy('ora',
-                        descending:
-                            true) // Assicurati di avere un campo timestamp per ordinare
-                    .limit(5) // Limita i risultati agli ultimi 4 documenti
-                    .snapshots(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (!snapshot.hasData) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-
-                  return Scrollbar(
-                    child: ListView(
-                      children: snapshot.data!.docs.map((doc) {
-                        var title = doc['title'];
-                        var body = doc['body'];
-
-                        return ListTile(
-                          title: Text(title),
-                          subtitle: Text(
-                            body,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          leading: Icon(
-                            Icons.newspaper,
-                            color: Colors.deepPurple,
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => NewsDetailPage(
-                                  news: doc,
-                                  isNews: true,
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      }).toList(),
-                    ),
-                  );
-                },
+            Padding(
+              padding: const EdgeInsets.only(top: 0, bottom: 0, left: 12, right: 12),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text('Ultime Notizie'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NewsPage(),
+                        ),
+                      );
+                    },
+                    child: Text('Vedi tutte'),
+                  ),
+                ],
               ),
             ),
-          ),
+            SizedBox(
+              height: 250,
+              child: Card(
+                elevation: 4,
+                child: Scrollbar(
+                  controller: _listViewController,
+                  child: ListView(
+                    controller: _listViewController,
+                    children: [
+                      StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection('news') // Usa il nome della tua collezione
+                            .orderBy('ora',
+                                descending: true) // Assicurati di avere un campo timestamp per ordinare
+                            .limit(5) // Limita i risultati agli ultimi 5 documenti
+                            .snapshots(),
+                        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (!snapshot.hasData) {
+                            return Center(child: CircularProgressIndicator());
+                          }
+
+                          return Column(
+                            children: snapshot.data!.docs.map((doc) {
+                              var title = doc['title'];
+                              var body = doc['body'];
+
+                              return ListTile(
+                                title: Text(title),
+                                subtitle: Text(
+                                  body,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                leading: Icon(
+                                  Icons.newspaper,
+                                  color: Colors.deepPurple,
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => NewsDetailPage(
+                                        news: doc,
+                                        isNews: true,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }).toList(),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Space(heigth: 100),
+          ],
+        ),
+      ),
+      extendBody: true,
+      bottomNavigationBar: FloatingNavbar(
+        padding: EdgeInsets.all(2),
+        margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        selectedItemColor: Colors.deepPurple,
+        backgroundColor: Colors.white,
+        unselectedItemColor: Colors.black,
+        selectedBackgroundColor: Color.fromARGB(255, 250, 219, 255),
+        elevation: 4,
+        onTap: (int val) {
+          // returns tab id which is user tapped
+        },
+        currentIndex: 0,
+        items: [
+          FloatingNavbarItem(icon: Icons.home, title: 'Home'),
+          FloatingNavbarItem(icon: Icons.newspaper, title: 'Notizie'),
+          FloatingNavbarItem(icon: Icons.more_horiz, title: 'Altro'),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _listViewController.dispose();
+    super.dispose();
   }
 }
