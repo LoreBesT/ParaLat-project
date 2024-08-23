@@ -35,6 +35,7 @@ class Auth {
     }
   }
 
+
   String? getUserDisplayName() {
     String? nome = _firebaseAuth.currentUser?.displayName;
     if (nome != null) {

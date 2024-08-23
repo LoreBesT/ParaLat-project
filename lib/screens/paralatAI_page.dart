@@ -1,5 +1,13 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:docx_template/docx_template.dart' as docxTemp;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:http/http.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 // Usare docx_template
 // Opzione 2: creare un file base salvato su firestore modificarlo ad ogni richiesta e scaricarlo con dio come in archivio
 
@@ -30,16 +38,71 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
         Content.text(completeInput),
       ]);
       String? response2 = response.text?.replaceAll("*", "");
+      final directory = await getTemporaryDirectory();
+      final path = '${directory.path}/documento.txt';
+      await File(path).writeAsString(
+        response2!,
+        mode: FileMode.write,
+      );
+
+      // Apri il file con l'app predefinita
+      Future.delayed(Duration(seconds: 2), () async {
+        await OpenFile.open(path);
+      });
+
       setState(() {
         _messages.add({
           "sender": "bot",
-          "text": response2!
+          "text": /*response2!*/
+              "Versione generata con successo e salvata correttamente. ParaLat AI potrebbe commettere errori. Considera di verificare le informazioni più importanti."
         }); // Supponendo che la risposta abbia una proprietà 'text'
+        _isLoading = false;
+      });
+    } on TimeoutException {
+      setState(() {
+        _messages.add({
+          "sender": "bot",
+          "text": "Errore: ParaLat AI ha impiegato troppo tempo a rispondere."
+        });
+        _isLoading = false;
+      });
+    } on PathNotFoundException {
+      setState(() {
+        _messages.add({
+          "sender": "bot",
+          "text":
+              "Errore: ParaLat AI ha riscontrato un problema nel salvataggio del file. Prova a svuotare le cache e verifica di aver concesso tutte le autorizzazioni necessarie. Se non dovessi risolvere contatta lo sviluppatore tramite la mail: lorenzodellabona06@gmail.com"
+        });
+        _isLoading = false;
+      });
+    } on FileSystemException {
+      setState(() {
+        _messages.add({
+          "sender": "bot",
+          "text":
+              "Errore: ParaLat AI non è riuscito a salvare il file. Verifica di avere spazio sufficiente sul dispositivo e di aver concesso tutti i permessi necessari."
+        });
+        _isLoading = false;
+      });
+    } on ClientException {
+      setState(() {
+        _messages.add({"sender": "bot", "text": "Errore: Impossibile raggiungere i server di ParaLat AI. Verifica la stabilità della tua connessione ad internet."});
+        _isLoading = false;
+      });
+    } on GenerativeAIException {
+      setState(() {
+        _messages.add({"sender": "bot", "text": "Errore: A causa di contenuti potenzialmente inappropriati ParaLat AI Safety system ha bloccato la risposta alla tua domanda"});
         _isLoading = false;
       });
     } catch (e) {
       setState(() {
-        _messages.add({"sender": "bot", "text": "Error: $e"});
+        print(e.toString());
+        print(e.runtimeType.toString());
+        _messages.add({
+          "sender": "bot",
+          "text":
+              "Errore: ParaLat AI ha riscontrato un errore sconosciuto durante il processo della tua richiesta. Riprova più tardi"
+        });
         _isLoading = false;
       });
     }
@@ -61,7 +124,8 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                 CrossAxisAlignment.start, // Allinea gli elementi all'inizio
             children: [
               Padding(
-                padding: const EdgeInsets.all(8), // Distanza tra l'icona e il testo
+                padding:
+                    const EdgeInsets.all(8), // Distanza tra l'icona e il testo
                 child: isUserMessage
                     ? Icon(Icons.person)
                     : Icon(Icons.generating_tokens),
@@ -75,7 +139,8 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                       child: Text(
                         isUserMessage ? 'User' : 'ParaLat AI',
                         textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w500),
                       ),
                     ),
                     SizedBox(

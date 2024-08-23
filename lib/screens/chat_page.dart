@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:google_generative_ai/google_generative_ai.dart'; // Questo è un esempio, sostituisci con la libreria corretta se differente
+import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:http/http.dart'; // Questo è un esempio, sostituisci con la libreria corretta se differente
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -40,9 +43,33 @@ class _ChatPageState extends State<ChatPage> {
         }); // Supponendo che la risposta abbia una proprietà 'text'
         _isLoading = false;
       });
+    } on TimeoutException {
+      setState(() {
+        _messages.add({
+          "sender": "bot",
+          "text": "Errore: ParaLat AI ha impiegato troppo tempo a rispondere."
+        });
+        _isLoading = false;
+      });
+    }  on ClientException {
+      setState(() {
+        _messages.add({"sender": "bot", "text": "Errore: Impossibile raggiungere i server di ParaLat AI. Verifica la stabilità della tua connessione ad internet."});
+        _isLoading = false;
+      });
+    } on GenerativeAIException {
+      setState(() {
+        _messages.add({"sender": "bot", "text": "Errore: A causa di contenuti potenzialmente inappropriati ParaLat AI Safety system ha bloccato la risposta alla tua domanda"});
+        _isLoading = false;
+      });
     } catch (e) {
       setState(() {
-        _messages.add({"sender": "bot", "text": "Error: $e"});
+        print(e.toString());
+        print(e.runtimeType.toString());
+        _messages.add({
+          "sender": "bot",
+          "text":
+              "Errore: ParaLat AI ha riscontrato un errore sconosciuto durante il processo della tua richiesta. Riprova più tardi"
+        });
         _isLoading = false;
       });
     }

@@ -14,7 +14,7 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   int _index = 1;
 
-  List<Widget> funzioni = [HomePage(), NewsPage(), ImpostazioniPage()];
+  List<Widget>? funzioni = [HomePage(), NewsPage(), ImpostazioniPage()];
 
   @override
   Widget build(BuildContext context) {
