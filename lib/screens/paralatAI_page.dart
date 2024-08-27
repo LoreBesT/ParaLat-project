@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:docx_template/docx_template.dart' as docxTemp;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,8 +7,6 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:http/http.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-// Usare docx_template
-// Opzione 2: creare un file base salvato su firestore modificarlo ad ogni richiesta e scaricarlo con dio come in archivio
 
 class GeminiApiPage extends StatefulWidget {
   @override
@@ -20,14 +17,15 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
   final TextEditingController _controller = TextEditingController();
   List<Map<String, String>> _messages =
       []; // Cambia a lista di mappe per tracciare chi ha inviato il messaggio
-  final String apiKey = 'AIzaSyA8XweciTZnjycM2iwHRSzCle-3YAYzV2o';
+  final String apiKey =
+      'AIzaSyA8XweciTZnjycM2iwHRSzCle-3YAYzV2o'; // Inserisci la tua API Key
   bool _isLoading = false;
   final ScrollController _scrollController = ScrollController();
 
   Future<void> _fetchResponse(String text) async {
     final model = GenerativeModel(model: "gemini-1.5-flash", apiKey: apiKey);
     final completeInput =
-        'Ciao ho questa versione. Creami una tabella in cui nella prima colonna metti la parola latina, nella seconda metti il complemento per i nomi, il modo per i verbi e la parte del discorso per i restanti. Nella terza colonna metti il caso per nomi, pronomi e aggettivi e il tempo per i verbi. Nella quarta metti il genere(per i verbi metti la persona 1,2,3). Nella quinta metti il genere(per i verbi il numero). Nella sesta metti il paradigma/derivazione ed infine nella settima la corrispettiva traduzione di ogni parola. N.B per parole che non hanno tutte le proprietà precedentemente descritte come una conginzione metti una \'/\' nelle caselle da non completare. Questa è la versione da analizzare: $text';
+        'Ciao ho questa versione. Creami una tabella in cui nella prima colonna metti la parola latina, nella seconda metti il complemento per i nomi, il modo per i verbi e la parte del discorso per i restanti. Nella terza colonna metti il caso per nomi, pronomi e aggettivi e il tempo per i verbi. Nella quarta metti il genere(per i verbi metti la persona 1,2,3). Nella quinta metti il genere(per i verbi il numero). Nella sesta metti il paradigma/derivazione ed infine nella settima la corrispettiva traduzione di ogni parola. N.B per parole che non hanno tutte le proprietà precedentemente descritte come una congiunzione metti una \'/\' nelle caselle da non completare. Questa è la versione da analizzare: $text';
     setState(() {
       _messages.add({"sender": "user", "text": text});
       _isLoading = true;
@@ -38,24 +36,38 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
         Content.text(completeInput),
       ]);
       String? response2 = response.text?.replaceAll("*", "");
-      final directory = await getTemporaryDirectory();
-      final path = '${directory.path}/documento.txt';
-      await File(path).writeAsString(
-        response2!,
-        mode: FileMode.write,
-      );
 
-      // Apri il file con l'app predefinita
-      Future.delayed(Duration(seconds: 2), () async {
-        await OpenFile.open(path);
-      });
+      // Carica il template di base (assicurati di avere un template.docx nel progetto)
+  final ByteData data = await rootBundle.load(r'assets/docs/template.docx');
+  final bytes = data.buffer.asUint8List();
+  final docx = await docxTemp.DocxTemplate.fromBytes(bytes);
+
+  // Definisci i contenuti da inserire nel template
+  final docxTemp.Content content = docxTemp.Content();
+  content.add(docxTemp.TextContent("risposta", response2!));
+
+  // Genera il documento
+  final generatedDocx = await docx.generate(content);
+
+  if (generatedDocx == null) {
+    throw UnsupportedError('Errore nella generazione del documento');
+  }
+
+  // Salva il file generato
+  final directory = await getTemporaryDirectory();
+  final path = '${directory.path}/documento.docx';
+  await File(path).writeAsBytes(generatedDocx);
+
+  // Apri il file con l'app predefinita
+  Future.delayed(Duration(seconds: 2), () async {
+    await OpenFile.open(path);
+  });
 
       setState(() {
         _messages.add({
           "sender": "bot",
-          "text": /*response2!*/
-              "Versione generata con successo e salvata correttamente. ParaLat AI potrebbe commettere errori. Considera di verificare le informazioni più importanti."
-        }); // Supponendo che la risposta abbia una proprietà 'text'
+          "text": "Versione generata con successo e salvata correttamente. ParaLat AI potrebbe commettere errori. Considera di verificare le informazioni più importanti."
+        });
         _isLoading = false;
       });
     } on TimeoutException {
@@ -70,8 +82,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
       setState(() {
         _messages.add({
           "sender": "bot",
-          "text":
-              "Errore: ParaLat AI ha riscontrato un problema nel salvataggio del file. Prova a svuotare le cache e verifica di aver concesso tutte le autorizzazioni necessarie. Se non dovessi risolvere contatta lo sviluppatore tramite la mail: lorenzodellabona06@gmail.com"
+          "text": "Errore: ParaLat AI ha riscontrato un problema nel salvataggio del file. Prova a svuotare le cache e verifica di aver concesso tutte le autorizzazioni necessarie. Se non dovessi risolvere contatta lo sviluppatore tramite la mail: lorenzodellabona06@gmail.com"
         });
         _isLoading = false;
       });
@@ -79,8 +90,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
       setState(() {
         _messages.add({
           "sender": "bot",
-          "text":
-              "Errore: ParaLat AI non è riuscito a salvare il file. Verifica di avere spazio sufficiente sul dispositivo e di aver concesso tutti i permessi necessari."
+          "text": "Errore: ParaLat AI non è riuscito a salvare il file. Verifica di avere spazio sufficiente sul dispositivo e di aver concesso tutti i permessi necessari."
         });
         _isLoading = false;
       });
@@ -100,8 +110,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
         print(e.runtimeType.toString());
         _messages.add({
           "sender": "bot",
-          "text":
-              "Errore: ParaLat AI ha riscontrato un errore sconosciuto durante il processo della tua richiesta. Riprova più tardi"
+          "text": "Errore: ParaLat AI ha riscontrato un errore sconosciuto durante il processo della tua richiesta. Riprova più tardi"
         });
         _isLoading = false;
       });
@@ -155,13 +164,6 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
               ),
             ],
           ),
-          // child: //Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: Text(
-          //     message["text"] ?? "",
-          //     style: const TextStyle(fontSize: 16),
-          //   ),
-          // ),
         ),
       ),
     );
@@ -177,8 +179,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              reverse:
-                  true, // Scorri automaticamente verso il basso quando vengono aggiunti nuovi messaggi
+              reverse: true, // Scorri automaticamente verso il basso quando vengono aggiunti nuovi messaggi
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
