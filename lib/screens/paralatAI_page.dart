@@ -66,7 +66,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
       await File(path).writeAsBytes(generatedDocx);
 
       // Apri il file con l'app predefinita
-      Future.delayed(Duration(seconds: 2), () async {
+      Future.delayed(Duration(milliseconds: 900), () async {
         await OpenFile.open(path);
       });
 

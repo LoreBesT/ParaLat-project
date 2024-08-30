@@ -1,7 +1,6 @@
 # Upgrade urgenti
 ### Implementare l'arrivo di notizie solo ad un singolo utente o una porzione
 ### Implementare notifica per ogni nuova notizia
-### Implementare il salvataggio di file markdown da ParaLat AI e la conversione in .docx
 ### Implementare la possibilità di scansionare documenti ed inviarli a paralat ai
 ### Fixare bug pulsante esci
 
@@ -28,4 +27,4 @@
 ### Modificare e rendere più efficace il prompt da mandare a Gemini API DONE
 ### Realizzare da 0 ParaLat Cards ABORTED
 ## Verificare compatibilità badge con telefono tramite APP 'TAG Writer' DONE
-
+### Implementare il salvataggio di file markdown da ParaLat AI e la conversione in .docx DONE

@@ -1,3 +1,5 @@
+//RICORDA IMPLEMENATARE REPORT TRAMITE FIREBASE
+//Fare domani subito!!!!
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +47,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           title:
-              Text(widget.title, style: TextStyle(fontWeight: FontWeight.w500)),
+              Text(widget.title, style: TextStyle(fontWeight: FontWeight.w500,)),
           toolbarHeight: 130,
           centerTitle: true,
           automaticallyImplyLeading: false,

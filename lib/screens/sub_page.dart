@@ -116,6 +116,11 @@ class _SubPageState extends State<SubPage> {
                       subtitle: Text('Canale Discord esclusivo per i membri Premium con la possibilità di discutere e ricevere spoiler sul progetto esclusivi'),
                     ),
                     const ListTile(
+                      leading: Icon(Icons.contact_support),
+                      title: Text('Assistenza Premium'),
+                      subtitle: Text('Servizio di assistenza più rapido e veloce esclusivo per i membri premium'),
+                    ),
+                    const ListTile(
                       leading: Icon(Icons.star),
                       title: Text('Badge sul profilo'),
                       subtitle: Text('Badge esclusivo per gli utenti premium'),

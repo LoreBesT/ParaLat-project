@@ -6,7 +6,7 @@ class InfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String riconoscimenti =
-        'Un rigranziamento a tutti coloro che hanno collaborato e che vorrano contribuire con feedback e segnalazioni.\n\nCredits:\n● Lorenzo Della Bona: Android Developer\n● Francesca Bariletto - 25/05/2023\n● Letizia Marzo - 25/05/2023\n● Nicole Pastore - 25/05/2023 \n● Annamaria Alba - 29/09/2023\n● Luca Martella - 29/09/2023\n● Mario Accogli - 28/02/2024\n● Jacopo Leo - 14/03/2024\n';
+        'ParaLat App è un progetto ideato e realizzato da Lorenzo Della Bona. Un rigranziamento a tutti coloro che hanno collaborato e che vorrano contribuire con feedback e segnalazioni.\n\nCredits:\n● Lorenzo Della Bona: Android Developer\n● Francesca Bariletto - 25/05/2023\n● Letizia Marzo - 25/05/2023\n● Nicole Pastore - 25/05/2023 \n● Annamaria Alba - 29/09/2023\n● Luca Martella - 29/09/2023\n● Mario Accogli - 28/02/2024\n● Jacopo Leo - 14/03/2024\n';
     return Scaffold(
       appBar: AppBar(
         title: const Text('Credits'),

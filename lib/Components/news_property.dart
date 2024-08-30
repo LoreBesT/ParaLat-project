@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class NewsProperty {
   Color setColor(String newsImportance) {
-    if (newsImportance == 'max') {
+    if (newsImportance == 'red') {
       return Colors.red;
-    } else if (newsImportance == 'medium') {
+    } else if (newsImportance == 'yellow') {
       return Colors.yellow;
-    } else if (newsImportance == 'min') {
-      return Colors.green;
+    } else if (newsImportance == 'purple') {
+      return Colors.purple;
     } else {
-      return Colors.green;
+      return Colors.purple;
     }
   }
 
@@ -27,6 +27,8 @@ class NewsProperty {
         return Colors.blue;
       case 'purple':
         return Colors.purple;
+      case 'brown':
+        return Colors.brown.shade600;
       default:
         return Colors.purple;
     }

@@ -15,6 +15,8 @@ class AssistenzaPage extends StatefulWidget {
 }
 
 class _AssistenzaPageState extends State<AssistenzaPage> {
+  final _titolo = TextEditingController();
+  final _segnalazione = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,10 +38,63 @@ class _AssistenzaPageState extends State<AssistenzaPage> {
                   funzione: TermsPage(),
                   testo: 'Termini e Privacy'),
               Space(heigth: 10),
-              Button(
-                  icona: Icons.feedback_outlined,
-                  funzione: WorkPage(),
-                  testo: 'Invia una segnalazione'),
+              // Button(
+              //     icona: Icons.feedback_outlined,
+              //     funzione: WorkPage(),
+              //     testo: 'Invia una segnalazione'),
+              Container(
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                                title: Text(
+                                  'Invia una segnalazione',
+                                  textAlign: TextAlign.center,
+                                ),
+                                content: SizedBox(
+                                  height: 200,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      TextField(
+                                        controller: _titolo,
+                                        decoration: const InputDecoration(
+                                            label: Text('Titolo')),
+                                      ),
+                                      const Space(heigth: 20, width: 40),
+                                      TextField(
+                                        controller: _segnalazione,
+                                        decoration: const InputDecoration(
+                                            label: Text('Segnalazione')),
+                                      ),
+                                      Space(heigth: 12.8),
+                                      ElevatedButton(
+                                        child: Text('OK'),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ));
+                    },
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.contact_support),
+                          Text(
+                            '  Invia una segnalazione',
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
+                    )),
+              ),
               Space(heigth: 10),
               Button(
                   icona: Icons.info_outline,
