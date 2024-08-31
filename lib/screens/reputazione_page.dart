@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/space.dart';
-import 'package:paralat/screens/auth_page.dart';
 //import 'package:flutter_animate/flutter_animate.dart';
 
 class ProfiloPage extends StatefulWidget {

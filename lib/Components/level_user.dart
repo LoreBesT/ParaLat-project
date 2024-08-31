@@ -88,6 +88,8 @@ class Verify {
         return ('${nomeCognome[1]} ${nomeCognome[2]}');
       case 3:
         return guest;
+      case 4:
+        return nome;
       default:
         if (nomeCognome.length == 2) {
           return '${nomeCognome[0]} ${nomeCognome[1]}';

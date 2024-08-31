@@ -31,6 +31,7 @@ class _NavFloatBarState extends State<NavFloatBar> {
           context,
           MaterialPageRoute(builder: (context) => widget.funzioni![val]),
         );
+        // navigateWithCustomAnimation(context, widget.funzioni![val]);
       },
       currentIndex: widget.index,
       items: [

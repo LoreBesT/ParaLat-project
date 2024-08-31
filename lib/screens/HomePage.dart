@@ -1,22 +1,15 @@
-//RICORDA IMPLEMENATARE REPORT TRAMITE FIREBASE
-//Fare domani subito!!!!
+//Implementare verifica se un utente ha sanzioni con espulsione o meno in homepage. Se vi è una sanzione con espulsione permabannare account e inibire l'accesso all'app
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:paralat/Components/Drawer_buttons.dart';
-import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/space.dart';
 import 'package:paralat/screens/dettagli.dart';
 import 'package:paralat/screens/impostazioni_page.dart';
 import 'package:paralat/screens/paralatAI_page.dart';
-import 'package:paralat/screens/scadenze_page.dart';
 import 'package:paralat/screens/sub_page.dart';
-import 'package:paralat/screens/work_page.dart';
 import 'archivio_page.dart';
 import 'news_page.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -42,7 +35,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     String verifiedUser = Verify().verifyUser(context);
-    String? initialLetters = Auth().getInitials(nomeUtente);
 
     return Scaffold(
         appBar: AppBar(

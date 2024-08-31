@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:paralat/Components/level_user.dart';
+import 'package:paralat/Components/trans.dart';
 import 'package:paralat/screens/sub_page.dart';
 
 class Button extends StatefulWidget {
@@ -32,13 +32,16 @@ class _ButtonState extends State<Button> {
           animationDuration: const Duration(seconds: 1),
         ),
         onPressed: () {
-          if (widget.isPremium != null && widget.isPremium == true || widget.testo != 'Archivio Versioni') {
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (context) => widget.funzione,
-              ),
-            );
+          
+          if (widget.isPremium != null && widget.isPremium == true ||
+              widget.testo != 'Archivio Versioni') {
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute<void>(
+            //     builder: (context) => widget.funzione,
+            //   ),
+            // );
+            navigateWithCustomAnimation(context, widget.funzione);
           } else {
             Navigator.push(
               context,
@@ -55,8 +58,8 @@ class _ButtonState extends State<Button> {
               Icon(widget.icona),
               const SizedBox(width: 8),
               Text('${widget.testo}  '),
-              if(widget.isPremium != null && widget.isPremium == false)
-              Icon(Icons.diamond_outlined),
+              if (widget.isPremium != null && widget.isPremium == false)
+                Icon(Icons.diamond_outlined),
             ],
           ),
         ),

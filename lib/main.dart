@@ -1,5 +1,4 @@
 import 'package:paralat/Components/notifiche.dart';
-
 import 'Components/auth.dart';
 import 'screens/auth_page.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import 'screens/HomePage.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 
 void main() async {

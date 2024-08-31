@@ -1,5 +1,6 @@
+import 'dart:io';
 import 'dart:async';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/material.dart';
@@ -21,6 +22,23 @@ class Auth {
         email: email, password: password);
   }
 
+  Future<void> createReport(String title, String description, String userId,
+      BuildContext context) async {
+    CollectionReference reports =
+        FirebaseFirestore.instance.collection('reports');
+    return reports
+        .add({
+          'title': title,
+          'description': description,
+          'userId': userId,
+          'timestamp': FieldValue.serverTimestamp(),
+          'piattaforma': '${Platform.operatingSystem} ${Platform.operatingSystemVersion}',
+          'processori': Platform.numberOfProcessors.toString()
+        })
+        .then((value) {})
+        .catchError((error) {});
+  }
+
   Future<void> setNameAndSurname(
       {required String name, required String surname}) async {
     try {
@@ -35,7 +53,6 @@ class Auth {
     }
   }
 
-
   String? getUserDisplayName() {
     String? nome = _firebaseAuth.currentUser?.displayName;
     if (nome != null) {
@@ -46,14 +63,13 @@ class Auth {
   }
 
   Future<void> signOut(context) async {
-    try{
+    try {
       await _firebaseAuth.currentUser?.reload();
       await _firebaseAuth.signOut();
-    } on FirebaseException catch (e){
-            ScaffoldMessenger.of(context).showSnackBar(
+    } on FirebaseException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-              'Errore: $e'),
+          content: Text('Errore: $e'),
           backgroundColor: Colors.red,
         ),
       );
@@ -160,13 +176,5 @@ class Auth {
       );
     }
     return null;
-  }
-  String getInitials(String nomeUtente) {
-    List<String> nameParts = nomeUtente.split(' ');
-    if (nameParts.length < 2) {
-      return ''; // Se non ci sono due parole, ritorna una stringa vuota
-    }
-    String initials = nameParts[0][0] + nameParts[1][0];
-    return initials.toUpperCase(); // Rende le iniziali maiuscole
   }
 }
