@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paralat/Components/auth.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 //COMPLETARE QUESTA PAGINA E REPUTAZIONE PAGE
 
 class Verify {

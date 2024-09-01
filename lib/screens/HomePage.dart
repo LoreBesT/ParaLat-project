@@ -34,12 +34,14 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    String verifiedUser = Verify().verifyUser(context);
+    String verifiedUser = Verify().verifyUser(context).toString();
 
     return Scaffold(
         appBar: AppBar(
-          title:
-              Text(widget.title, style: TextStyle(fontWeight: FontWeight.w500,)),
+          title: Text(widget.title,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+              )),
           toolbarHeight: 130,
           centerTitle: true,
           automaticallyImplyLeading: false,
@@ -181,7 +183,12 @@ class _HomePageState extends State<HomePage> {
                               children: snapshot.data!.docs.map((doc) {
                                 var title = doc['title'];
                                 var body = doc['body'];
-
+                                if (doc['to'] != 'everyone' &&
+                                    doc['to'] !=
+                                        Verify().nameUser(0).toLowerCase()) {
+                                  return SizedBox
+                                      .shrink(); // Non mostra nulla per questa notizia
+                                }
                                 return ListTile(
                                   title: Text(title),
                                   subtitle: Text(

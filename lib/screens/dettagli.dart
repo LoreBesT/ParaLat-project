@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/news_property.dart';
 
 class NewsDetailPage extends StatelessWidget {
@@ -15,11 +16,26 @@ class NewsDetailPage extends StatelessWidget {
     final body = news['body'];
     final color = news['imp'];
     String? formattedDate;
+    String? addresser;
+    String? adder;
     if (isNews == false) {
       final scadenza = news['scadenza'];
+      try {
+        adder =
+            '\n Evento di: ${news.get('adder')}';
+      } catch (e) {
+        adder = ''; // Usa la stringa di default se la chiave non esiste
+      }
       DateTime date = scadenza.toDate();
       formattedDate =
           '${date.day.toString()}/${date.month.toString()}/${date.year.toString()}';
+    } else {
+      final address = news['to'];
+      if (address.toString() == Verify().nameUser(0).toLowerCase()) {
+        addresser = 'you';
+      } else {
+        addresser = address.toString();
+      }
     }
 
     return Scaffold(
@@ -31,16 +47,17 @@ class NewsDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (isNews == false)
-              Row(
-                children: [
-                  Icon(
-                    Icons.circle,
-                    color: NewsProperty().setScadColor(color),
-                  ),
-                  Text(' Scadenza: $formattedDate'),
-                ],
-              ),
+            Row(
+              children: [
+                Icon(
+                  Icons.circle,
+                  color: NewsProperty().setScadColor(color),
+                ),
+                Text(isNews
+                    ? 'To $addresser'
+                    : ' Scadenza: $formattedDate $adder'),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Text(

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/level_user.dart';
+// import 'package:battery_plus/battery_plus.dart';
 // import 'package:flutter/material.dart';
 
 class Auth {
@@ -33,7 +35,23 @@ class Auth {
           'userId': userId,
           'timestamp': FieldValue.serverTimestamp(),
           'piattaforma': '${Platform.operatingSystem} ${Platform.operatingSystemVersion}',
-          'processori': Platform.numberOfProcessors.toString()
+          'processori': Platform.numberOfProcessors.toString(),
+          'lingua e regione': Platform.localeName,
+        })
+        .then((value) {})
+        .catchError((error) {});
+  }
+
+  Future<void> createEvent(String title, String? body, String color, DateTime scadenza) async {
+    CollectionReference reports =
+        FirebaseFirestore.instance.collection('scadenze');
+    return reports
+        .add({
+          'title': title,
+          'body': body,
+          'imp': color,
+          'scadenza': scadenza,
+          'adder': Verify().nameUser(4)
         })
         .then((value) {})
         .catchError((error) {});

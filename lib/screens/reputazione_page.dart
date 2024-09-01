@@ -84,7 +84,7 @@ class _MyWidgetState extends State<ProfiloPage> {
 
   @override
   Widget build(BuildContext context) {
-    String verifiedUser = Verify().verifyUser(context);
+    String verifiedUser = Verify().verifyUser(context).toString();
     return Scaffold(
         appBar: AppBar(
           title: Text(

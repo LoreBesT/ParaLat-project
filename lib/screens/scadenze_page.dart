@@ -1,10 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:paralat/Components/auth.dart';
+import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/news_property.dart';
+import 'package:paralat/Components/space.dart';
 import 'package:paralat/screens/dettagli.dart'; // Assicurati di importare la nuova pagina
 
 class ScadenzePage extends StatelessWidget {
+  final _title = TextEditingController();
+  final _body = TextEditingController();
+  final _color = TextEditingController();
+  final _dateTimeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +71,8 @@ class ScadenzePage extends StatelessWidget {
                     ...newsList.map((scadenze) {
                       Timestamp timestamp = scadenze['scadenza'];
                       DateTime scadenzaDate = timestamp.toDate();
-                      String scadenzaFormatted = '${scadenzaDate.day.toString().padLeft(2, '0')} ${_getMonthName(scadenzaDate.month.toInt())} ${scadenzaDate.year}';
+                      String scadenzaFormatted =
+                          '${scadenzaDate.day.toString().padLeft(2, '0')} ${_getMonthName(scadenzaDate.month.toInt())} ${scadenzaDate.year}';
                       return Padding(
                         padding: const EdgeInsets.only(
                             top: 8, left: 8, right: 8, bottom: 0),
@@ -101,7 +109,102 @@ class ScadenzePage extends StatelessWidget {
           );
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                    title: Text(
+                      'Aggiungi un evento',
+                      textAlign: TextAlign.center,
+                    ),
+                    content: SizedBox(
+                      height: 300,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextField(
+                            controller: _title,
+                            decoration:
+                                const InputDecoration(label: Text('Titolo')),
+                          ),
+                          TextField(
+                            controller: _body,
+                            decoration: const InputDecoration(
+                                label: Text('Contenuto (facoltativo)')),
+                          ),
+                          TextField(
+                            controller: _color,
+                            decoration:
+                                const InputDecoration(label: Text('Colore')),
+                          ),
+                          TextField(
+                            controller: _dateTimeController,
+                            readOnly: true,
+                            decoration: const InputDecoration(
+                                label: Text('Data scadenza')),
+                            onTap: () => _selectDateTime(context),
+                          ),
+                          Space(heigth: 12.8),
+                          ElevatedButton(
+                            child: Text('Aggiungi'),
+                            onPressed: () {
+                              if (_dateTimeController.text.isNotEmpty &&
+                                  _title.text.isNotEmpty &&
+                                  _color.text.isNotEmpty) {
+
+                                Navigator.pop(context);
+                                DateTime parsedDateTime = DateTime.parse(_dateTimeController.text);
+                                Auth().createEvent(_title.text, _body.text, _color.text,  parsedDateTime);
+                                _title.clear();
+                                _body.clear();
+                                _color.clear();
+                                _dateTimeController.clear();
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Compilare tutti i campi!'),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ));
+        },
+        child: Icon(Icons.edit),
+      ),
     );
+  }
+
+  Future<void> _selectDateTime(BuildContext context) async {
+    final DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2101),
+    );
+
+    // if (selectedDate != null) {
+    //   final TimeOfDay? selectedTime = await showTimePicker(
+    //     context: context,
+    //     initialTime: TimeOfDay.fromDateTime(DateTime.now()),
+    //   );
+
+      if (selectedDate != null) {
+        final DateTime finalDateTime = DateTime(
+          selectedDate.year,
+          selectedDate.month,
+          selectedDate.day,
+          0,
+          0,
+        );
+        // print('ORA: ${selectedTime.hour} MINUTI: ${selectedTime.minute}');
+        _dateTimeController.text = finalDateTime.toString();
+      }
+    }
   }
 
   // Funzione per ottenere il nome del mese
@@ -135,4 +238,4 @@ class ScadenzePage extends StatelessWidget {
         return '';
     }
   }
-}
+// }
