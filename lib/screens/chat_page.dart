@@ -104,8 +104,8 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              // reverse:
-              //     true, // Scorri automaticamente verso il basso quando vengono aggiunti nuovi messaggi
+              reverse:
+                  true, // Scorri automaticamente verso il basso quando vengono aggiunti nuovi messaggi
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,11 +123,19 @@ class _ChatPageState extends State<ChatPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                      labelText: 'Descrivi il tuo problema',
-                      border: OutlineInputBorder(),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100)),
+                    child: TextField(
+                      controller: _controller,
+                      autocorrect: false,
+                      decoration: const InputDecoration(
+                        labelText: 'Descrivi il tuo problema',
+                        border: OutlineInputBorder(),
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.only(left: 10),
+                      ),
                     ),
                   ),
                 ),
@@ -143,7 +151,7 @@ class _ChatPageState extends State<ChatPage> {
                                 .clear(); // Pulisci il campo di testo dopo aver inviato il messaggio
                           }
                         },
-                        child: const Text('Invia'),
+                        child: const Icon(Icons.send),
                       ),
               ],
             ),
