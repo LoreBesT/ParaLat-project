@@ -20,7 +20,6 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
   final String apiKey =
       'AIzaSyA8XweciTZnjycM2iwHRSzCle-3YAYzV2o'; // Inserisci la tua API Key
   bool _isLoading = false;
-  final ScrollController _scrollController = ScrollController();
 
   Future<void> _fetchResponse(String text) async {
     final model = GenerativeModel(model: "gemini-1.5-flash", apiKey: apiKey);
@@ -36,8 +35,6 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
         Content.text(completeInput),
       ]);
       String response2 = response.text!;
-      List<String> lista = response2.split('&');
-      print(lista.length);
       String? response3 = response2.replaceAll("*", "").replaceAll("#", "");
 
       // Carica il template di base (assicurati di avere un template.docx nel progetto)

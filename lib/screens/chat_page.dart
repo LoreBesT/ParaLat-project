@@ -18,7 +18,6 @@ class _ChatPageState extends State<ChatPage> {
   final String apiKey =
       'AIzaSyA8XweciTZnjycM2iwHRSzCle-3YAYzV2o'; // Inserisci la tua API Key
   bool _isLoading = false;
-  final ScrollController _scrollController = ScrollController();
 
   Future<void> _fetchResponse(String text) async {
     final model = GenerativeModel(model: "gemini-1.5-flash", apiKey: apiKey);

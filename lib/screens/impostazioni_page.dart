@@ -3,12 +3,9 @@ import 'package:paralat/Components/Drawer_buttons.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/space.dart';
-import 'package:paralat/screens/HomePage.dart';
 import 'package:paralat/screens/assistenza_page.dart';
 import 'package:paralat/screens/info_page.dart';
-import 'package:paralat/screens/news_page.dart';
 import 'package:paralat/screens/reputazione_page.dart';
-import 'package:paralat/screens/scadenze_page.dart';
 import 'package:paralat/screens/sub_page.dart';
 import 'package:paralat/screens/theme_page.dart';
 import 'package:paralat/screens/work_page.dart';
@@ -23,9 +20,10 @@ class ImpostazioniPage extends StatefulWidget {
 class _ImpostazioniPageState extends State<ImpostazioniPage> {
     int _index = 2;
 
-  List<Widget> funzioni = [HomePage(), NewsPage(), ImpostazioniPage()];
+  // List<Widget> funzioni = [HomePage(), NewsPage(), ImpostazioniPage()];
   @override
   Widget build(BuildContext context) {
+    List<Widget>? funzioni = Verify().funzioniBottAppBar(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Impostazioni'),
@@ -57,26 +55,6 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
                       icona: Icons.accessibility_new,
                       funzione: WorkPage(),
                       testo: '   Accessibilità')),
-              SizedBox(
-                height: 20,
-              ),
-              if (Verify().verifyUser(context) == 'Official Member ParaLat Team')
-                Text('Admin Tools'),
-              if (Verify().verifyUser(context) == 'Official Member ParaLat Team')
-              SizedBox(
-                  width: double.infinity,
-                  child: Button(
-                      icona: Icons.warning,
-                      funzione: ScadenzePage(),
-                      testo: '   Scadenze')),
-              if (Verify().verifyUser(context) == 'Official Member ParaLat Team')
-              SizedBox(
-                  width: double.infinity,
-                  child: Button(
-                      icona: Icons.photo,
-                      funzione: WorkPage(),
-                      testo: '   FotoBook')),
-              if (Verify().verifyUser(context) == 'Official Member ParaLat Team')
               SizedBox(
                 height: 20,
               ),

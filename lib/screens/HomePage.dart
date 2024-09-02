@@ -5,7 +5,6 @@ import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/space.dart';
 import 'package:paralat/screens/dettagli.dart';
-import 'package:paralat/screens/impostazioni_page.dart';
 import 'package:paralat/screens/paralatAI_page.dart';
 import 'package:paralat/screens/sub_page.dart';
 import 'archivio_page.dart';
@@ -22,7 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _index = 0;
-  List<Widget> funzioni = [HomePage(), NewsPage(), ImpostazioniPage()];
+  // List<Widget> funzioni = [HomePage(), NewsPage(), ImpostazioniPage()];
   bool isFavorite = false;
   List<int> lista = [1, 2, 3, 4];
   int index = 1;
@@ -34,7 +33,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    String verifiedUser = Verify().verifyUser(context).toString();
+    List<Widget>? funzioni = Verify().funzioniBottAppBar(context);
+    Verify().verifyUser(context).toString();
 
     return Scaffold(
         appBar: AppBar(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:paralat/Components/auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:paralat/screens/HomePage.dart';
+import 'package:paralat/screens/impostazioni_page.dart';
+import 'package:paralat/screens/news_general_page.dart';
+import 'package:paralat/screens/news_page.dart';
 //COMPLETARE QUESTA PAGINA E REPUTAZIONE PAGE
 
 class Verify {
@@ -33,6 +36,14 @@ class Verify {
       return freeUser;
     } else {
       return 'Guest';
+    }
+  }
+
+  List<Widget>? funzioniBottAppBar(BuildContext context) {
+    if (Verify().verifyUser(context) == 'Official Member ParaLat Team') {
+      return [HomePage(), NewsPage(), ImpostazioniPage()];
+    } else{
+      return [HomePage(), NewsGeneralPage(), ImpostazioniPage()];
     }
   }
 
@@ -104,7 +115,8 @@ class Verify {
   }
 
   bool isPremium(context) {
-    if (Verify().verifyUser(context) == premiumUser || Verify().verifyUser(context) == adminUser) {
+    if (Verify().verifyUser(context) == premiumUser ||
+        Verify().verifyUser(context) == adminUser) {
       return true;
     } else {
       return false;
