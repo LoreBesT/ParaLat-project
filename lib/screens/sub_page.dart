@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/space.dart';
 
 class SubPage extends StatefulWidget {
@@ -19,6 +20,7 @@ class _SubPageState extends State<SubPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkTheme = Auth().isDarkTheme(context);
     return Scaffold(
       body: Stack(
         alignment: AlignmentDirectional.center,
@@ -27,7 +29,7 @@ class _SubPageState extends State<SubPage> {
             slivers: [
               SliverAppBar(
                 //Fixare il white e modificare il colore a seconda se ci si trova in dark mode o white mode
-                backgroundColor: Colors.white,
+                backgroundColor: isDarkTheme? Color.fromARGB(255, 17, 16, 16) : Colors.white,
                 pinned: true,
                 expandedHeight: 250,
                 flexibleSpace: FlexibleSpaceBar(
@@ -58,19 +60,19 @@ class _SubPageState extends State<SubPage> {
                       title: const Text('Abbonamento Annuale'),
                       secondary: const Text('2,08€/mese', style: TextStyle(fontSize: 14),),
                       subtitle: RichText(
-                        text: const TextSpan(
+                        text: TextSpan(
                           children: [
                             TextSpan(
                               text: '35,88€',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: isDarkTheme? Colors.white : Colors.black,
                                 decoration: TextDecoration.lineThrough,
                               ),
                             ),
                             TextSpan(
                               text: '  24,96€/anno',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: isDarkTheme? Colors.white : Colors.black,
                                 decoration: TextDecoration.none,
                               ),
                             ),
