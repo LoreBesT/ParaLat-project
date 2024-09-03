@@ -34,7 +34,8 @@ class Auth {
           'description': description,
           'userId': userId,
           'timestamp': FieldValue.serverTimestamp(),
-          'piattaforma': '${Platform.operatingSystem} ${Platform.operatingSystemVersion}',
+          'piattaforma':
+              '${Platform.operatingSystem} ${Platform.operatingSystemVersion}',
           'processori': Platform.numberOfProcessors.toString(),
           'lingua e regione': Platform.localeName,
         })
@@ -42,7 +43,8 @@ class Auth {
         .catchError((error) {});
   }
 
-  Future<void> createEvent(String title, String? body, String color, DateTime scadenza) async {
+  Future<void> createEvent(
+      String title, String? body, String color, DateTime scadenza) async {
     CollectionReference reports =
         FirebaseFirestore.instance.collection('scadenze');
     return reports
@@ -55,6 +57,14 @@ class Auth {
         })
         .then((value) {})
         .catchError((error) {});
+  }
+
+  Future<void> deleteDocument(DocumentSnapshot documentSnapshot) async {
+    try {
+      // Ottieni la referenza del documento dal DocumentSnapshot
+      final documentRef = documentSnapshot.reference;
+      await documentRef.delete();
+    } catch (e) {}
   }
 
   Future<void> setNameAndSurname(
@@ -154,6 +164,11 @@ class Auth {
     }
   }
 
+  bool isDarkTheme(BuildContext context) {
+    return MediaQuery.of(context).platformBrightness == Brightness.dark;
+  }
+
+  
   String? metaDatas(BuildContext context, int i) {
     try {
       User? utente = _firebaseAuth.currentUser;

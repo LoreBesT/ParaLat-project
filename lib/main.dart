@@ -43,6 +43,7 @@ class _MyAppState extends State<MyApp> {
           useMaterial3: true,
           iconTheme: IconThemeData(color: Colors.deepPurple),
           appBarTheme: AppBarTheme(color: Theme.of(context).colorScheme.inversePrimary, toolbarHeight: 100),
+          bottomAppBarTheme: BottomAppBarTheme(),
           scrollbarTheme: ScrollbarThemeData(thumbVisibility: WidgetStatePropertyAll(true),thumbColor: WidgetStatePropertyAll(Colors.deepPurple.shade100))),
         darkTheme: ThemeData.dark(),
         // home: const HomePage(),

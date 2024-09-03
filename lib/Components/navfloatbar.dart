@@ -1,5 +1,6 @@
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/auth.dart';
 
 class NavFloatBar extends StatefulWidget {
   NavFloatBar({super.key, this.index, this.funzioni});
@@ -13,12 +14,14 @@ class NavFloatBar extends StatefulWidget {
 class _NavFloatBarState extends State<NavFloatBar> {
   @override
   Widget build(BuildContext context) {
+    bool isDarkTheme = Auth().isDarkTheme(context);
     return FloatingNavbar(
       padding: EdgeInsets.all(2),
       margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       selectedItemColor: Colors.deepPurple,
-      backgroundColor: Colors.white,
-      unselectedItemColor: Colors.black,
+      backgroundColor:
+          isDarkTheme ? Color.fromARGB(48, 0, 0, 0) : Colors.white,
+      unselectedItemColor: isDarkTheme ? Colors.white : Colors.black,
       selectedBackgroundColor: Color.fromARGB(255, 250, 219, 255),
       elevation: 4,
       borderRadius: 20,

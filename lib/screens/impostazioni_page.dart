@@ -58,16 +58,6 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
               SizedBox(
                 height: 20,
               ),
-              Text('Personalizzazione'),
-              SizedBox(
-                  width: double.infinity,
-                  child: Button(
-                      icona: Icons.format_paint_rounded,
-                      funzione: ThemePage(),
-                      testo: '   Modifica tema')),
-              SizedBox(
-                height: 20,
-              ),
               Text('Altro'),
               if (Verify().verifyUser(context) !=
                       'Official Member ParaLat Team' &&
@@ -97,7 +87,7 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Text(
-                    'Made by Lorenzo Della Bona',
+                    'Versione 1.0.0.0-D\nMade by Lorenzo Della Bona',
                     style: TextStyle(color: Colors.grey, fontSize: 12),
                     textAlign: TextAlign.center,
                   ),

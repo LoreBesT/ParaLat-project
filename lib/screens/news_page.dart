@@ -16,6 +16,7 @@ class _NewsPageState extends State<NewsPage>
   int _index = 1;
   late TabController _tabController;
   bool _showFAB = false;
+  Set<String> selectedItems = {};  // Set per tenere traccia delle scadenze selezionate
 
   final _title = TextEditingController();
   final _body = TextEditingController();
@@ -181,6 +182,8 @@ class _NewsPageState extends State<NewsPage>
                     String scadenzaFormatted =
                         '${scadenzaDate.day.toString().padLeft(2, '0')} ${_getMonthName(scadenzaDate.month.toInt())} ${scadenzaDate.year}';
 
+                    bool isSelected = selectedItems.contains(scadenze.id);
+
                     return Padding(
                       padding: const EdgeInsets.only(
                           top: 8, left: 8, right: 8, bottom: 0),
@@ -192,6 +195,19 @@ class _NewsPageState extends State<NewsPage>
                             color: NewsProperty()
                                 .setScadColor(scadenze['imp'] ?? Colors.purple),
                           ),
+                          trailing: isSelected
+                              ? IconButton(
+                                  onPressed: () {
+                                    Auth().deleteDocument(scadenze);
+                                    setState(() {
+                                      selectedItems.remove(scadenze.id);
+                                    });
+                                  },
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ))
+                              : null,
                           title: Text(scadenze['title']),
                           subtitle: Text(scadenzaFormatted,
                               overflow: TextOverflow.ellipsis),
@@ -205,6 +221,15 @@ class _NewsPageState extends State<NewsPage>
                                 ),
                               ),
                             );
+                          },
+                          onLongPress: () {
+                            setState(() {
+                              if (isSelected) {
+                                selectedItems.remove(scadenze.id);
+                              } else {
+                                selectedItems.add(scadenze.id);
+                              }
+                            });
                           },
                         ),
                       ),
@@ -287,50 +312,32 @@ class _NewsPageState extends State<NewsPage>
     final DateTime? selectedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2101),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
     );
 
     if (selectedDate != null) {
-      final DateTime finalDateTime = DateTime(
-        selectedDate.year,
-        selectedDate.month,
-        selectedDate.day,
-        0,
-        0,
-      );
-      _dateTimeController.text = finalDateTime.toString();
+      setState(() {
+        _dateTimeController.text = selectedDate.toIso8601String();
+      });
     }
   }
 
   String _getMonthName(int month) {
-    switch (month) {
-      case 1:
-        return 'Gennaio';
-      case 2:
-        return 'Febbraio';
-      case 3:
-        return 'Marzo';
-      case 4:
-        return 'Aprile';
-      case 5:
-        return 'Maggio';
-      case 6:
-        return 'Giugno';
-      case 7:
-        return 'Luglio';
-      case 8:
-        return 'Agosto';
-      case 9:
-        return 'Settembre';
-      case 10:
-        return 'Ottobre';
-      case 11:
-        return 'Novembre';
-      case 12:
-        return 'Dicembre';
-      default:
-        return '';
-    }
+    List<String> months = [
+      'Gennaio',
+      'Febbraio',
+      'Marzo',
+      'Aprile',
+      'Maggio',
+      'Giugno',
+      'Luglio',
+      'Agosto',
+      'Settembre',
+      'Ottobre',
+      'Novembre',
+      'Dicembre'
+    ];
+    return months[month - 1];
   }
 }

@@ -152,8 +152,8 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                 padding:
                     const EdgeInsets.all(8), // Distanza tra l'icona e il testo
                 child: isUserMessage
-                    ? Icon(Icons.person)
-                    : Icon(Icons.generating_tokens),
+                    ? Icon(Icons.person, color: Colors.deepPurple,)
+                    : Icon(Icons.generating_tokens, color: Colors.deepPurple,),
               ),
               Expanded(
                 child: Column(
@@ -165,14 +165,14 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                         isUserMessage ? 'User' : 'ParaLat AI',
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w500),
+                            fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),
                       ),
                     ),
                     SizedBox(
                         height: 2), // Distanza tra il titolo e il sottotitolo
                     Text(
                       message["text"] ?? "",
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16, color: Colors.black),
                       textAlign: TextAlign.left,
                     ),
                   ],

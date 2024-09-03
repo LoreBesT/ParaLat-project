@@ -86,7 +86,7 @@ class _ChatPageState extends State<ChatPage> {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             message["text"] ?? "",
-            style: const TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16, color: Colors.black),
           ),
         ),
       ),

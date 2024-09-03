@@ -25,42 +25,46 @@ class Button extends StatefulWidget {
 class _ButtonState extends State<Button> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          animationDuration: const Duration(seconds: 1),
-        ),
-        onPressed: () {
-          
-          if (widget.isPremium != null && widget.isPremium == true ||
-              widget.testo != 'Archivio Versioni') {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute<void>(
-            //     builder: (context) => widget.funzione,
-            //   ),
-            // );
-            navigateWithCustomAnimation(context, widget.funzione);
-          } else {
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (context) => SubPage(),
-              ),
-            );
-          }
-        },
-        child: Animate(
-          effects: const [ScaleEffect()],
-          child: Row(
-            children: [
-              Icon(widget.icona),
-              const SizedBox(width: 8),
-              Text('${widget.testo}  '),
-              if (widget.isPremium != null && widget.isPremium == false)
-                Icon(Icons.diamond_outlined),
-            ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: SizedBox(
+        width: double.infinity,
+        height: 50,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            animationDuration: const Duration(seconds: 1),
+          ),
+          onPressed: () {
+            
+            if (widget.isPremium != null && widget.isPremium == true ||
+                widget.testo != 'Archivio Versioni') {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute<void>(
+              //     builder: (context) => widget.funzione,
+              //   ),
+              // );
+              navigateWithCustomAnimation(context, widget.funzione);
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (context) => SubPage(),
+                ),
+              );
+            }
+          },
+          child: Animate(
+            effects: const [ScaleEffect()],
+            child: Row(
+              children: [
+                Icon(widget.icona),
+                const SizedBox(width: 8),
+                Text('${widget.testo}  '),
+                if (widget.isPremium != null && widget.isPremium == false)
+                  Icon(Icons.diamond_outlined),
+              ],
+            ),
           ),
         ),
       ),
