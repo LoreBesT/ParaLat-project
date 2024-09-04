@@ -19,7 +19,9 @@ class Auth {
   }
 
   Future<void> createUserWithEmailAndPassword(
-      {required String email, required String password}) async {
+      {required String email,
+      required String password,
+      }) async {
     await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
   }
@@ -59,6 +61,24 @@ class Auth {
         .catchError((error) {});
   }
 
+  Future<void> createNews(String nome, String uid) async {
+    String title = 'Ciao $nome, benvenuto su ParaLat!';
+    String body =
+        'Ciao $nome e benvenuto su ParaLat. Siamo lieti di accoglierti all\'interno della nostra community.\nTi informarmiamo che avrai a disposizione molteplici funzionalità totalmente gratuite e senza limite. Qualora avessi bisogno di ulteriori strumenti potrai abbonarti a ParaLat Premium in forma mensile o annuale\nIn caso di problemi con ParaLat siamo sempre a tua disposizione.\n\nUn saluto, il tuo ParaLat Team';
+    CollectionReference reports =
+        FirebaseFirestore.instance.collection('news');
+    return reports
+        .add({
+          'title': title,
+          'body': body,
+          'imp': 'purple',
+          'ora': FieldValue.serverTimestamp(),
+          'to': uid
+        })
+        .then((value) {})
+        .catchError((error) {});
+  }
+
   Future<void> deleteDocument(DocumentSnapshot documentSnapshot) async {
     try {
       // Ottieni la referenza del documento dal DocumentSnapshot
@@ -86,8 +106,13 @@ class Auth {
     if (nome != null) {
       return _firebaseAuth.currentUser?.displayName;
     } else {
-      return 'Guest';
+      return 'Guest'; //Rimuovere non esistono più i guest
     }
+  }
+
+  String? getUID(){
+    User? utente = _firebaseAuth.currentUser;
+    return utente!.uid.toString();
   }
 
   Future<void> signOut(context) async {
@@ -98,20 +123,6 @@ class Auth {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Errore: $e'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
-  }
-
-  Future<void> accediComeGuest(context) async {
-    try {
-      await _firebaseAuth.signInAnonymously();
-    } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-              'Si è verificato un errore durante l\'accesso anonimo\nCodice errore ${e.message}'),
           backgroundColor: Colors.red,
         ),
       );
@@ -168,7 +179,6 @@ class Auth {
     return MediaQuery.of(context).platformBrightness == Brightness.dark;
   }
 
-  
   String? metaDatas(BuildContext context, int i) {
     try {
       User? utente = _firebaseAuth.currentUser;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/news_property.dart';
 
@@ -31,7 +32,7 @@ class NewsDetailPage extends StatelessWidget {
           '${date.day.toString()}/${date.month.toString()}/${date.year.toString()}';
     } else {
       final address = news['to'];
-      if (address.toString() == Verify().nameUser(0).toLowerCase()) {
+      if (address.toString() == Auth().getUID()) {
         addresser = 'you';
       } else {
         addresser = address.toString();

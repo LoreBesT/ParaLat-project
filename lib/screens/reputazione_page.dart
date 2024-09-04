@@ -18,7 +18,7 @@ class _MyWidgetState extends State<ProfiloPage> {
   // bool isOfficialMember = false;
   DateTime data_versione = DateTime.now();
   String nome_versione = 'Versione';
-  String ofMember = 'Official Member ParaLat Team';
+  String ofMember = Verify().typeUser(0);
   List<String> sanzioni = [
     'Non è presente alcuna sanzione',
     'Hai ricevuto in data 26/07/2024 una sanzione quantitativa. La tua parte dell\'ultima versione assegnata, Carpe Diem, non risulta essere svolta. Questo è solo un richiamo. In caso di reiterazione sia nel breve che nel lungo termine sarai effettivamente sanzionato',
@@ -221,7 +221,7 @@ class _MyWidgetState extends State<ProfiloPage> {
                           ),
                         ),
                       ),
-                    if (Verify().nameUser(0) != 'Guest')
+                    if (Verify().nameUser(0) != 'Guest') //Rimuovere non esistono più i guest
                       Container(
                           width: double.infinity,
                           padding: const EdgeInsets.all(8),
@@ -297,7 +297,7 @@ class _MyWidgetState extends State<ProfiloPage> {
                               'Esci',
                               style: TextStyle(color: Colors.red),
                             ))),
-                    if (Verify().nameUser(0) != 'Guest')
+                    if (Verify().nameUser(0) != 'Guest') //Rimuovere non esistono più i guest
                       Container(
                           width: double.infinity,
                           padding: const EdgeInsets.all(8),

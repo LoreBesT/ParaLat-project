@@ -1,6 +1,7 @@
 //Implementare verifica se un utente ha sanzioni con espulsione o meno in homepage. Se vi è una sanzione con espulsione permabannare account e inibire l'accesso all'app
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/space.dart';
@@ -26,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   List<int> lista = [1, 2, 3, 4];
   int index = 1;
   String nomeUtente = Verify().nameUser(4);
-  String ofMember = 'Official Member ParaLat Team';
+  String ofMember = Verify().typeUser(0);
 
   // Definisci un ScrollController
   final ScrollController _listViewController = ScrollController();
@@ -184,8 +185,7 @@ class _HomePageState extends State<HomePage> {
                                 var title = doc['title'];
                                 var body = doc['body'];
                                 if (doc['to'] != 'everyone' &&
-                                    doc['to'] !=
-                                        Verify().nameUser(0).toLowerCase()) {
+                                    doc['to'] != Auth().getUID()) {
                                   return SizedBox
                                       .shrink(); // Non mostra nulla per questa notizia
                                 }

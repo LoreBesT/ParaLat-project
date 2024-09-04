@@ -7,9 +7,9 @@ import 'package:paralat/screens/news_page.dart';
 //COMPLETARE QUESTA PAGINA E REPUTAZIONE PAGE
 
 class Verify {
-  String adminUser = 'Official Member ParaLat Team';
-  String freeUser = 'Free ParaLat User';
-  String premiumUser = 'Premium ParaLat User';
+  // String adminUser = 'Official Member ParaLat Team';
+  // String freeUser = 'Free ParaLat User';
+  // String premiumUser = 'Premium ParaLat User';
   List<String> premiumUsers = []; //Prendere i premium users dal cloud
   List<String> adminUsers = [
     'lorenzodellabona06@gmail.com',
@@ -22,36 +22,49 @@ class Verify {
     'annamariaalba19@gmail.com'
   ];
 
+  String typeUser(int i) {
+    switch (i) {
+      case 0:
+        return 'Official Member ParaLat Team';
+      case 1:
+        return 'Premium ParaLat User';
+      case 2:
+        return 'Free ParaLat User';
+      default:
+        return 'Free ParaLat User';
+    }
+  }
+
   ///Function to verify if a user is admin, free or premium
   String verifyUser(context) {
     String? currentEmail = Auth().metaDatas(context, 2);
 
     for (var user in adminUsers) {
       if (user == currentEmail) {
-        return adminUser;
+        return typeUser(0);
       }
     }
 
     if (currentEmail != null && currentEmail != 'null') {
-      return freeUser;
+      return typeUser(2);
     } else {
-      return 'Guest';
+      return 'Guest'; // Rimuovere non esistono più i guest
     }
   }
 
   List<Widget>? funzioniBottAppBar(BuildContext context) {
-    if (Verify().verifyUser(context) == 'Official Member ParaLat Team') {
+    if (Verify().verifyUser(context) == typeUser(0)) {
       return [HomePage(), NewsPage(), ImpostazioniPage()];
-    } else{
+    } else {
       return [HomePage(), NewsGeneralPage(), ImpostazioniPage()];
     }
   }
 
   ///Function to set the icon for admin, free and premium users
   IconData setIcon(context) {
-    if (verifyUser(context) == adminUser) {
+    if (verifyUser(context) == typeUser(0)) {
       return Icons.verified;
-    } else if (verifyUser(context) == freeUser) {
+    } else if (verifyUser(context) == typeUser(2)) {
       return Icons.verified;
     } else {
       return Icons.no_accounts;
@@ -60,9 +73,9 @@ class Verify {
 
   ///Function to set icon color of admin, free, premium user's icon.
   Color setColor(context) {
-    if (verifyUser(context) == adminUser) {
+    if (verifyUser(context) == typeUser(0)) {
       return Colors.green;
-    } else if (verifyUser(context) == freeUser) {
+    } else if (verifyUser(context) == typeUser(2)) {
       return const Color.fromARGB(255, 221, 102, 242);
     } else {
       return const Color.fromARGB(255, 255, 153, 0);
@@ -82,7 +95,7 @@ class Verify {
   ///For i > 3 the function measures the lenght of listname and returns name and surname completely
   String nameUser(int i) {
     String? nome = Auth().getUserDisplayName();
-    String guest = 'Guest';
+    String guest = 'Guest'; //Rimuovere
     List<String> nomeCognome = nome!.split(' ');
 
     switch (i) {
@@ -115,8 +128,8 @@ class Verify {
   }
 
   bool isPremium(context) {
-    if (Verify().verifyUser(context) == premiumUser ||
-        Verify().verifyUser(context) == adminUser) {
+    if (Verify().verifyUser(context) == typeUser(1) ||
+        Verify().verifyUser(context) == typeUser(0)) {
       return true;
     } else {
       return false;

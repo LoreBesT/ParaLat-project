@@ -78,6 +78,7 @@ class _AuthPageState extends State<AuthPage> {
             email: _email.text, password: _password.text);
         await Auth()
             .setNameAndSurname(name: _nome.text, surname: _cognome.text);
+        Auth().createNews(_nome.text, Auth().getUID().toString());
       }
     } on FirebaseAuthException catch (error) {
       String message;
@@ -112,7 +113,10 @@ class _AuthPageState extends State<AuthPage> {
         ], transform: GradientRotation(3.14))),
         child: Column(
           children: [
-            const Space(heigth: 70,width: double.maxFinite,),
+            const Space(
+              heigth: 70,
+              width: double.maxFinite,
+            ),
             const Text(
               'Benvenuto su ParaLat',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400),
@@ -125,7 +129,7 @@ class _AuthPageState extends State<AuthPage> {
                     'Accedi o Iscriviti per continuare',
                     style: TextStyle(fontSize: 20),
                   ),
-                  const Space(heigth: 30,width: double.infinity),
+                  const Space(heigth: 30, width: double.infinity),
                   if (isLogin == false)
                     Row(
                       children: [
@@ -136,7 +140,7 @@ class _AuthPageState extends State<AuthPage> {
                                 const InputDecoration(label: Text('nome')),
                           ),
                         ),
-                        const Space(heigth: 20,width: 40),
+                        const Space(heigth: 20, width: 40),
                         Expanded(
                           child: TextField(
                             controller: _cognome,
@@ -193,14 +197,18 @@ class _AuthPageState extends State<AuthPage> {
                                       const Space(heigth: 30),
                                       TextButton(
                                           onPressed: () {
-                                            Auth().reimpostaPassword(context,
-                                                true, _email.text);
-                                            ScaffoldMessenger.of(context).showSnackBar(
+                                            Auth().reimpostaPassword(
+                                                context, true, _email.text);
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
                                               SnackBar(
-                                                content: const Text('Email inviata'),
-                                                backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+                                                content:
+                                                    const Text('Email inviata'),
+                                                backgroundColor:
+                                                    Theme.of(context)
+                                                        .colorScheme
+                                                        .inversePrimary,
                                               ),
-                                              
                                             );
                                             Navigator.pop(context);
                                           },
@@ -212,7 +220,10 @@ class _AuthPageState extends State<AuthPage> {
                         // Auth().reimpostaPassword(context);
                       },
                     ),
-                  const Space(heigth: 6, width: double.maxFinite,),
+                  const Space(
+                    heigth: 6,
+                    width: double.maxFinite,
+                  ),
                   ElevatedButton(
                       onPressed: () {
                         FocusScope.of(context).unfocus();
@@ -237,26 +248,6 @@ class _AuthPageState extends State<AuthPage> {
                           ))
                     ],
                   ),
-                  // ElevatedButton(
-                  //     onPressed: () {
-                  //       AssetsAudioPlayer.newPlayer().open(
-                  //         Audio("assets/audios/ParaLat.mp3"),
-                  //         autoStart: true,
-                  //         showNotification: true,
-                  //       );
-
-                  //       setState(() {
-                  //         isPlay = !isPlay;
-                  //         // if (isPlay = true)
-                  //         //   AssetsAudioPlayer.newPlayer().stop();
-                  //       });
-                  //     },
-                  //     child: Icon(isPlay ? Icons.play_arrow : Icons.pause)),
-                  TextButton(
-                      onPressed: () {
-                        Auth().accediComeGuest(context);
-                      },
-                      child: const Text('Accedi come guest')),
                 ],
               ),
             ),

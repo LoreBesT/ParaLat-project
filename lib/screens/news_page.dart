@@ -93,7 +93,7 @@ class _NewsPageState extends State<NewsPage>
           itemBuilder: (context, index) {
             var news = snapshot.data!.docs[index];
             if (news['to'] != 'everyone' &&
-                news['to'] != Verify().nameUser(0).toLowerCase()) {
+                news['to'] != Auth().getUID()) {
               return SizedBox.shrink();
             }
             return Padding(

@@ -7,7 +7,6 @@ import 'package:paralat/screens/assistenza_page.dart';
 import 'package:paralat/screens/info_page.dart';
 import 'package:paralat/screens/reputazione_page.dart';
 import 'package:paralat/screens/sub_page.dart';
-import 'package:paralat/screens/theme_page.dart';
 import 'package:paralat/screens/work_page.dart';
 
 class ImpostazioniPage extends StatefulWidget {
@@ -65,9 +64,8 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Text('Altro'),
                 ),
-                if (Verify().verifyUser(context) !=
-                        'Official Member ParaLat Team' &&
-                    Verify().verifyUser(context) != 'Premium ParaLat User')
+                if (Verify().verifyUser(context) != Verify().typeUser(0) &&
+                    Verify().verifyUser(context) != Verify().typeUser(1))
                   SizedBox(
                       width: double.infinity,
                       child: Button(

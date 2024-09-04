@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/news_property.dart';
@@ -39,7 +40,7 @@ class _NewsPageState extends State<NewsGeneralPage> {
               itemBuilder: (context, index) {
                 var news = snapshot.data!.docs[index];
                 if (news['to'] != 'everyone' &&
-                    news['to'] != Verify().nameUser(0).toLowerCase()) {
+                    news['to'] != Auth().getUID()) {
                   return SizedBox
                       .shrink();
                 }

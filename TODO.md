@@ -1,4 +1,5 @@
 # Upgrade urgenti
+### FALLA DI SICUREZZA: MODIFICARE CON URGENZA L'ATTUALE SISTEMA DI VERIFICA DELL'UTENTE BASATO SU NOME IN VIRTU DI UNO BASATO SU UID
 ### Implementare notifica per ogni nuova notizia
 ### Implementare la possibilità di scansionare documenti ed inviarli a paralat ai
 ### Fixare bug pulsante esci
