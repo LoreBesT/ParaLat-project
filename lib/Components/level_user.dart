@@ -48,7 +48,7 @@ class Verify {
     if (currentEmail != null && currentEmail != 'null') {
       return typeUser(2);
     } else {
-      return 'Guest'; // Rimuovere non esistono più i guest
+      return '';
     }
   }
 
@@ -90,12 +90,11 @@ class Verify {
   ///
   ///For i = 2 the function returns the first and second word
   ///
-  ///For i = 3 the function returns guest
+  ///For i = 4 the function returns the complete name and surname
   ///
-  ///For i > 3 the function measures the lenght of listname and returns name and surname completely
+  ///For default the function returns the complete name and surname
   String nameUser(int i) {
     String? nome = Auth().getUserDisplayName();
-    String guest = 'Guest'; //Rimuovere
     List<String> nomeCognome = nome!.split(' ');
 
     switch (i) {
@@ -103,27 +102,17 @@ class Verify {
         if (nomeCognome.length >= 2 && nomeCognome[0] != 'null') {
           return nomeCognome[0];
         } else {
-          return guest;
+          return '';
         }
 
       case 1:
         return nomeCognome[1];
       case 2:
         return ('${nomeCognome[1]} ${nomeCognome[2]}');
-      case 3:
-        return guest;
       case 4:
         return nome;
       default:
-        if (nomeCognome.length == 2) {
-          return '${nomeCognome[0]} ${nomeCognome[1]}';
-        } else if (nomeCognome.length == 1 && nomeCognome[0] != 'null') {
-          return nomeCognome[0];
-        } else if (nomeCognome.length == 3) {
-          return '${nomeCognome[0]} ${nomeCognome[1]} ${nomeCognome[2]}';
-        } else {
-          return guest;
-        }
+        return nome;
     }
   }
 

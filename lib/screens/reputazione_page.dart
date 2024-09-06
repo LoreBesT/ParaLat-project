@@ -31,12 +31,34 @@ class _MyWidgetState extends State<ProfiloPage> {
     'Hai ricevuto in data 26/07/2024 una sanzione quantitativa. La tua parte dell\'ultima versione assegnata, Carpe Diem, non risulta essere svolta. Questa è la terza sanzione che ricevi sul tuo profilo. Sei dunque espulso con effetto immediato dal gruppo. Ricorda che ti sarà inibito l\'accesso a qualsiasi software ParaLat a livello admin. Potrai continuare ad usare ParaLat App come un normale utente.',
     'Hai ricevuto in data 26/07/2024 una sanzione qualitativa. La tua parte dell\'ultima versione assegnata, Carpe Diem, non risulta essere svolta nella sua interezza corretamente o completamente. Questa è la terza sanzione che ricevi sul tuo profilo. Sei dunque espulso con effetto immediato dal gruppo. Ricorda che ti sarà inibito l\'accesso a qualsiasi software ParaLat a livello admin. Potrai continuare ad usare ParaLat App come un normale utente.'
   ];
+  
+  String getNumber(int sanzione) {
+    switch (sanzione) {
+      case 0:
+        return '0';
+      case 1:
+      case 4:
+        return '1';
+      case 2:
+      case 5:
+        return '2';
+      case 3:
+      case 6:
+      case 8:
+      case 9:
+        return '3';
+      case 7:
+        return '4';
+      default:
+        return 'err';
+    }
+  }
 
   List<String> premiMerito = [
     'Non è presente alcun premio di merito',
     'Congratulazioni sei uno tra i migliori admin ParaLat, continua così!',
     'Congratulazioni in data 26/07/2024 hai ricevuto un premio di merito. Sei l\'admin ParaLat con la reputazione più alta di questo mese. Ora rilassati pure. Non sei tenuto/a a svolgere la prossima versione. Ci penseranno gli altri a svolgerla per te!',
-    'Congratulazione in data 26/07/2024 risulti essere stato l\'admin ParaLat con la reputazione più alta in 3 mesi. Hai diritto pertanto all\'accesso a dei nuovi privilegi: \nNon svolgere la versioni per 2 volte(non consecutive) entro i prossimi 3 mesi\nAccesso illimitato alle funzionalità di amministratore Whatsapp\nDedica speciale in-app visibile a tutti gli utenti per 3 mesi',
+    'Congratulazione in data 26/07/2024 risulti essere stato l\'admin ParaLat con la reputazione più alta in 3 mesi. Hai diritto pertanto all\'accesso a dei nuovi privilegi: \nNon svolgere la versioni per 2 volte(non consecutive) entro i prossimi 3 mesi\nAccesso illimitato alle funzionalità di amministratore Whatsapp\nDedica speciale in-app visibile a tutti gli utenti per 3 giorni',
   ];
   Color getIconColor(int sanzione) {
     switch (sanzione) {
@@ -138,8 +160,7 @@ class _MyWidgetState extends State<ProfiloPage> {
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
                                                 },
-                                                child: const Text(
-                                                    'Accedi come guest'))));
+                                                child: const Text('Ok'))));
                               },
                               child: const Text(
                                 'Cambia Account',
@@ -202,8 +223,8 @@ class _MyWidgetState extends State<ProfiloPage> {
                                     ),
                                   );
                                 },
-                                child: const Text(
-                                    'Sanzioni assegnate: 1\nPremi di merito: 0\nProvvedimenti in corso: 0')),
+                                child: Text(
+                                    'Sanzioni assegnate: ${getNumber(sanzione)}\nPremi di merito: ${merito.toString()}\nProvvedimenti in corso: 0')),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -221,26 +242,25 @@ class _MyWidgetState extends State<ProfiloPage> {
                           ),
                         ),
                       ),
-                    if (Verify().nameUser(0) != 'Guest') //Rimuovere non esistono più i guest
-                      Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(8),
-                          child: ElevatedButton(
-                              onPressed: () {
-                                Auth().reimpostaPassword(context, false);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: const Text(
-                                      'Email inviata con successo',
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                    backgroundColor: Theme.of(context)
-                                        .colorScheme
-                                        .inversePrimary,
+                    Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(8),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Auth().reimpostaPassword(context, false);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: const Text(
+                                    'Email inviata con successo',
+                                    style: TextStyle(color: Colors.black),
                                   ),
-                                );
-                              },
-                              child: const Text('Reimposta Password'))),
+                                  backgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .inversePrimary,
+                                ),
+                              );
+                            },
+                            child: const Text('Reimposta Password'))),
                     Container(
                         width: double.infinity,
                         padding: const EdgeInsets.all(8),
@@ -297,21 +317,20 @@ class _MyWidgetState extends State<ProfiloPage> {
                               'Esci',
                               style: TextStyle(color: Colors.red),
                             ))),
-                    if (Verify().nameUser(0) != 'Guest') //Rimuovere non esistono più i guest
-                      Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(8),
-                          child: ElevatedButton(
-                              onPressed: () {
-                                Auth().deleteAccount(context);
-                                Auth().signOut(context);
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                              },
-                              child: const Text(
-                                'Elimina account',
-                                style: TextStyle(color: Colors.red),
-                              ))),
+                    Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(8),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Auth().deleteAccount(context);
+                              Auth().signOut(context);
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              'Elimina account',
+                              style: TextStyle(color: Colors.red),
+                            ))),
                   ],
                 ),
               );

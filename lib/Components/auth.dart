@@ -106,7 +106,7 @@ class Auth {
     if (nome != null) {
       return _firebaseAuth.currentUser?.displayName;
     } else {
-      return 'Guest'; //Rimuovere non esistono più i guest
+      return '';
     }
   }
 

@@ -1,5 +1,14 @@
+# Monetization Plan
+### Implementare visualizzazione di inserzioni attraverso Google adMob
+## Posizionamento annunci
+### Annunci quadrati all'interno di ogni news/scadenza sotto il testo
+### News 'Annuncio' ogni 3/4 news ne sarà inviata una con sponsorizzazione. La news sponsorizzata avrà le stesse caratteristiche in HomePage di una non sponsorizzata
+### Nella chat di ParaLat AI apparirà un banner nella parte alta dello schermo fisso ad ogni accesso.
+### Implementare sistema di pagamento in-app e pubblicare attraverso Google Play Console
+
+
+
 # Upgrade urgenti
-### FALLA DI SICUREZZA: MODIFICARE CON URGENZA L'ATTUALE SISTEMA DI VERIFICA DELL'UTENTE BASATO SU NOME IN VIRTU DI UNO BASATO SU UID
 ### Implementare notifica per ogni nuova notizia
 ### Implementare la possibilità di scansionare documenti ed inviarli a paralat ai
 ### Fixare bug pulsante esci
@@ -29,3 +38,4 @@
 ## Verificare compatibilità badge con telefono tramite APP 'TAG Writer' DONE
 ### Implementare il salvataggio di file markdown da ParaLat AI e la conversione in .docx DONE
 ### Implementare l'arrivo di notizie solo ad un singolo utente o una porzione DONE
+### FALLA DI SICUREZZA: MODIFICARE CON URGENZA L'ATTUALE SISTEMA DI VERIFICA DELL'UTENTE BASATO SU NOME IN VIRTU DI UNO BASATO SU UID
