@@ -50,7 +50,7 @@ dependencies:
   docx_template: ^0.4.0
   floating_bottom_navigation_bar: ^1.5.2
   flutter_launcher_icons: ^0.13.1
-  # google_mobile_ads: ^5.1.0
+  google_mobile_ads: ^5.1.0
   # google_sign_in: ^6.1.0
 
 dev_dependencies:

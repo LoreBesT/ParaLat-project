@@ -106,7 +106,7 @@ class _FolderPageState extends State<FolderPage> {
         isLoading = false;
       });
     } catch (e) {
-        null;
+      null;
       setState(() {
         isLoading = false;
       });

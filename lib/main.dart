@@ -1,3 +1,4 @@
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:paralat/Components/notifiche.dart';
 import 'Components/auth.dart';
 import 'screens/auth_page.dart';
@@ -8,19 +9,25 @@ import 'screens/HomePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-
 void main() async {
+  var devices = ['1FA165CFB0DE351CE0C523D8FDA31AB3'];
   WidgetsFlutterBinding.ensureInitialized();
+  await MobileAds.instance.initialize();
+
+  RequestConfiguration requestConfiguration =
+      RequestConfiguration(testDeviceIds: devices);
+  MobileAds.instance.updateRequestConfiguration(requestConfiguration);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  
+
   setupFirebaseMessaging(navigatorKey);
 
-  runApp(MyApp(navigatorKey: navigatorKey,));
+  runApp(MyApp(
+    navigatorKey: navigatorKey,
+  ));
 }
-
 
 class MyApp extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
@@ -36,15 +43,20 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'ParaLat',
-        navigatorKey: widget.navigatorKey, 
-        theme: ThemeData( 
-          //Ricorda implementare palette colori completa con i colori per ogni widget
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-          iconTheme: IconThemeData(color: Colors.deepPurple),
-          appBarTheme: AppBarTheme(color: Theme.of(context).colorScheme.inversePrimary, toolbarHeight: 100),
-          bottomAppBarTheme: BottomAppBarTheme(),
-          scrollbarTheme: ScrollbarThemeData(thumbVisibility: WidgetStatePropertyAll(true),thumbColor: WidgetStatePropertyAll(Colors.deepPurple.shade100))),
+        navigatorKey: widget.navigatorKey,
+        theme: ThemeData(
+            //Ricorda implementare palette colori completa con i colori per ogni widget
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+            iconTheme: IconThemeData(color: Colors.deepPurple),
+            appBarTheme: AppBarTheme(
+                color: Theme.of(context).colorScheme.inversePrimary,
+                toolbarHeight: 100),
+            bottomAppBarTheme: BottomAppBarTheme(),
+            scrollbarTheme: ScrollbarThemeData(
+                thumbVisibility: WidgetStatePropertyAll(true),
+                thumbColor:
+                    WidgetStatePropertyAll(Colors.deepPurple.shade100))),
         darkTheme: ThemeData.dark(),
         // home: const HomePage(),
         home: StreamBuilder(

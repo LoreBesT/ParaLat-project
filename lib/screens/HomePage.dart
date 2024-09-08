@@ -7,6 +7,7 @@ import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/space.dart';
 import 'package:paralat/screens/dettagli.dart';
 import 'package:paralat/screens/paralatAI_page.dart';
+import 'package:paralat/screens/search_page.dart';
 import 'package:paralat/screens/sub_page.dart';
 import 'archivio_page.dart';
 import 'news_page.dart';
@@ -96,21 +97,12 @@ class _HomePageState extends State<HomePage> {
                         elevation: 4,
                         child: InkWell(
                           onTap: () {
-                            if (Verify().isPremium(context) == true) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (context) => ArchivioPage(),
-                                ),
-                              );
-                            } else {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (context) => SubPage(),
-                                ),
-                              );
-                            }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (context) => SearchPage(),
+                              ),
+                            );
                           },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,

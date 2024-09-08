@@ -190,6 +190,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chatta con ParaLat AI'),
+        toolbarHeight: 130,
       ),
       body: Column(
         children: [

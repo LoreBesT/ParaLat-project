@@ -29,7 +29,7 @@ class _ButtonState extends State<Button> {
       padding: const EdgeInsets.only(bottom: 15),
       child: SizedBox(
         width: double.infinity,
-        height: 50,
+        height: 55,
         child: ElevatedButton(
           style: ButtonStyle(
             animationDuration: const Duration(seconds: 1),

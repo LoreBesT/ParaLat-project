@@ -91,16 +91,6 @@ class _SubPageState extends State<SubPage> {
                       onChanged: _handleRadioValueChange,
                     ),
                     const ListTile(
-                      leading: Icon(Icons.archive_outlined),
-                      title: Text('Archivio Versioni'),
-                      subtitle: Text('Sblocca l\'accesso a decine di versioni revisionate e corrette da esperti'),
-                    ),
-                    const ListTile(
-                      leading: Icon(Icons.download),
-                      title: Text('Download delle versioni'),
-                      subtitle: Text('Scarica tutte le versioni dall\'archivio che desideri e sfruttale come meglio desideri*'),
-                    ),
-                    const ListTile(
                       leading: Icon(Icons.workspace_premium),
                       title: Text('Accesso al modello Pro di ParaLat AI'),
                       subtitle: Text('Versioni più corrette e generate in meno tempo grazie a ParaLat AI pro - based on Google Gemini 1.5 pro'),
