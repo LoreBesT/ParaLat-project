@@ -3,6 +3,7 @@ import 'package:paralat/Components/action_buttons.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/space.dart';
 import 'package:paralat/screens/archivio_page.dart';
+import 'package:paralat/screens/work_page.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -78,26 +79,31 @@ class _SearchPageState extends State<SearchPage> {
                   icona: Icons.upload,
                   testoMinuscolo: 'Carica una versione',
                   testoMaiuscolo: 'PER LA COMMUNITY',
+                  funzione: WorkPage(),
                 ),
                 ActionButtons(
                   icona: Icons.search_off,
                   testoMinuscolo: 'Nessun Risultato?',
                   testoMaiuscolo: 'PROVA LA RICERCA MANUALE',
+                  funzione: ArchivioPage(),
                 ),
                 ActionButtons(
                   icona: Icons.camera_alt,
                   testoMinuscolo: 'Cerca con la versione',
                   testoMaiuscolo: 'FOTOCAMERA',
+                  funzione: WorkPage(),
                 ),
                 ActionButtons(
                   icona: Icons.filter_alt_rounded,
                   testoMinuscolo: 'Affina la ricerca',
                   testoMaiuscolo: 'INSERISCI DEI FILTRI',
+                  funzione: WorkPage(),
                 ),
                 ActionButtons(
                   icona: Icons.report,
                   testoMinuscolo: 'Segnalaci un errore',
                   testoMaiuscolo: 'NELLE VERSIONI ',
+                  funzione: WorkPage(),
                 ),
               ],
             ),

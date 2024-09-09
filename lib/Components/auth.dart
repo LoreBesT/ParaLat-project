@@ -18,10 +18,10 @@ class Auth {
         email: email, password: password);
   }
 
-  Future<void> createUserWithEmailAndPassword(
-      {required String email,
-      required String password,
-      }) async {
+  Future<void> createUserWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
     await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
   }
@@ -61,12 +61,30 @@ class Auth {
         .catchError((error) {});
   }
 
+  Future<void> uploadVersione(
+      String title, String versione, String autore, String traduzione) async {
+    CollectionReference versioni =
+        FirebaseFirestore.instance.collection('Versioni');
+    return versioni
+        .add({
+          'title': title,
+          'versione': versione,
+          'autore': autore,
+          'traduzione': traduzione,
+          'data/ora': FieldValue.serverTimestamp(),
+          'caricatore': Verify().nameUser(4)
+        })
+        .then((value) {})
+        .catchError((error) {
+          print(error);
+        });
+  }
+
   Future<void> createNews(String nome, String uid) async {
     String title = 'Ciao $nome, benvenuto su ParaLat!';
     String body =
         'Ciao $nome e benvenuto su ParaLat. Siamo lieti di accoglierti all\'interno della nostra community.\nTi informarmiamo che avrai a disposizione molteplici funzionalità totalmente gratuite e senza limite. Qualora avessi bisogno di ulteriori strumenti potrai abbonarti a ParaLat Premium in forma mensile o annuale\nIn caso di problemi con ParaLat siamo sempre a tua disposizione.\n\nUn saluto, il tuo ParaLat Team';
-    CollectionReference reports =
-        FirebaseFirestore.instance.collection('news');
+    CollectionReference reports = FirebaseFirestore.instance.collection('news');
     return reports
         .add({
           'title': title,
@@ -110,7 +128,7 @@ class Auth {
     }
   }
 
-  String? getUID(){
+  String? getUID() {
     User? utente = _firebaseAuth.currentUser;
     return utente!.uid.toString();
   }
