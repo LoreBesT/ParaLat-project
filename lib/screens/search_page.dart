@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paralat/Components/action_buttons.dart';
+import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/space.dart';
 import 'package:paralat/screens/archivio_page.dart';
@@ -55,6 +56,10 @@ class _SearchPageState extends State<SearchPage> {
                             child: IconButton(
                               onPressed: () {
                                 FocusScope.of(context).unfocus();
+                                // Auth().searchInFirestore(_versione.text);
+                                //Completare realizzando una pagina con una serie di ListTile
+                                //Quando premuto il cerca manda alla pagina listTile
+                                //Qui si potrà premere ogni singola listtile che usando i dati del firestore ricostruirà il percorso del documento su storage.
                                 if (_versione.text.isNotEmpty) {
                                   _versione.clear();
                                 }
@@ -107,6 +112,7 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ],
             ),
+            //Creare una lista delle versioni ParaLat Originals. Trovare un index randomico per ognuna così da metterle nel feed in posizioni casuali ogni volta.
           ),
         ],
       ),

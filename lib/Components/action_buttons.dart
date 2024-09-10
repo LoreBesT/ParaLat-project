@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:paralat/Components/auth.dart';
+import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/space.dart';
 import 'dart:io';
-
 import 'package:paralat/Components/trans.dart';
 
 class ActionButtons extends StatefulWidget {
@@ -50,7 +50,12 @@ class _ActionButtonsState extends State<ActionButtons> {
       });
 
       try {
-        String nomeFile = _nomeFileSelezionato!;
+        String estensione =
+            _nomeFileSelezionato!.substring(_nomeFileSelezionato!.length - 4);
+        DateTime now = DateTime.now();
+        String newFileName =
+            '${_nomeVersione.text}_${_autore.text}_${now.day}-${now.month}-${now.year}_${now.hour}${now.minute}${now.second}${Verify().nameUser(4).replaceAll(' ', '_')}${estensione}';
+        String nomeFile = newFileName;
         String percorso = 'Versioni/Community/$nomeFile';
         FirebaseStorage storage = FirebaseStorage.instance;
         Reference ref = storage.ref().child(percorso);
@@ -142,7 +147,8 @@ class _ActionButtonsState extends State<ActionButtons> {
                             } catch (e) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Si è verificato un errore. Riprova'),
+                                  content: Text(
+                                      'Si è verificato un errore. Riprova'),
                                   backgroundColor: Colors.red,
                                 ),
                               );
@@ -196,7 +202,10 @@ class _ActionButtonsState extends State<ActionButtons> {
           child: InkWell(
             borderRadius: BorderRadius.circular(100),
             onTap: () {
-              if (widget.icona == Icons.search_off) {
+              if (widget.icona == Icons.search_off ||
+                  widget.icona == Icons.camera_alt ||
+                  widget.icona == Icons.filter_alt_rounded ||
+                  widget.icona == Icons.report) {
                 navigateWithCustomAnimation(context, widget.funzione);
               } else if (widget.icona == Icons.upload) {
                 _mostraDialogCaricaVersione(context);

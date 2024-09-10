@@ -18,6 +18,17 @@ class Auth {
         email: email, password: password);
   }
 
+  Future<List<DocumentSnapshot>> searchInFirestore(String searchString) async {
+  final collectionRef = FirebaseFirestore.instance.collection('Versioni');
+  final querySnapshot = await collectionRef.get();
+  final matchingDocs = querySnapshot.docs.where((doc) {
+    final body = doc['body'] as String?;
+    return body != null && body.contains(searchString);
+  }).toList();
+  
+  return matchingDocs;
+}
+
   Future<void> createUserWithEmailAndPassword({
     required String email,
     required String password,
