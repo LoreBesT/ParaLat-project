@@ -22,7 +22,7 @@ class Auth {
   final collectionRef = FirebaseFirestore.instance.collection('Versioni');
   final querySnapshot = await collectionRef.get();
   final matchingDocs = querySnapshot.docs.where((doc) {
-    final body = doc['body'] as String?;
+    final body = doc['versione'] as String?;
     return body != null && body.contains(searchString);
   }).toList();
   
