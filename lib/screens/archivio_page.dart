@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:paralat/Components/auth.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
 import 'package:dio/dio.dart';
@@ -113,32 +114,32 @@ class _FolderPageState extends State<FolderPage> {
     }
   }
 
-  Future<void> downloadFile(String url, String fileName) async {
-    final Directory? appDocDir = await getExternalStorageDirectory();
-    final String filePath = '${appDocDir!.path}/$fileName';
+  // Future<void> downloadFile(String url, String fileName) async {
+  //   final Directory? appDocDir = await getExternalStorageDirectory();
+  //   final String filePath = '${appDocDir!.path}/$fileName';
 
-    try {
-      // print('Tentativo di scaricare il file $fileName da $url');
-      Dio dio = Dio();
-      await dio.download(url, filePath);
-      // print('File scaricato con successo in $filePath');
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('File scaricato: $fileName')));
-      OpenFile.open(filePath); // Apre il file appena scaricato
-    } catch (e) {
-      // print('Errore durante il download del file: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Errore durante il download: $e')));
-    }
-  }
+  //   try {
+  //     // print('Tentativo di scaricare il file $fileName da $url');
+  //     Dio dio = Dio();
+  //     await dio.download(url, filePath);
+  //     // print('File scaricato con successo in $filePath');
+  //     ScaffoldMessenger.of(context)
+  //         .showSnackBar(SnackBar(content: Text('File scaricato: $fileName')));
+  //     OpenFile.open(filePath); // Apre il file appena scaricato
+  //   } catch (e) {
+  //     // print('Errore durante il download del file: $e');
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text('Errore durante il download: $e')));
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.folderPath.split('/').last),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        toolbarHeight: 100,
+        // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        // toolbarHeight: 100,
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -156,7 +157,7 @@ class _FolderPageState extends State<FolderPage> {
                               icon: const Icon(Icons.download),
                               onPressed: () async {
                                 final url = await item.getDownloadURL();
-                                downloadFile(url, itemName);
+                                Auth().downloadFile(url, itemName, context);
                               },
                             )
                           : const Icon(Icons.arrow_forward),

@@ -36,6 +36,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
       ]);
       String response2 = response.text!;
       String? response3 = response2.replaceAll("*", "").replaceAll("#", "");
+      String? response4 = '${response3}\n\nVersione generata con ParaLat AI\nParaLat AI può commettere errori. Ricorda di controllare accuratamente la tua analisi prima di utilizzarla.';
 
       // Carica il template di base (assicurati di avere un template.docx nel progetto)
       final ByteData data = await rootBundle.load(r'assets/docs/template.docx');
@@ -44,7 +45,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
 
       // Definisci i contenuti da inserire nel template
       final docxTemp.Content content = docxTemp.Content();
-      content.add(docxTemp.TextContent("risposta", response3!));
+      content.add(docxTemp.TextContent("risposta", response4!));
       // content.add(docxTemp.TableContent("table", [
 
       //   docxTemp.RowContent()

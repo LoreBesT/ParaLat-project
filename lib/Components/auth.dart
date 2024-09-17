@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:open_file/open_file.dart';
 import 'package:paralat/Components/level_user.dart';
+import 'package:path_provider/path_provider.dart';
 // import 'package:battery_plus/battery_plus.dart';
 // import 'package:flutter/material.dart';
 
@@ -25,9 +28,27 @@ class Auth {
     final body = doc['versione'] as String?;
     return body != null && body.contains(searchString);
   }).toList();
-  
   return matchingDocs;
 }
+
+  Future<void> downloadFile(String url, String fileName, BuildContext context) async {
+    final Directory? appDocDir = await getExternalStorageDirectory();
+    final String filePath = '${appDocDir!.path}/$fileName';
+
+    try {
+      // print('Tentativo di scaricare il file $fileName da $url');
+      Dio dio = Dio();
+      await dio.download(url, filePath);
+      // print('File scaricato con successo in $filePath');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('File scaricato: $fileName')));
+      OpenFile.open(filePath); // Apre il file appena scaricato
+    } catch (e) {
+      // print('Errore durante il download del file: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Errore durante il download: $e')));
+    }
+  }
 
   Future<void> createUserWithEmailAndPassword({
     required String email,

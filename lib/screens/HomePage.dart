@@ -60,6 +60,7 @@ class _HomePageState extends State<HomePage> {
                       height: 160,
                       width: 160,
                       child: Card(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                         elevation: 4,
                         child: InkWell(
                           onTap: () {
@@ -94,6 +95,7 @@ class _HomePageState extends State<HomePage> {
                       height: 160,
                       width: 160,
                       child: Card(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                         elevation: 4,
                         child: InkWell(
                           onTap: () {
@@ -149,6 +151,7 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 250,
                 child: Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   elevation: 4,
                   child: Scrollbar(
                     controller: _listViewController,

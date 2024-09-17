@@ -16,24 +16,44 @@ class Feedcard extends StatefulWidget {
 }
 
 class _FeedcardState extends State<Feedcard> {
+  bool isLikePressed = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: SizedBox(
         child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           elevation: 2,
+          clipBehavior: Clip.hardEdge,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Image.asset(
+                r'assets\images\logo.png',
+              ),
               ListTile(
-                title: Text(widget.text),
-                subtitle: Text(widget.autore),
-                leading: Icon(Icons.abc),
-                trailing: Icon(Icons.download),
-                //Modificare la Card in modo da avere qlc di simile a Feed di Google ed in ogni caso come video 16 corso flutter
-              )
+                  title: Text(widget.text),
+                  subtitle: Text(widget.autore),
+                  leading: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          isLikePressed = !isLikePressed;
+                        });
+                      },
+                      icon: Icon(
+                        isLikePressed ? Icons.favorite : Icons.favorite_border,
+                        color: isLikePressed ? Colors.red : null,
+                      )),
+                  trailing: IconButton(
+                    icon: Icon(Icons.download),
+                    onPressed: () {
+                    },
+                  )
+                  //Modificare la Card in modo da avere qlc di simile a Feed di Google ed in ogni caso come video 16 corso flutter
+                  )
             ],
           ),
         ),
