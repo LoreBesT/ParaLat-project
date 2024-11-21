@@ -100,6 +100,7 @@ class _NewsPageState extends State<NewsPage>
               padding:
                   const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 0),
               child: Card(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                 elevation: 4,
                 child: ListTile(
                   leading: Icon(
@@ -188,6 +189,7 @@ class _NewsPageState extends State<NewsPage>
                       padding: const EdgeInsets.only(
                           top: 8, left: 8, right: 8, bottom: 0),
                       child: Card(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                         elevation: 4,
                         child: ListTile(
                           leading: Icon(

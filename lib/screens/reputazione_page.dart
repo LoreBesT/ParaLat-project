@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
+import 'package:paralat/Components/modalBottomSheet.dart';
 import 'package:paralat/Components/space.dart';
 //import 'package:flutter_animate/flutter_animate.dart';
 
@@ -21,17 +22,12 @@ class _MyWidgetState extends State<ProfiloPage> {
   String ofMember = Verify().typeUser(0);
   List<String> sanzioni = [
     'Non è presente alcuna sanzione',
-    'Ciao ${Verify().nameUser(0)}.\nHai ricevuto una sanzione quantitativa. La tua parte dell\'ultima versione assegnata, non risulta essere svolta. Questo è solo un richiamo. In caso di reiterazione sia nel breve che nel lungo termine sarai effettivamente sanzionato',
-    'Ciao ${Verify().nameUser(0)}.\nHai ricevuto una sanzione quantitativa. La tua parte dell\'ultima versione assegnata, non risulta essere svolta. Non hai svolto per la seconda volta una versione.Ti sarà comminata una sanzione nella prossima versione consistente nello svolgimento di una parte in più della stessa. In caso di reiterazione sia nel breve che nel lungo termine è prevista l\'espulsione con effetto immediato dal gruppo con il divieto di rientrarci',
-    'Ciao ${Verify().nameUser(0)}.\n Hai ricevuto una sanzione quantitativa. La tua parte dell\'ultima versione assegnata, non risulta essere svolta. Non hai svolto per la terza volta una versione. A causa delle tue inadempienze sei espulso con effetto immediato dal gruppo. Ricorda che ti sarà inibito l\'accesso a qualsiasi software ParaLat a livello admin. Potrai continuare ad usare ParaLat App come un normale utente.',
-    'Ciao ${Verify().nameUser(0)}.\n Hai ricevuto una sanzione qualitativa. La tua parte dell\'ultima versione assegnata, non risulta essere svolta nella sua interezza correttamente o completamente. Non preoccuparti questo è solo un richiamo e non avrà alcun peso sulla tua reputazione. Un saluto dal team ParaLat',
-    'Ciao ${Verify().nameUser(0)}.\n Hai ricevuto una sanzione qualitativa. La tua parte dell\'ultima versione assegnata, non risulta essere svolta nella sua interezza correttamente o completamente. Questo è il tuo secondo richiamo qualitativo. In caso di una successiva rilevazione di incorrettezza sarai effettivamente sanzionato',
-    'Ciao ${Verify().nameUser(0)}.\n Hai ricevuto una sanzione qualitativa. La tua parte dell\'ultima versione assegnata, non risulta essere svolta nella sua interezza correttamente o completamente. Questo è il tuo terzo richiamo qualitativo. Ti sarà comminata una sanzione nella prossima versione consistente nello svolgimento di una parte in più della stessa. In caso di reiterazione sia nel breve che nel lungo termine è prevista l\'espulsione con effetto immediato dal gruppo con il divieto di rientrarci',
-    'Ciao ${Verify().nameUser(0)}.\n Hai ricevuto una sanzione qualitativa. La tua parte dell\'ultima versione assegnata, non risulta essere svolta. Questo è il tuo quarto richiamo qualitativo. A causa delle tue inadempienze sei espulso con effetto immediato dal gruppo. Ricorda che ti sarà inibito l\'accesso a qualsiasi software ParaLat a livello admin. Potrai continuare ad usare ParaLat App come un normale utente.',
-    'Ciao ${Verify().nameUser(0)}.\n Hai ricevuto una sanzione quantitativa. La tua parte dell\'ultima versione assegnata, non risulta essere svolta. Questa è la terza sanzione che ricevi sul tuo profilo. Sei dunque espulso con effetto immediato dal gruppo. Ricorda che ti sarà inibito l\'accesso a qualsiasi software ParaLat a livello admin. Potrai continuare ad usare ParaLat App come un normale utente.',
-    'Ciao ${Verify().nameUser(0)}.\n Hai ricevuto una sanzione qualitativa. La tua parte dell\'ultima versione assegnata, non risulta essere svolta nella sua interezza corretamente o completamente. Questa è la terza sanzione che ricevi sul tuo profilo. Sei dunque espulso con effetto immediato dal gruppo. Ricorda che ti sarà inibito l\'accesso a qualsiasi software ParaLat a livello admin. Potrai continuare ad usare ParaLat App come un normale utente.'
+    'Ciao ${Verify().nameUser(0)}.\nHai ricevuto un richiamo disciplinare. Non hai completato i tuoi incarichi per tempo. Non preoccuparti questo è solo un richiamo. In caso di reticenza potresti incorrere in sanzioni.',
+    'Ciao ${Verify().nameUser(0)}.\nHai ricevuto una sanzione disciplinare. Non hai rispettato i tuoi incarichi e doveri. Ti sarà assegnata una sanzione consistente nello svolgimento di due parti di analisi nella prossima versioni. In caso di reticenza si rischia di incappare in sanzioni di livello superiore',
+    'Ciao ${Verify().nameUser(0)}.\nHai ricevuto una sanzione disciplinare di secondo livello. Hai non rispettato per numerose volte i tuoi incarichi. Ti sarà assegnata una sanzione consistente nello svolgimento di due parti di analisi nella prossima versione. In caso di reticenza sarai espulso/a dal gruppo.',
+    'Ciao ${Verify().nameUser(0)}.\nTi comunichiamo che sei stato espulso da ParaLat. Hai violato il regolamento interno del gruppo, non rispettando i tuoi incarichi e doveri. Non avrai più alcun accesso ai livelli admin di ParaLat, i quali rimarranno attivi esclusivamente per le prossime 24 ore.'
   ];
-  
+
   String getNumber(int sanzione) {
     switch (sanzione) {
       case 0:
@@ -56,9 +52,10 @@ class _MyWidgetState extends State<ProfiloPage> {
 
   List<String> premiMerito = [
     'Non è presente alcun premio di merito',
-    'Congratulazioni sei uno tra i migliori admin ParaLat, continua così!',
-    'Congratulazioni in data 26/07/2024 hai ricevuto un premio di merito. Sei l\'admin ParaLat con la reputazione più alta di questo mese. Ora rilassati pure. Non sei tenuto/a a svolgere la prossima versione. Ci penseranno gli altri a svolgerla per te!',
-    'Congratulazione in data 26/07/2024 risulti essere stato l\'admin ParaLat con la reputazione più alta in 3 mesi. Hai diritto pertanto all\'accesso a dei nuovi privilegi: \nNon svolgere la versioni per 2 volte(non consecutive) entro i prossimi 3 mesi\nAccesso illimitato alle funzionalità di amministratore Whatsapp\nDedica speciale in-app visibile a tutti gli utenti per 3 giorni',
+    'Congratulazioni hai ricevuto una nota di merito. Continua così!',
+    'Congratulazioni hai ricevuto una nota di merito di secondo livello! Hai svolto un ottimo lavoro',
+    'Congratulazioni hai ricevuto un premio di merito di terzo livello. Hai svolto al miglior modo il tuo compito da admin. Contatta gli altri admin per ricevere un premio di merito',
+    'Congratulazioni sei il miglior admin attualmente. Hai ricevuto un premio di merito di quarto livello. Contatta gli altri admin per ricevere un premio esclusivo'
   ];
   Color getIconColor(int sanzione) {
     switch (sanzione) {
@@ -67,16 +64,12 @@ class _MyWidgetState extends State<ProfiloPage> {
       case 1:
         return Colors.yellow;
       case 2:
-      case 6:
-        return Colors.orange;
       case 3:
-      case 9:
-      case 8:
-      case 7:
+        return Colors.orange;
+      case 4:
         return Colors.red;
-
       default:
-        return Colors.red;
+        return Colors.blue;
     }
   }
 
@@ -84,7 +77,7 @@ class _MyWidgetState extends State<ProfiloPage> {
     String greenMessage = 'La tua reputazione è perfetta';
     String yellowMessage = 'Hai ricevuto un richiamo';
     String orangeMessage =
-        'Reputazione a rischio\nHai ricevuto una sanzione\nPotresti richiare un\'espulsione';
+        'Hai ricevuto una sanzione\nPotresti richiare un\'espulsione od un\'altra sanzione';
     String redMessage = 'Sei stato espulso dal progetto';
     switch (sanzione) {
       case 0:
@@ -92,12 +85,9 @@ class _MyWidgetState extends State<ProfiloPage> {
       case 1:
         return yellowMessage;
       case 2:
-      case 6:
-        return orangeMessage;
       case 3:
-      case 7:
-      case 8:
-      case 9:
+        return orangeMessage;
+      case 4:
         return redMessage;
       default:
         return redMessage;
@@ -108,32 +98,34 @@ class _MyWidgetState extends State<ProfiloPage> {
   Widget build(BuildContext context) {
     String verifiedUser = Verify().verifyUser(context).toString();
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-              'Ciao ${Verify().nameUser(0)}'), //.animate(effects: [ ]), //RICORDA DI INSERIRE ANIMAZIONE AL NOME
-        ),
-        body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-            stream: FirebaseFirestore.instance
-                .collection('Sanzioni')
-                .doc(Verify().nameUser(0).toLowerCase())
-                .snapshots(),
-            builder: (context,
-                AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
-                    snapshot) {
-              if (!snapshot.hasData) {
-                return Center(child: CircularProgressIndicator());
-              }
-              // print(Verify().nameUser(0).toLowerCase());
-              var documentData = snapshot.data?.data();
-              int sanzione = documentData?['sanzione'] ?? 0;
-              int merito = documentData?['merito'] ?? 0;
-              // if (documentData == null) {
-              //   return Center(child: Text("Utente non trovato"));
-              // }
-              return Align(
+      appBar: AppBar(
+        title: Text(
+            'Ciao ${Verify().nameUser(0)}'), //.animate(effects: [ ]), //RICORDA DI INSERIRE ANIMAZIONE AL NOME
+      ),
+      body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+          stream: FirebaseFirestore.instance
+              .collection('Sanzioni')
+              .doc(Verify().nameUser(0).toLowerCase())
+              .snapshots(),
+          builder: (context,
+              AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+            // print(Verify().nameUser(0).toLowerCase());
+            var documentData = snapshot.data?.data();
+            int sanzione = documentData?['sanzione'] ?? 0;
+            int merito = documentData?['merito'] ?? 0;
+            // if (documentData == null) {
+            //   return Center(child: Text("Utente non trovato"));
+            // }
+            return SingleChildScrollView(
+              child: Align(
                 child: Column(
                   children: [
                     Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)),
                       margin: const EdgeInsets.all(8),
                       elevation: 7,
                       child: Column(
@@ -174,6 +166,8 @@ class _MyWidgetState extends State<ProfiloPage> {
                         height: 118,
                         width: double.infinity,
                         child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
                           margin: const EdgeInsets.all(8),
                           elevation: 8,
                           child: ListTile(
@@ -333,7 +327,71 @@ class _MyWidgetState extends State<ProfiloPage> {
                             ))),
                   ],
                 ),
+              ),
+            );
+          }),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+            ),
+            builder: (BuildContext context) {
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: double.maxFinite,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          showCustomBottomSheet(context, [
+                            'Francesca Bariletto',
+                            'Lorenzo Della Bona',
+                            'Jacopo Leo',
+                            'Luca Martella',
+                            'Letizia Marzo',
+                            'Nicole Pastore',
+                          ]);
+                        },
+                        icon: const Icon(
+                          Icons.note_alt,
+                        ),
+                        label: const Text("Assegna sanzione"),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      width: double.maxFinite,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          // Azione 2
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.admin_panel_settings),
+                        label: const Text("Gestisci gli admin"),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      width: double.maxFinite,
+                      child: ElevatedButton.icon(
+                          onPressed: () {},
+                          icon: Icon(Icons.block),
+                          label: Text(" Blocca un utente")),
+                    )
+                  ],
+                ),
               );
-            }));
+            },
+          );
+        },
+        label: const Text("Azioni"),
+        icon: const Icon(Icons.add),
+      ),
+    );
   }
 }

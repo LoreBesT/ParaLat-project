@@ -22,16 +22,17 @@ class Auth {
   }
 
   Future<List<DocumentSnapshot>> searchInFirestore(String searchString) async {
-  final collectionRef = FirebaseFirestore.instance.collection('Versioni');
-  final querySnapshot = await collectionRef.get();
-  final matchingDocs = querySnapshot.docs.where((doc) {
-    final body = doc['versione'] as String?;
-    return body != null && body.contains(searchString);
-  }).toList();
-  return matchingDocs;
-}
+    final collectionRef = FirebaseFirestore.instance.collection('Versioni');
+    final querySnapshot = await collectionRef.get();
+    final matchingDocs = querySnapshot.docs.where((doc) {
+      final body = doc['versione'] as String?;
+      return body != null && body.contains(searchString);
+    }).toList();
+    return matchingDocs;
+  }
 
-  Future<void> downloadFile(String url, String fileName, BuildContext context) async {
+  Future<void> downloadFile(
+      String url, String fileName, BuildContext context) async {
     final Directory? appDocDir = await getExternalStorageDirectory();
     final String filePath = '${appDocDir!.path}/$fileName';
 
@@ -75,6 +76,14 @@ class Auth {
         })
         .then((value) {})
         .catchError((error) {});
+  }
+
+  Future<void> addSanction(String person,String fieldName, int newValue) async {
+    try {
+      DocumentReference docRef =
+          FirebaseFirestore.instance.collection("Sanzioni").doc(person);
+      await docRef.update({fieldName: newValue});
+    } catch (e) {}
   }
 
   Future<void> createEvent(

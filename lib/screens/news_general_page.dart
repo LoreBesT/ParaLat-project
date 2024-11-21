@@ -78,6 +78,7 @@ class _NewsPageState extends State<NewsGeneralPage> {
                     const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 0),
                 child: Card(
                   elevation: 4,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   child: ListTile(
                     leading: Icon(
                       Icons.newspaper,
