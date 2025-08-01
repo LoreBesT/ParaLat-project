@@ -6,6 +6,7 @@ import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/space.dart';
 import 'package:paralat/screens/dettagli.dart';
+import 'package:paralat/screens/news_general_page.dart';
 import 'package:paralat/screens/paralatAI_page.dart';
 import 'package:paralat/screens/search_page.dart';
 import 'package:paralat/screens/sub_page.dart';
@@ -139,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => NewsPage(),
+                            builder: (context) => NewsGeneralPage(),
                           ),
                         );
                       },

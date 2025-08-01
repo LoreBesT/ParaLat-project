@@ -84,6 +84,7 @@ flutter:
   assets:
    - assets\images\ParaLat.png
    - assets\images\logo.png
+   - assets\images\logo_word.png
    - assets/docs/template.docx
   #   - images/a_dot_ham.jpeg
 

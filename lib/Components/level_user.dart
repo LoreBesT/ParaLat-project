@@ -53,11 +53,7 @@ class Verify {
   }
 
   List<Widget>? funzioniBottAppBar(BuildContext context) {
-    if (Verify().verifyUser(context) == typeUser(0)) {
-      return [HomePage(), NewsPage(), ImpostazioniPage()];
-    } else {
-      return [HomePage(), NewsGeneralPage(), ImpostazioniPage()];
-    }
+    return [HomePage(), NewsGeneralPage(), ImpostazioniPage()];
   }
 
   ///Function to set the icon for admin, free and premium users

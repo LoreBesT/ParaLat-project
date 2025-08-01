@@ -140,24 +140,6 @@ class _MyWidgetState extends State<ProfiloPage> {
                               size: 25,
                             ),
                           ),
-                          TextButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        AlertDialog(
-                                            title: const Text(
-                                                'Scegli un altro account'),
-                                            content: TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text('Ok'))));
-                              },
-                              child: const Text(
-                                'Cambia Account',
-                                style: TextStyle(fontSize: 14),
-                              )),
                         ],
                       ),
                     ),
@@ -276,10 +258,6 @@ class _MyWidgetState extends State<ProfiloPage> {
                                                   'Utente: ${Auth().getUserDisplayName()}\nEmail: ${Auth().metaDatas(context, 2)}\nID account:\n${Auth().metaDatas(context, 3)}\nUltimo accesso: ${Auth().metaDatas(context, 1)}\nData creazione account: ${Auth().metaDatas(context, 0)}',
                                                   textAlign: TextAlign.left,
                                                 ),
-                                                //Text('\nEmail: ${Auth().metaDatas(context, 2)}'),
-                                                //Text('\nID account: \n${Auth().metaDatas(context, 3)}'),
-                                                // Text('\nData creazione account: \n ${Auth().metaDatas(context, 0)}'),
-                                                // Text('\nUltimo accesso:\n${Auth().metaDatas(context, 1)}'),
                                                 const SizedBox(
                                                   height: 10,
                                                 ),
@@ -330,68 +308,6 @@ class _MyWidgetState extends State<ProfiloPage> {
               ),
             );
           }),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-            ),
-            builder: (BuildContext context) {
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      width: double.maxFinite,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          showCustomBottomSheet(context, [
-                            'Francesca Bariletto',
-                            'Lorenzo Della Bona',
-                            'Jacopo Leo',
-                            'Luca Martella',
-                            'Letizia Marzo',
-                            'Nicole Pastore',
-                          ]);
-                        },
-                        icon: const Icon(
-                          Icons.note_alt,
-                        ),
-                        label: const Text("Assegna sanzione"),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    SizedBox(
-                      width: double.maxFinite,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          // Azione 2
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.admin_panel_settings),
-                        label: const Text("Gestisci gli admin"),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    SizedBox(
-                      width: double.maxFinite,
-                      child: ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(Icons.block),
-                          label: Text(" Blocca un utente")),
-                    )
-                  ],
-                ),
-              );
-            },
-          );
-        },
-        label: const Text("Azioni"),
-        icon: const Icon(Icons.add),
-      ),
     );
   }
 }
