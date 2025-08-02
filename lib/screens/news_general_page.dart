@@ -53,7 +53,7 @@ class _NewsPageState extends State<NewsGeneralPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notizie'),
+        title: Text('Notizie ed Eventi'),
         automaticallyImplyLeading: false,
         centerTitle: true,
       ),

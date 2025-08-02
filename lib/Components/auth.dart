@@ -78,30 +78,6 @@ class Auth {
         .catchError((error) {});
   }
 
-  Future<void> addSanction(String person,String fieldName, int newValue) async {
-    try {
-      DocumentReference docRef =
-          FirebaseFirestore.instance.collection("Sanzioni").doc(person);
-      await docRef.update({fieldName: newValue});
-    } catch (e) {}
-  }
-
-  Future<void> createEvent(
-      String title, String? body, String color, DateTime scadenza) async {
-    CollectionReference reports =
-        FirebaseFirestore.instance.collection('scadenze');
-    return reports
-        .add({
-          'title': title,
-          'body': body,
-          'imp': color,
-          'scadenza': scadenza,
-          'adder': Verify().nameUser(4)
-        })
-        .then((value) {})
-        .catchError((error) {});
-  }
-
   Future<void> uploadVersione(
       String title, String versione, String autore, String traduzione) async {
     CollectionReference versioni =

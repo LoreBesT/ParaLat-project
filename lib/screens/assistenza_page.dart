@@ -3,9 +3,9 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:paralat/Components/Drawer_buttons.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
+import 'package:paralat/Components/socialLinks.dart';
 import 'package:paralat/Components/space.dart';
-import 'package:paralat/screens/chat_page.dart';
-import 'package:paralat/screens/faq_page.dart';
+import 'package:paralat/screens/Faq_page.dart';
 import 'package:paralat/screens/infoapp_page.dart';
 import 'package:paralat/screens/terms.dart';
 
@@ -33,7 +33,7 @@ class _AssistenzaPageState extends State<AssistenzaPage> {
           children: [
             Button(
                 icona: Icons.help_center_outlined,
-                funzione: FaqPage(),
+                funzione: Faqpage(),
                 testo: 'FAQ'),
             Button(
                 icona: Icons.privacy_tip,
@@ -146,12 +146,7 @@ class _AssistenzaPageState extends State<AssistenzaPage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (context) => const ChatPage(),
-            ),
-          );
+          sendMail(context,'paralatstudy@gmail.com', 'Richiesta di supporto - ${Verify().nameUser(4)}', 'Non eliminare o modificare queste informazioni.\n\n______________________\n\nNome e Cognome: ${Verify().nameUser(4)}\n\nUID: ${Auth().getUID()}\n______________________\n\nDescrivi qui il tuo problema:\n');
         },
         label: const Text('Contattaci'),
         icon: const Icon(Icons.chat),

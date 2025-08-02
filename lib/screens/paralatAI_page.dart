@@ -225,6 +225,17 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
+                  CircleAvatar(
+                    radius: 23,
+                    child: IconButton(
+                      icon: Icon(Icons.image), // Si può sostituire con icons.add
+                      onPressed: () {
+                        // setState(() {
+                        //   _messages.clear(); // Pulisce la chat
+                        // });
+                      },
+                    ),
+                  ),
                   Expanded(
                     child: Card(
                       shape: RoundedRectangleBorder(
@@ -232,30 +243,29 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                       child: TextField(
                         controller: _controller,
                         autocorrect: false,
-                        decoration: const InputDecoration(
-                          labelText: 'Inserisci la tua versione',
-                          border: OutlineInputBorder(),
-                          suffixIcon: Icon(Icons.camera_alt_outlined),
+                        decoration: InputDecoration(
+                          labelText: 'Scrivi qui',
+                          border: const OutlineInputBorder(),
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.only(left: 10),
+                          contentPadding: const EdgeInsets.only(left: 10),
+                          suffixIcon: _isLoading
+                              ? const CircularProgressIndicator()
+                              : IconButton(
+                                  icon: const Icon(Icons.send),
+                                  onPressed: () {
+                                    FocusScope.of(context).unfocus();
+                                    if (_controller.text.isNotEmpty) {
+                                      _fetchResponse(_controller.text);
+                                      _controller
+                                          .clear(); // Pulisci il campo di testo dopo aver inviato il messaggio
+                                    }
+                                  },
+                                ),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 6),
-                  _isLoading
-                      ? const CircularProgressIndicator()
-                      : ElevatedButton(
-                          onPressed: () {
-                            FocusScope.of(context).unfocus();
-                            if (_controller.text.isNotEmpty) {
-                              _fetchResponse(_controller.text);
-                              _controller.clear();
-                            }
-                          },
-                          child: const Icon(Icons.send),
-                        ),
                 ],
               ),
             ),

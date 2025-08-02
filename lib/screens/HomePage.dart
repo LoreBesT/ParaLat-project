@@ -9,9 +9,6 @@ import 'package:paralat/screens/dettagli.dart';
 import 'package:paralat/screens/news_general_page.dart';
 import 'package:paralat/screens/paralatAI_page.dart';
 import 'package:paralat/screens/search_page.dart';
-import 'package:paralat/screens/sub_page.dart';
-import 'archivio_page.dart';
-import 'news_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
