@@ -1,5 +1,5 @@
 name: paralat
-description: "Il latino in pochi minuti"
+description: "Il latino in un click"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -49,11 +49,19 @@ dependencies:
   google_generative_ai: ^0.4.3
   docx_template: ^0.4.0
   floating_bottom_navigation_bar: ^1.5.2
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: ^0.14.4
   google_mobile_ads: ^5.1.0
   file_picker: ^8.0.7
   url_launcher: ^6.3.2
+  font_awesome_flutter: ^10.8.0
+  # shared_preferences: ^2.5.3
   # google_sign_in: ^6.1.0
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/icon.png"
+  min_sdk_android: 21
 
 dev_dependencies:
   flutter_test:

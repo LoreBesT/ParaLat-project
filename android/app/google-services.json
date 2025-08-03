@@ -12,7 +12,20 @@
           "package_name": "com.example.paralat"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "319025793022-r0bgl2p9q2pg5a3orueokf56qn4953ho.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.paralat",
+            "certificate_hash": "4980b9fc345d8fe4ad0581fa76d1e3261d52d4cd"
+          }
+        },
+        {
+          "client_id": "319025793022-j1952etrkrkjeb25s3ojbu8cfc8fnf4n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDM9BZIVAmzYkkkpAzYTvpQEWaPwJ6w9Yw"
@@ -20,7 +33,56 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "319025793022-j1952etrkrkjeb25s3ojbu8cfc8fnf4n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "319025793022-orbkeavpkslofj3310024nbn1o730vd1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.paralat"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-4577207339753994~3076279651"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319025793022:android:f220e2e517e1cecd32a2af",
+        "android_client_info": {
+          "package_name": "com.paralat.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "319025793022-j1952etrkrkjeb25s3ojbu8cfc8fnf4n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM9BZIVAmzYkkkpAzYTvpQEWaPwJ6w9Yw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "319025793022-j1952etrkrkjeb25s3ojbu8cfc8fnf4n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "319025793022-orbkeavpkslofj3310024nbn1o730vd1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.paralat"
+              }
+            }
+          ]
         }
       }
     }

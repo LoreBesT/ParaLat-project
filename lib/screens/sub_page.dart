@@ -94,7 +94,7 @@ class _SubPageState extends State<SubPage> {
                       const ListTile(
                         leading: Icon(Icons.workspace_premium),
                         title: Text('Accesso al modello Pro di ParaLat AI'),
-                        subtitle: Text('Versioni più corrette e generate in meno tempo grazie ai modelli pro di ParaLat AI'),
+                        subtitle: Text('Versioni generate in meno tempo grazie ai modelli pro di ParaLat AI'),
                       ),
                       const ListTile(
                         leading: Icon(Icons.ads_click),
@@ -104,22 +104,22 @@ class _SubPageState extends State<SubPage> {
                       const ListTile(
                         leading: Icon(Icons.attach_money),
                         title: Text('Monetizzazione illimitata'),
-                        subtitle: Text('Vendi quanti appunti vuoi senza alcun limite e con commissione ridotta al 5%'),
+                        subtitle: Text('Vendi quanti appunti vuoi senza alcun limite e con commissione ridotta al 5%*'),
                       ),
                       const ListTile(
                         leading: Icon(Icons.auto_stories_outlined),
-                        title: Text('Accesso a tutti gli articoli ed approfondimenti'),
-                        subtitle: Text('Potrai leggere tutti gli articoli ed approfondimenti esclusivi senza alcun limite'),
+                        title: Text('Accesso ad approfondimenti esclusivi'),
+                        subtitle: Text('Oltre agli articoli disponibili per tutti avrai accesso anche ad approfondimenti esclusivi'),
                       ),
                       const ListTile(
                         leading: Icon(Icons.discord),
-                        title: Text('Accesso al canale Discord esclusivo'),
-                        subtitle: Text('Canale Discord esclusivo per i membri Premium con la possibilità di discutere e ricevere spoiler sul progetto esclusivi'),
+                        title: Text('Accesso al canale Discord'),
+                        subtitle: Text('Canale Discord riservato ai soli membri Premium con la possibilità di discutere e ricevere spoiler sul progetto'),
                       ),
                       const ListTile(
                         leading: Icon(Icons.contact_support),
                         title: Text('Assistenza Premium'),
-                        subtitle: Text('Servizio di assistenza più rapido e veloce esclusivo per i membri premium'),
+                        subtitle: Text('Servizio di assistenza più rapido per i membri premium con risposta garantita entro 24h**'),
                       ),
                       const ListTile(
                         leading: Icon(Icons.rocket_launch),
@@ -131,7 +131,7 @@ class _SubPageState extends State<SubPage> {
                         title: Text('Badge sul profilo'),
                         subtitle: Text('Badge esclusivo per gli utenti premium'),
                       ),
-                      const Text('*I file scaricati sono da considerarsi ad uso esclusivo personale. Una eventuale diffusione non autorizzata è punibile penalmente.', textAlign: TextAlign.center, style: TextStyle(color: Colors.grey, fontSize: 12),),
+                      const Text('*Commissioni sulle vendite ridotte dal 30% al 5%.\n**un giorno lavorativo.', textAlign: TextAlign.center, style: TextStyle(color: Colors.grey, fontSize: 12),),
                       const Space(heigth: 65),
                     ],
                   ),

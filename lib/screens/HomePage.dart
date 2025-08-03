@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
+import 'package:paralat/Components/rounded_buttons.dart';
 import 'package:paralat/Components/space.dart';
 import 'package:paralat/screens/dettagli.dart';
 import 'package:paralat/screens/news_general_page.dart';
@@ -52,76 +53,8 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 160,
-                      width: 160,
-                      child: Card(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                        elevation: 4,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => GeminiApiPage(),
-                              ),
-                            );
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'ParaLat AI',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              Icon(
-                                Icons.generating_tokens,
-                                size: 50,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 160,
-                      width: 160,
-                      child: Card(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                        elevation: 4,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (context) => SearchPage(),
-                              ),
-                            );
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'Archivio',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              Icon(
-                                Icons.archive,
-                                size: 50,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  RoundedButtons(testo: 'ParaLat AI', icon: Icons.generating_tokens, function: GeminiApiPage()),
+                  RoundedButtons(testo: 'Archivio', icon: Icons.archive, function: SearchPage()),
                 ],
               ),
               Padding(

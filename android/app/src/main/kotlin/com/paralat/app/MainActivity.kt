@@ -1,4 +1,4 @@
-package com.example.paralat
+package com.paralat.app
 
 import io.flutter.embedding.android.FlutterActivity
 

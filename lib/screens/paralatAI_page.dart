@@ -6,6 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:http/http.dart';
 import 'package:open_file/open_file.dart';
+import 'package:paralat/Components/drawerButtonNoAnimatedWithTrailing.dart';
+import 'package:paralat/Components/rounded_buttons_new.dart';
+import 'package:paralat/screens/work_page.dart';
 import 'package:path_provider/path_provider.dart';
 
 class GeminiApiPage extends StatefulWidget {
@@ -230,6 +233,34 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                     child: IconButton(
                       icon: Icon(Icons.image), // Si può sostituire con icons.add
                       onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return SafeArea(
+                              child: Padding(
+                                padding: EdgeInsetsGeometry.all(14),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        RoundedButtonsNew(testo: 'Fotocamera', icon: Icons.camera_alt, function: WorkPage(), page: true),
+                                        RoundedButtonsNew(testo: 'Foto', icon: Icons.image_sharp, function: WorkPage(), page: true),
+                                      ],
+                                    ),
+                                    Divider(),
+                                    ButtonNoAnimatedTr(testo: 'PDF'),
+                                    ButtonNoAnimatedTr(testo: 'DOC'),
+                                    Divider(),
+                                    ButtonNoAnimatedTr(testo: 'AI PRO'),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
                         // setState(() {
                         //   _messages.clear(); // Pulisce la chat
                         // });

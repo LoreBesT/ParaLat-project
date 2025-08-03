@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:paralat/Components/Drawer_buttons.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/socialLinks.dart';
-import 'package:paralat/Components/space.dart';
 import 'package:paralat/screens/Faq_page.dart';
 import 'package:paralat/screens/infoapp_page.dart';
 import 'package:paralat/screens/terms.dart';
@@ -17,8 +15,6 @@ class AssistenzaPage extends StatefulWidget {
 }
 
 class _AssistenzaPageState extends State<AssistenzaPage> {
-  final _titolo = TextEditingController();
-  final _segnalazione = TextEditingController();
   // bool _isLoading = false;
 
   @override

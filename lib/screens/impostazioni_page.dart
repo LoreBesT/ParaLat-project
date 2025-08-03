@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:paralat/Components/Drawer_buttons.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
+import 'package:paralat/Components/socialLinks.dart';
 import 'package:paralat/Components/space.dart';
+import 'package:paralat/Components/trans.dart';
 import 'package:paralat/screens/assistenza_page.dart';
 import 'package:paralat/screens/info_page.dart';
 import 'package:paralat/screens/reputazione_page.dart';
@@ -64,15 +67,43 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Text('Altro'),
                 ),
-                if (Verify().verifyUser(context) != Verify().typeUser(0) &&
-                    Verify().verifyUser(context) != Verify().typeUser(1))
+                if (Verify().verifyUser(context) != Verify().typeUser(0))
                   SizedBox(
                       width: double.infinity,
                       child: Button(
-                        icona: Icons.diamond_outlined,
+                        icona: Icons.diamond,
                         funzione: SubPage(),
                         testo: '    ParaLat Premium',
                       )),
+                SizedBox(
+                    width: double.infinity,
+                    child: Padding(
+                      padding: EdgeInsetsGeometry.only(bottom: 15),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 55,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            animationDuration: const Duration(seconds: 1),
+                          ),
+                          onPressed: () {
+                            openSite(context, 'https://ko-fi.com/paralatstudy');
+                          },
+                          child: Animate(
+                            effects: const [ScaleEffect()],
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.favorite,
+                                ),
+                                const SizedBox(width: 8),
+                                Text('    Fai una donazione'),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )),
                 SizedBox(
                     width: double.infinity,
                     child: Button(
@@ -87,7 +118,7 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
                         funzione: InfoPage(),
                         testo: '     Credits')),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
+                  padding: const EdgeInsets.only(top: 20.0, bottom: 40),
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Text(

@@ -35,24 +35,7 @@ class _ButtonState extends State<Button> {
             animationDuration: const Duration(seconds: 1),
           ),
           onPressed: () {
-            
-            if (widget.isPremium != null && widget.isPremium == true ||
-                widget.testo != 'Archivio Versioni') {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute<void>(
-              //     builder: (context) => widget.funzione,
-              //   ),
-              // );
               navigateWithCustomAnimation(context, widget.funzione);
-            } else {
-              Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (context) => SubPage(),
-                ),
-              );
-            }
           },
           child: Animate(
             effects: const [ScaleEffect()],
@@ -61,8 +44,6 @@ class _ButtonState extends State<Button> {
                 Icon(widget.icona),
                 const SizedBox(width: 8),
                 Text('${widget.testo}  '),
-                if (widget.isPremium != null && widget.isPremium == false)
-                  Icon(Icons.diamond_outlined),
               ],
             ),
           ),
