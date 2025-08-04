@@ -5,18 +5,15 @@ class ButtonNoAnimatedTr extends StatefulWidget {
   /// Bottone per il drawer personalizzabile con icona, testo e pagina di destinazione
   ButtonNoAnimatedTr({
     super.key,
-    // required this.icona,
     required this.testo,
   });
-
-  // final IconData icona;
   final String testo;
 
   @override
-  State<ButtonNoAnimatedTr> createState() => _ButtonNoAnimatedState();
+  State<ButtonNoAnimatedTr> createState() => _ButtonNoAnimatedTrState();
 }
 
-class _ButtonNoAnimatedState extends State<ButtonNoAnimatedTr> {
+class _ButtonNoAnimatedTrState extends State<ButtonNoAnimatedTr> {
   bool value = false; // Stato iniziale del switch
 
   @override
@@ -61,15 +58,10 @@ class _ButtonNoAnimatedState extends State<ButtonNoAnimatedTr> {
           child: Row(
             children: [
               const SizedBox(width: 16),
-              // Icon(widget.icona,
-              //     color: value
-              //         ? Colors.white
-              //         : Theme.of(context).colorScheme.primary),
-              // const SizedBox(width: 8),
+              const SizedBox(width: 8),
               Text(
                 '${widget.testo}  ',
                 style: TextStyle(
-                    fontWeight: FontWeight.w600,
                     color: value
                         ? Colors.white
                         : Theme.of(context).colorScheme.primary),

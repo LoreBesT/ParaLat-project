@@ -32,104 +32,106 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
           automaticallyImplyLeading: false,
           centerTitle: true,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(10),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Text('Profilo'),
-                ),
-                SizedBox(
-                    width: double.infinity,
-                    child: Button(
-                        icona: Icons.account_circle_sharp,
-                        funzione: ProfiloPage(),
-                        testo: '   Account')),
-                SizedBox(
-                    width: double.infinity,
-                    child: Button(
-                        icona: Icons.language,
-                        funzione: WorkPage(),
-                        testo: '   Cambia lingua')),
-                SizedBox(
-                    width: double.infinity,
-                    child: Button(
-                        icona: Icons.accessibility_new,
-                        funzione: WorkPage(),
-                        testo: '   Accessibilità')),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Text('Altro'),
-                ),
-                if (Verify().verifyUser(context) != Verify().typeUser(0))
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Text('Profilo'),
+                  ),
                   SizedBox(
                       width: double.infinity,
                       child: Button(
-                        icona: Icons.diamond,
-                        funzione: SubPage(),
-                        testo: '    ParaLat Premium',
-                      )),
-                SizedBox(
-                    width: double.infinity,
-                    child: Padding(
-                      padding: EdgeInsetsGeometry.only(bottom: 15),
-                      child: SizedBox(
+                          icona: Icons.account_circle_sharp,
+                          funzione: ProfiloPage(),
+                          testo: '   Account')),
+                  SizedBox(
+                      width: double.infinity,
+                      child: Button(
+                          icona: Icons.language,
+                          funzione: WorkPage(),
+                          testo: '   Cambia lingua')),
+                  SizedBox(
+                      width: double.infinity,
+                      child: Button(
+                          icona: Icons.accessibility_new,
+                          funzione: WorkPage(),
+                          testo: '   Accessibilità')),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Text('Altro'),
+                  ),
+                  if (Verify().verifyUser(context) != Verify().typeUser(0))
+                    SizedBox(
                         width: double.infinity,
-                        height: 55,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            animationDuration: const Duration(seconds: 1),
-                          ),
-                          onPressed: () {
-                            openSite(context, 'https://ko-fi.com/paralatstudy');
-                          },
-                          child: Animate(
-                            effects: const [ScaleEffect()],
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.favorite,
-                                ),
-                                const SizedBox(width: 8),
-                                Text('    Fai una donazione'),
-                              ],
+                        child: Button(
+                          icona: Icons.diamond,
+                          funzione: SubPage(),
+                          testo: '    ParaLat Premium',
+                        )),
+                  SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: EdgeInsetsGeometry.only(bottom: 15),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 55,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              animationDuration: const Duration(seconds: 1),
+                            ),
+                            onPressed: () {
+                              openSite(context, 'https://ko-fi.com/paralatstudy');
+                            },
+                            child: Animate(
+                              effects: const [ScaleEffect()],
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.favorite,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text('    Fai una donazione'),
+                                ],
+                              ),
                             ),
                           ),
                         ),
+                      )),
+                  SizedBox(
+                      width: double.infinity,
+                      child: Button(
+                        icona: Icons.help,
+                        funzione: AssistenzaPage(),
+                        testo: '    Assistenza',
+                      )),
+                  SizedBox(
+                      width: double.infinity,
+                      child: Button(
+                          icona: Icons.info,
+                          funzione: InfoPage(),
+                          testo: '     Credits')),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Text(
+                        'Versione 1.0.0.0-D\nMade by Lorenzo Della Bona',
+                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                        textAlign: TextAlign.center,
                       ),
-                    )),
-                SizedBox(
-                    width: double.infinity,
-                    child: Button(
-                      icona: Icons.help,
-                      funzione: AssistenzaPage(),
-                      testo: '    Assistenza',
-                    )),
-                SizedBox(
-                    width: double.infinity,
-                    child: Button(
-                        icona: Icons.info,
-                        funzione: InfoPage(),
-                        testo: '     Credits')),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0, bottom: 40),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Text(
-                      'Versione 1.0.0.0-D\nMade by Lorenzo Della Bona',
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
-                      textAlign: TextAlign.center,
                     ),
                   ),
-                ),
-                Space(heigth: 70),
-              ],
+                  // Space(heigth: 10),
+                ],
+              ),
             ),
           ),
         ),

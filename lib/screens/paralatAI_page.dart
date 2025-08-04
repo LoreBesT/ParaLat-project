@@ -10,6 +10,7 @@ import 'package:paralat/Components/drawerButtonNoAnimatedWithTrailing.dart';
 import 'package:paralat/Components/rounded_buttons_new.dart';
 import 'package:paralat/screens/work_page.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:image_picker/image_picker.dart';
 
 class GeminiApiPage extends StatefulWidget {
   @override
@@ -23,9 +24,38 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
   final String apiKey =
       'AIzaSyA8XweciTZnjycM2iwHRSzCle-3YAYzV2o'; // Inserisci la tua API Key
   bool _isLoading = false;
+  bool _isPickingImage = false;
+  final ImagePicker _picker = ImagePicker();
+  File? _selectedImage;
+  String models = '2.0-flash';
+  bool aiProActive = false;
+
+  Future<void> _pickImage(ImageSource source) async {
+    if (_isPickingImage) return;
+    _isPickingImage = true;
+
+    try {
+      final XFile? image = await _picker.pickImage(source: source);
+      if (image != null) {
+        setState(() {
+          // _controller.text == 'Analizza';
+          _selectedImage = File(image.path); // Salva l'immagine
+          _messages.add({
+            "sender": "user",
+            "text": "📷 Immagine selezionata: ${image.name}"
+          });
+          FocusScope.of(context).unfocus();
+          _fetchResponse(_controller.text);
+          _controller.clear();
+        });
+      }
+    } finally {
+      _isPickingImage = false;
+    }
+  }
 
   Future<void> _fetchResponse(String text) async {
-    final model = GenerativeModel(model: "gemini-2.0-flash", apiKey: apiKey);
+    final model = GenerativeModel(model: "gemini-${models}", apiKey: apiKey);
     final completeInput =
         'Ciao ho questa versione che devi analizzare secondo le indicazioni che ti do. L\'analisi la incollerò in un file word, perciò dedica una riga per l\'analisi di ciascuna parola. L\'analisi dovrà essere svolta così: subito dopo la parola metti il complemento(oggetto, specificazione, termine, stato in luogo, soggetto ecc... ecc..) per nomi, e pronomi e aggettivi(per gli aggettivi specifica scrivendo ad esempio: Att. del compl di termine); per i verbi metti il modo(indicativo, congiuntivo ecc.. ecc..) per il resto metti invece la parte del discorso(congiunzione, interazione, avverbio ecc...). Dopo tale parte metti il caso per nomi, pronomi e aggettivi ed il tempo per i verbi. In seguito metti il genere(Indica il maschile con M ed il femminile con F) mentre per i verbi metti la persona(Indicandola con 1, 2, 3). Dopo metti il numero(indicandolo con S per il singolare e P per il plurale). Dopo metti per i verbi il paradigma del verbo(Ricorda il paradigma è costituito da 5 voci del verbo: 1 persona indicativo presente, 2 persona indicativo presente, 1 persona indicativo perfetto, supino, infinito presente) mentre per il resto la derivazione(nominativo e genitivo singolare della parola in questione). Infine metti  la corrispettiva traduzione italiana di ogni parola. Un ultima precisazione non fornirmi l\'output in markdown e fornisci l\'analisi completa NON DEVI BLOCCARTI A META\' ANALISI. N.B. Se qualcuna delle precedenti voci dovesse risultare vuota allora non metti direttamente la voce successiva. Questo è un esempio di come fare l\'analisi: Vocas = indicativo, presente 2 S, voco-vocas-vocavi-vocatum-vocare trad: chiami. Oppure per una congiunzione: et = congiunzione trad: e. Per un nome invece ad esempio: rosam = Compl. Oggetto, accusativo, F, S, rosa-rosae, trad: la rosa. Questa è la versione da analizzare: $text';
     setState(() {
@@ -34,40 +64,47 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
     });
 
     try {
-      final response = await model.generateContent([
-        Content.text(completeInput),
-      ]);
-      String response2 = response.text!;
-      String? response3 = response2.replaceAll("*", "").replaceAll("#", "");
-      String? response4 =
-          '${response3}\n\nVersione generata con ParaLat AI\nParaLat AI può commettere errori. Ricorda di controllare accuratamente la tua analisi prima di utilizzarla.';
+      final List<Content> contents = [];
 
-      // Carica il template di base (assicurati di avere un template.docx nel progetto)
+      // Aggiungi immagine se presente
+      if (_selectedImage != null) {
+        final bytes = await _selectedImage!.readAsBytes();
+        contents.add(
+          Content.multi([
+            TextPart(completeInput),
+            DataPart('image/jpg', bytes), // o 'image/png' se PNG
+          ]),
+        );
+      } else {
+        contents.add(Content.text(completeInput));
+      }
+
+      final response = await model.generateContent(contents);
+
+      String response2 = response.text ?? "";
+      String response3 = response2.replaceAll("*", "").replaceAll("#", "");
+      String response4 =
+          '$response3\n\nVersione generata con ParaLat AI - Model $models\nParaLat AI può commettere errori. Ricorda di controllare accuratamente la tua analisi prima di utilizzarla.';
+
+      // Carica il template DOCX
       final ByteData data = await rootBundle.load(r'assets/docs/template.docx');
       final bytes = data.buffer.asUint8List();
       final docx = await docxTemp.DocxTemplate.fromBytes(bytes);
 
-      // Definisci i contenuti da inserire nel template
       final docxTemp.Content content = docxTemp.Content();
-      content.add(docxTemp.TextContent("risposta", response4!));
-      // content.add(docxTemp.TableContent("table", [
+      content.add(docxTemp.TextContent("risposta", response4));
 
-      //   docxTemp.RowContent()
-      // ]));
-
-      // Genera il documento
       final generatedDocx = await docx.generate(content);
 
       if (generatedDocx == null) {
         throw UnsupportedError('Errore nella generazione del documento');
       }
 
-      // Salva il file generato
+      // Salva e apri
       final directory = await getTemporaryDirectory();
       final path = '${directory.path}/documento.docx';
       await File(path).writeAsBytes(generatedDocx);
 
-      // Apri il file con l'app predefinita
       Future.delayed(Duration(milliseconds: 900), () async {
         await OpenFile.open(path);
       });
@@ -79,6 +116,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
               "Versione generata con successo e salvata correttamente. ParaLat AI potrebbe commettere errori. Considera di verificare le informazioni più importanti."
         });
         _isLoading = false;
+        _selectedImage = null; // Reset immagine dopo invio
       });
     } on TimeoutException {
       setState(() {
@@ -231,7 +269,8 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                   CircleAvatar(
                     radius: 23,
                     child: IconButton(
-                      icon: Icon(Icons.image), // Si può sostituire con icons.add
+                      icon:
+                          Icon(Icons.image), // Si può sostituire con icons.add
                       onPressed: () {
                         showModalBottomSheet(
                           context: context,
@@ -244,17 +283,34 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                                   children: [
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        RoundedButtonsNew(testo: 'Fotocamera', icon: Icons.camera_alt, function: WorkPage(), page: true),
-                                        RoundedButtonsNew(testo: 'Foto', icon: Icons.image_sharp, function: WorkPage(), page: true),
+                                        RoundedButtonsNew(
+                                            testo: 'Fotocamera',
+                                            icon: Icons.camera_alt,
+                                            function: () {
+                                              Navigator.pop(context);
+                                              _pickImage(ImageSource.camera);
+                                            },
+                                            page: false),
+                                        RoundedButtonsNew(
+                                            testo: 'Foto',
+                                            icon: Icons.image_sharp,
+                                            function: () {
+                                              Navigator.pop(context);
+                                              _pickImage(ImageSource.gallery);
+                                            },
+                                            page: false),
                                       ],
                                     ),
                                     Divider(),
                                     ButtonNoAnimatedTr(testo: 'PDF'),
                                     ButtonNoAnimatedTr(testo: 'DOC'),
                                     Divider(),
-                                    ButtonNoAnimatedTr(testo: 'AI PRO'),
+                                    ButtonNoAnimatedTr(
+                                      testo: 'AI PRO',
+                                    ),
                                   ],
                                 ),
                               ),

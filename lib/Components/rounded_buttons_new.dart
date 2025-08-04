@@ -35,7 +35,7 @@ class _RoundedButtonsNewState extends State<RoundedButtonsNew> {
                 ),
               );
             } else {
-              widget.function;
+              widget.function();
             }
           },
           child: Column(
