@@ -54,6 +54,7 @@ dependencies:
   url_launcher: ^6.3.2
   font_awesome_flutter: ^10.8.0
   image_picker: ^1.1.2
+  dio: ^5.8.0+1
   # shared_preferences: ^2.5.3
   # google_sign_in: ^6.1.0
 
@@ -93,7 +94,6 @@ flutter:
   assets:
    - assets\images\ParaLat.png
    - assets\images\logo.png
-   - assets\images\logo_word.png
    - assets/docs/template.docx
   #   - images/a_dot_ham.jpeg
 
