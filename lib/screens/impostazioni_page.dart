@@ -4,8 +4,6 @@ import 'package:paralat/Components/Drawer_buttons.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/socialLinks.dart';
-import 'package:paralat/Components/space.dart';
-import 'package:paralat/Components/trans.dart';
 import 'package:paralat/screens/assistenza_page.dart';
 import 'package:paralat/screens/info_page.dart';
 import 'package:paralat/screens/reputazione_page.dart';
@@ -35,41 +33,41 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 10),
                     child: Text('Profilo'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                       width: double.infinity,
                       child: Button(
                           icona: Icons.account_circle_sharp,
                           funzione: ProfiloPage(),
                           testo: '   Account')),
-                  SizedBox(
+                  const SizedBox(
                       width: double.infinity,
                       child: Button(
                           icona: Icons.language,
                           funzione: WorkPage(),
                           testo: '   Cambia lingua')),
-                  SizedBox(
+                  const SizedBox(
                       width: double.infinity,
                       child: Button(
                           icona: Icons.accessibility_new,
                           funzione: WorkPage(),
                           testo: '   Accessibilità')),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 10),
                     child: Text('Altro'),
                   ),
                   if (Verify().verifyUser(context) != Verify().typeUser(0))
-                    SizedBox(
+                    const SizedBox(
                         width: double.infinity,
                         child: Button(
                           icona: Icons.diamond,
@@ -79,25 +77,25 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
                   SizedBox(
                       width: double.infinity,
                       child: Padding(
-                        padding: EdgeInsetsGeometry.only(bottom: 15),
+                        padding: const EdgeInsetsGeometry.only(bottom: 15),
                         child: SizedBox(
                           width: double.infinity,
                           height: 55,
                           child: ElevatedButton(
-                            style: ButtonStyle(
-                              animationDuration: const Duration(seconds: 1),
+                            style: const ButtonStyle(
+                              animationDuration: Duration(seconds: 1),
                             ),
                             onPressed: () {
                               openSite(context, 'https://ko-fi.com/paralatstudy');
                             },
                             child: Animate(
                               effects: const [ScaleEffect()],
-                              child: Row(
+                              child: const Row(
                                 children: [
                                   Icon(
                                     Icons.favorite,
                                   ),
-                                  const SizedBox(width: 8),
+                                  SizedBox(width: 8),
                                   Text('    Fai una donazione'),
                                 ],
                               ),
@@ -105,21 +103,21 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
                           ),
                         ),
                       )),
-                  SizedBox(
+                  const SizedBox(
                       width: double.infinity,
                       child: Button(
                         icona: Icons.help,
                         funzione: AssistenzaPage(),
                         testo: '    Assistenza',
                       )),
-                  SizedBox(
+                  const SizedBox(
                       width: double.infinity,
                       child: Button(
                           icona: Icons.info,
                           funzione: InfoPage(),
                           testo: '     Credits')),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 20.0),
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Text(

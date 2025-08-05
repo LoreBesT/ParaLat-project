@@ -13,19 +13,19 @@ class WorkPage extends StatelessWidget {
         ),
       
       body: Container(
-        color: Color.fromARGB(255, 31, 24, 43),
+        color: const Color.fromARGB(255, 31, 24, 43),
 
-        child: Column(children: [
-          const SizedBox(height: 100,width: double.maxFinite,),
+        child: const Column(children: [
+          SizedBox(height: 100,width: double.maxFinite,),
           SizedBox(
             height: 350,
             width: double.maxFinite,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Card(
                 color: Color.fromARGB(255, 211, 188, 253),
                 // elevation: 10,
-                child: const Column(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('\nQuesta pagina non è ancora disponibile.\nIl nostro Team di sviluppo è al lavoro per rilasciarla quanto prima.', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.black),textAlign: TextAlign.center,),

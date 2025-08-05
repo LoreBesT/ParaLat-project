@@ -27,7 +27,7 @@ class InfoappPage extends StatelessWidget {
             const SizedBox(height: 20,),
             const Text('Tutti i diritti sono riservati',style: TextStyle(color: Colors.grey),),
             const SizedBox(height: 30,),
-            SizedBox(
+            const SizedBox(
               width: 150,
                 child: Button(
                     icona: Icons.info_outline_rounded,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ButtonNoAnimatedTr extends StatefulWidget {
   /// Bottone per il drawer personalizzabile con icona, testo e pagina di destinazione
-  ButtonNoAnimatedTr({
+  const ButtonNoAnimatedTr({
     super.key,
     required this.testo,
   });
@@ -66,7 +66,7 @@ class _ButtonNoAnimatedTrState extends State<ButtonNoAnimatedTr> {
                         ? Colors.white
                         : Theme.of(context).colorScheme.primary),
               ),
-              Spacer(),
+              const Spacer(),
               Switch(
                 value: value,
                 onChanged: (bool newValue) {

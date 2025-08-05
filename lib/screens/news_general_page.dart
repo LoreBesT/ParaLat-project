@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:paralat/Components/auth.dart';
-import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/news_property.dart';
 import 'package:paralat/screens/HomePage.dart';
@@ -10,6 +9,8 @@ import 'package:paralat/screens/dettagli.dart';
 import 'package:paralat/screens/impostazioni_page.dart'; // Assicurati di importare la nuova pagina
 
 class NewsGeneralPage extends StatefulWidget {
+  const NewsGeneralPage({super.key});
+
   @override
   State<NewsGeneralPage> createState() => _NewsPageState();
 }
@@ -21,9 +22,9 @@ class _NewsPageState extends State<NewsGeneralPage> {
     // initBannerAd();
   }
 
-  int _index = 1;
+  final int _index = 1;
 
-  List<Widget> funzioni = [HomePage(), NewsGeneralPage(), ImpostazioniPage()];
+  List<Widget> funzioni = [const HomePage(), const NewsGeneralPage(), const ImpostazioniPage()];
   // late BannerAd bannerAd;
   // bool isAdLoaded = false;
   // var adUnit =
@@ -53,7 +54,7 @@ class _NewsPageState extends State<NewsGeneralPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notizie ed Eventi'),
+        title: const Text('Notizie ed Eventi'),
         automaticallyImplyLeading: false,
         centerTitle: true,
       ),
@@ -64,14 +65,14 @@ class _NewsPageState extends State<NewsGeneralPage> {
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var news = snapshot.data!.docs[index];
               if (news['to'] != 'everyone' && news['to'] != Auth().getUID()) {
-                return SizedBox.shrink();
+                return const SizedBox.shrink();
               }
               return Padding(
                 padding:

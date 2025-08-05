@@ -16,13 +16,13 @@ class _NavFloatBarState extends State<NavFloatBar> {
   Widget build(BuildContext context) {
     bool isDarkTheme = Auth().isDarkTheme(context);
     return FloatingNavbar(
-      padding: EdgeInsets.all(2),
-      margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      padding: const EdgeInsets.all(2),
+      margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       selectedItemColor: Colors.deepPurple,
       backgroundColor:
-          isDarkTheme ? Color.fromARGB(48, 0, 0, 0) : Colors.white,
+          isDarkTheme ? const Color.fromARGB(48, 0, 0, 0) : Colors.white,
       unselectedItemColor: isDarkTheme ? Colors.white : Colors.black,
-      selectedBackgroundColor: Color.fromARGB(255, 250, 219, 255),
+      selectedBackgroundColor: const Color.fromARGB(255, 250, 219, 255),
       elevation: 4,
       borderRadius: 20,
       // onTap: (int val) => setState(() => _index = val),

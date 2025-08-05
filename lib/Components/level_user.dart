@@ -33,7 +33,7 @@ class Verify {
   }
 
   List<Widget>? funzioniBottAppBar(BuildContext context) {
-    return [HomePage(), NewsGeneralPage(), ImpostazioniPage()];
+    return [const HomePage(), const NewsGeneralPage(), const ImpostazioniPage()];
   }
 
   ///Function to set the icon for admin, free and premium users

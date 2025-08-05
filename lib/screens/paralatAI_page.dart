@@ -8,18 +8,19 @@ import 'package:http/http.dart';
 import 'package:open_file/open_file.dart';
 import 'package:paralat/Components/drawerButtonNoAnimatedWithTrailing.dart';
 import 'package:paralat/Components/rounded_buttons_new.dart';
-import 'package:paralat/screens/work_page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
 
 class GeminiApiPage extends StatefulWidget {
+  const GeminiApiPage({super.key});
+
   @override
   _GeminiApiPageState createState() => _GeminiApiPageState();
 }
 
 class _GeminiApiPageState extends State<GeminiApiPage> {
   final TextEditingController _controller = TextEditingController();
-  List<Map<String, String>> _messages =
+  final List<Map<String, String>> _messages =
       []; // Cambia a lista di mappe per tracciare chi ha inviato il messaggio
   final String apiKey =
       'AIzaSyA8XweciTZnjycM2iwHRSzCle-3YAYzV2o'; // Inserisci la tua API Key
@@ -55,7 +56,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
   }
 
   Future<void> _fetchResponse(String text) async {
-    final model = GenerativeModel(model: "gemini-${models}", apiKey: apiKey);
+    final model = GenerativeModel(model: "gemini-$models", apiKey: apiKey);
     final completeInput =
         'Ciao ho questa versione che devi analizzare secondo le indicazioni che ti do. L\'analisi la incollerò in un file word, perciò dedica una riga per l\'analisi di ciascuna parola. L\'analisi dovrà essere svolta così: subito dopo la parola metti il complemento(oggetto, specificazione, termine, stato in luogo, soggetto ecc... ecc..) per nomi, e pronomi e aggettivi(per gli aggettivi specifica scrivendo ad esempio: Att. del compl di termine); per i verbi metti il modo(indicativo, congiuntivo ecc.. ecc..) per il resto metti invece la parte del discorso(congiunzione, interazione, avverbio ecc...). Dopo tale parte metti il caso per nomi, pronomi e aggettivi ed il tempo per i verbi. In seguito metti il genere(Indica il maschile con M ed il femminile con F) mentre per i verbi metti la persona(Indicandola con 1, 2, 3). Dopo metti il numero(indicandolo con S per il singolare e P per il plurale). Dopo metti per i verbi il paradigma del verbo(Ricorda il paradigma è costituito da 5 voci del verbo: 1 persona indicativo presente, 2 persona indicativo presente, 1 persona indicativo perfetto, supino, infinito presente) mentre per il resto la derivazione(nominativo e genitivo singolare della parola in questione). Infine metti  la corrispettiva traduzione italiana di ogni parola. Un ultima precisazione non fornirmi l\'output in markdown e fornisci l\'analisi completa NON DEVI BLOCCARTI A META\' ANALISI. N.B. Se qualcuna delle precedenti voci dovesse risultare vuota allora non metti direttamente la voce successiva. Questo è un esempio di come fare l\'analisi: Vocas = indicativo, presente 2 S, voco-vocas-vocavi-vocatum-vocare trad: chiami. Oppure per una congiunzione: et = congiunzione trad: e. Per un nome invece ad esempio: rosam = Compl. Oggetto, accusativo, F, S, rosa-rosae, trad: la rosa. Questa è la versione da analizzare: $text';
     setState(() {
@@ -105,7 +106,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
       final path = '${directory.path}/documento.docx';
       await File(path).writeAsBytes(generatedDocx);
 
-      Future.delayed(Duration(milliseconds: 900), () async {
+      Future.delayed(const Duration(milliseconds: 900), () async {
         await OpenFile.open(path);
       });
 
@@ -164,8 +165,6 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
       });
     } catch (e) {
       setState(() {
-        print(e.toString());
-        print(e.runtimeType.toString());
         _messages.add({
           "sender": "bot",
           "text":
@@ -195,11 +194,11 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                 padding:
                     const EdgeInsets.all(8), // Distanza tra l'icona e il testo
                 child: isUserMessage
-                    ? Icon(
+                    ? const Icon(
                         Icons.person,
                         color: Colors.deepPurple,
                       )
-                    : Icon(
+                    : const Icon(
                         Icons.generating_tokens,
                         color: Colors.deepPurple,
                       ),
@@ -213,17 +212,17 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                       child: Text(
                         isUserMessage ? 'User' : 'ParaLat AI',
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                             color: Colors.black),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                         height: 2), // Distanza tra il titolo e il sottotitolo
                     Text(
                       message["text"] ?? "",
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
                       textAlign: TextAlign.left,
                     ),
                   ],
@@ -270,14 +269,14 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                     radius: 23,
                     child: IconButton(
                       icon:
-                          Icon(Icons.image), // Si può sostituire con icons.add
+                          const Icon(Icons.image), // Si può sostituire con icons.add
                       onPressed: () {
                         showModalBottomSheet(
                           context: context,
                           builder: (context) {
                             return SafeArea(
                               child: Padding(
-                                padding: EdgeInsetsGeometry.all(14),
+                                padding: const EdgeInsetsGeometry.all(14),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -304,10 +303,10 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                                             page: false),
                                       ],
                                     ),
-                                    Divider(),
+                                    const Divider(),
                                     ButtonNoAnimatedTr(testo: 'PDF'),
                                     ButtonNoAnimatedTr(testo: 'DOC'),
-                                    Divider(),
+                                    const Divider(),
                                     ButtonNoAnimatedTr(
                                       testo: 'AI PRO',
                                     ),

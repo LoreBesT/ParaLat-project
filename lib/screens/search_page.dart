@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paralat/Components/action_buttons.dart';
-import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/feed.dart';
-import 'package:paralat/Components/level_user.dart';
-import 'package:paralat/Components/space.dart';
 import 'package:paralat/screens/archivio_page.dart';
 import 'package:paralat/screens/work_page.dart';
 
@@ -47,15 +44,15 @@ class _SearchPageState extends State<SearchPage> {
                         alignLabelWithHint: true,
                         // Impedisce la sovrapposizione quando si inizia a scrivere
                         hintText: 'Scrivi',
-                        hintStyle: TextStyle(fontSize: 20),
-                        border: OutlineInputBorder(),
+                        hintStyle: const TextStyle(fontSize: 20),
+                        border: const OutlineInputBorder(),
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
                         // Padding modificato per evitare la sovrapposizione
                         contentPadding:
-                            EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                            const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                         suffixIcon: isLoading
-                            ? CircularProgressIndicator()
+                            ? const CircularProgressIndicator()
                             : Padding(
                                 padding: const EdgeInsets.only(right: 20),
                                 child: IconButton(
@@ -86,7 +83,7 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
               ),
-              SingleChildScrollView(
+              const SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -139,7 +136,7 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
               ) 
-              : Feed(),
+              : const Feed(),
             ],
           ),
         ),

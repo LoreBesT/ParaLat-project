@@ -48,7 +48,7 @@ void setupFirebaseMessaging(GlobalKey<NavigatorState> navigatorKey) {
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (context) => NewsGeneralPage()),
+      MaterialPageRoute(builder: (context) => const NewsGeneralPage()),
     );
   });
 }

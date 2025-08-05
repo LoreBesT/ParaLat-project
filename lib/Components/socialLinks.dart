@@ -63,7 +63,7 @@ Future sendMail(BuildContext context, String email, String titolo, String body) 
     await launchUrl(emailUri);
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text('Impossibile aprire il client email.'),
         backgroundColor: Colors.red,
       ),
@@ -81,7 +81,7 @@ Future<void> openSite(BuildContext context, String sito) async {
     }
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text("Errore: impossibile aprire il sito."),
         backgroundColor: Colors.red,
       ),

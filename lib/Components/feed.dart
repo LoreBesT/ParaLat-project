@@ -18,7 +18,7 @@ class _FeedState extends State<Feed> {
   Widget build(BuildContext context) {
     documenti.shuffle();
     return Padding(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: SizedBox(
         width: double.maxFinite,
         child: Column(

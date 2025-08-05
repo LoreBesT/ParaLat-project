@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class Faqpage extends StatefulWidget {
   const Faqpage({super.key});
@@ -9,15 +8,13 @@ class Faqpage extends StatefulWidget {
 }
 
 class _FaqpageState extends State<Faqpage> {
-  bool _isExpanded = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("FAQ"),
+        title: const Text("FAQ"),
       ),
-      body: SafeArea(
+      body: const SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -72,7 +69,7 @@ class FAQButtons extends StatelessWidget {
             splashColor: Colors.transparent,
           ),
           child: ExpansionTile(
-            trailing: Icon(Icons.expand_more_rounded, size: 30),
+            trailing: const Icon(Icons.expand_more_rounded, size: 30),
             title: Text(
               question,
             ),

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:paralat/Components/auth.dart';
-import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/news_property.dart';
 
 class NewsDetailPage extends StatelessWidget {
   final DocumentSnapshot news;
   final bool isNews;
 
-  NewsDetailPage({required this.news, required this.isNews});
+  const NewsDetailPage({super.key, required this.news, required this.isNews});
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +62,7 @@ class NewsDetailPage extends StatelessWidget {
               padding: const EdgeInsets.all(4.0),
               child: Text(
                 body,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
             ),
           ],

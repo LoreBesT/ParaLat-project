@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:paralat/Components/socialLinks.dart';
-import 'package:paralat/Components/trans.dart';
 
 class InfoPage extends StatelessWidget {
   const InfoPage({super.key});
@@ -25,7 +24,7 @@ class InfoPage extends StatelessWidget {
                   style: const TextStyle(fontSize: 16),
                   // textAlign: TextAlign.justify,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(

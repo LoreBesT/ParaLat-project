@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:paralat/Components/auth.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:open_file/open_file.dart';
-import 'package:dio/dio.dart';
-import 'dart:io';
+
 // IL DOWNLOAD DEI FILE FUNZIONA COME CRISTO COMANDA
 
 class ArchivioPage extends StatefulWidget {
@@ -80,7 +77,7 @@ class _ArchivioPageState extends State<ArchivioPage> {
 class FolderPage extends StatefulWidget {
   final String folderPath;
 
-  FolderPage({required this.folderPath});
+  const FolderPage({required this.folderPath});
 
   @override
   _FolderPageState createState() => _FolderPageState();

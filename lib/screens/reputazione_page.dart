@@ -29,8 +29,8 @@ class _MyWidgetState extends State<ProfiloPage> {
                 child: Column(
                   children: [
                     ListTile(
-                      title: Text('${Verify().nameUser(4)}'),
-                      subtitle: Text('${Verify().verifyUser(context)}'),
+                      title: Text(Verify().nameUser(4)),
+                      subtitle: Text(Verify().verifyUser(context)),
                       leading: const Icon(Icons.person),
                       trailing: Icon(
                         Verify().setIcon(context),

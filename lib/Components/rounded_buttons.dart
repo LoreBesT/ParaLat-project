@@ -41,9 +41,9 @@ class _RoundedButtonsState extends State<RoundedButtons> {
               children: [
                 Text(
                   widget.testo,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
-                SizedBox(height: 5,),
+                const SizedBox(height: 5,),
                 Icon(
                   widget.icon,
                   size: 50,

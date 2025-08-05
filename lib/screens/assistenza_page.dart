@@ -23,7 +23,7 @@ class _AssistenzaPageState extends State<AssistenzaPage> {
       appBar: AppBar(
         title: const Text('Assistenza'),
       ),
-      body: Padding(
+      body: const Padding(
         padding: EdgeInsets.all(8.0),
         child: Column(
           children: [

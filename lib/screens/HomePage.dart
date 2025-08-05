@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w500,
               )),
           toolbarHeight: 130,
@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   RoundedButtons(testo: 'ParaLat AI', icon: Icons.generating_tokens, function: GeminiApiPage()),
@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                     top: 0, bottom: 0, left: 12, right: 12),
                 child: Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: Text('Ultime Notizie'),
                     ),
                     TextButton(
@@ -70,11 +70,11 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => NewsGeneralPage(),
+                            builder: (context) => const NewsGeneralPage(),
                           ),
                         );
                       },
-                      child: Text('Vedi tutte'),
+                      child: const Text('Vedi tutte'),
                     ),
                   ],
                 ),
@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                           builder:
                               (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                             if (!snapshot.hasData) {
-                              return Center(child: CircularProgressIndicator());
+                              return const Center(child: CircularProgressIndicator());
                             }
 
                             return Column(
@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                                 var body = doc['body'];
                                 if (doc['to'] != 'everyone' &&
                                     doc['to'] != Auth().getUID()) {
-                                  return SizedBox
+                                  return const SizedBox
                                       .shrink(); // Non mostra nulla per questa notizia
                                 }
                                 return ListTile(
@@ -121,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                                     body,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  leading: Icon(
+                                  leading: const Icon(
                                     Icons.newspaper,
                                     color: Colors.deepPurple,
                                   ),
@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              Space(heigth: 100),
+              const Space(heigth: 100),
             ],
           ),
         ),

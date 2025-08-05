@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:paralat/Components/trans.dart';
-import 'package:paralat/screens/sub_page.dart';
 
 class Button extends StatefulWidget {
   ///Bottone per il drawer personalizzabile con icona, testo e pagina di destinazione
@@ -31,8 +30,8 @@ class _ButtonState extends State<Button> {
         width: double.infinity,
         height: 55,
         child: ElevatedButton(
-          style: ButtonStyle(
-            animationDuration: const Duration(seconds: 1),
+          style: const ButtonStyle(
+            animationDuration: Duration(seconds: 1),
           ),
           onPressed: () {
               navigateWithCustomAnimation(context, widget.funzione);

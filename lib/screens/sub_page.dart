@@ -30,7 +30,7 @@ class _SubPageState extends State<SubPage> {
               slivers: [
                 SliverAppBar(
                   //Fixare il white e modificare il colore a seconda se ci si trova in dark mode o white mode
-                  backgroundColor: isDarkTheme? Color.fromARGB(255, 17, 16, 16) : Colors.white,
+                  backgroundColor: isDarkTheme? const Color.fromARGB(255, 17, 16, 16) : Colors.white,
                   pinned: true,
                   expandedHeight: 250,
                   flexibleSpace: FlexibleSpaceBar(
@@ -148,10 +148,10 @@ class _SubPageState extends State<SubPage> {
                     onPressed: () {
                       // Azione da eseguire quando il pulsante viene premuto
                     },
+                    style: ButtonStyle(backgroundColor: WidgetStateProperty.all<Color>(const Color.fromARGB(255, 219, 116, 237)), foregroundColor: WidgetStateProperty.all(Colors.white)),
                     child: Text(_abbonamentoScelto == 'Annuale' 
                       ? 'Abbonati a 24,96€/anno' 
                       : 'Abbonati a 2,99€/mese'),
-                    style: ButtonStyle(backgroundColor: WidgetStateProperty.all<Color>(const Color.fromARGB(255, 219, 116, 237)), foregroundColor: WidgetStateProperty.all(Colors.white)),
                   ),
                 ),
               ),

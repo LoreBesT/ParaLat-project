@@ -48,7 +48,7 @@ class _FeedcardState extends State<Feedcard> {
                         color: isLikePressed ? Colors.red : null,
                       )),
                   trailing: IconButton(
-                    icon: Icon(Icons.download),
+                    icon: const Icon(Icons.download),
                     onPressed: () {
                     },
                   )
