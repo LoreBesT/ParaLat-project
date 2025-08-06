@@ -16,16 +16,16 @@ class NewsDetailPage extends StatelessWidget {
     // Estrai i dati dalla notizia
     final title = news['title'];
     final body = news['body'];
-  
+
     final autore = news['autore'];
     final image = news['image'];
-    String? addresser;
+    bool isToYou = false;
 
     final address = news['to'];
     if (address.toString() == Auth().getUID()) {
-      addresser = 'you';
+      isToYou = true;
     } else {
-      addresser = address.toString();
+      isToYou = false;
     }
 
     return Scaffold(
@@ -41,9 +41,9 @@ class NewsDetailPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildTitle(title),
-              _buildDetailImage(image),
+              _buildDetailImage(image, isToYou),
               const Divider(),
-              _buildAuthorAndDate(autore),
+              _buildAuthorAndDate(autore, isToYou),
               const Divider(),
               _buildBody(body),
             ],
@@ -62,17 +62,19 @@ Widget _buildTitle(String title) {
   );
 }
 
-Widget _buildDetailImage(String imageUrl) {
+Widget _buildDetailImage(String imageUrl, bool isToYou) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 10),
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(10.0),
-      child: Image.network(imageUrl),
-    ),
+    child: isToYou
+        ? SizedBox.shrink()
+        : ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Image.network(imageUrl),
+          ),
   );
 }
 
-Widget _buildAuthorAndDate(String autore) {
+Widget _buildAuthorAndDate(String autore, bool isToYou) {
   return Column(
     children: [
       Row(
@@ -83,14 +85,21 @@ Widget _buildAuthorAndDate(String autore) {
             onTap: () {},
             child: Padding(
               padding: const EdgeInsets.all(1.0),
-              child: Text(
-                "di $autore",
-                style: const TextStyle(
-                  color: Color.fromARGB(255, 246, 58, 76),
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: isToYou
+                  ? Text('Per te',
+                      style: const TextStyle(
+                        color: Colors.blue,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ))
+                  : Text(
+                      "di $autore",
+                      style: const TextStyle(
+                        color: Color.fromARGB(255, 246, 58, 76),
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
             ),
           ),
         ],
