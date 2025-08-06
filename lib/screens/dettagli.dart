@@ -1,73 +1,228 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
+import 'package:paralat/Components/aiFunction.dart';
 import 'package:paralat/Components/auth.dart';
-import 'package:paralat/Components/news_property.dart';
 
 class NewsDetailPage extends StatelessWidget {
   final DocumentSnapshot news;
-  final bool isNews;
-
-  const NewsDetailPage({super.key, required this.news, required this.isNews});
+  const NewsDetailPage({
+    super.key,
+    required this.news,
+  });
 
   @override
   Widget build(BuildContext context) {
     // Estrai i dati dalla notizia
     final title = news['title'];
     final body = news['body'];
-    final color = news['imp'];
-    String? formattedDate;
+  
+    final autore = news['autore'];
+    final image = news['image'];
     String? addresser;
-    String? adder;
-    if (isNews == false) {
-      final scadenza = news['scadenza'];
-      try {
-        adder =
-            '\n Evento di: ${news.get('adder')}';
-      } catch (e) {
-        adder = ''; // Usa la stringa di default se la chiave non esiste
-      }
-      DateTime date = scadenza.toDate();
-      formattedDate =
-          '${date.day.toString()}/${date.month.toString()}/${date.year.toString()}';
+
+    final address = news['to'];
+    if (address.toString() == Auth().getUID()) {
+      addresser = 'you';
     } else {
-      final address = news['to'];
-      if (address.toString() == Auth().getUID()) {
-        addresser = 'you';
-      } else {
-        addresser = address.toString();
-      }
+      addresser = address.toString();
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        toolbarHeight: 60,
+        centerTitle: true,
+        title: Text('ParaLat News'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.circle,
-                  color: NewsProperty().setScadColor(color),
-                ),
-                Text(isNews
-                    ? 'To $addresser'
-                    : ' Scadenza: $formattedDate $adder'),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Text(
-                body,
-                style: const TextStyle(fontSize: 16),
-              ),
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTitle(title),
+              _buildDetailImage(image),
+              const Divider(),
+              _buildAuthorAndDate(autore),
+              const Divider(),
+              _buildBody(body),
+            ],
+          ),
         ),
       ),
+      floatingActionButton: _buildFloatingActionButton(context, body, autore),
     );
   }
+}
+
+Widget _buildTitle(String title) {
+  return Text(
+    title,
+    style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+  );
+}
+
+Widget _buildDetailImage(String imageUrl) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 10),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(10.0),
+      child: Image.network(imageUrl),
+    ),
+  );
+}
+
+Widget _buildAuthorAndDate(String autore) {
+  return Column(
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          InkWell(
+            borderRadius: BorderRadius.circular(25),
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.all(1.0),
+              child: Text(
+                "di $autore",
+                style: const TextStyle(
+                  color: Color.fromARGB(255, 246, 58, 76),
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      // Padding(
+      //   padding: const EdgeInsets.only(top: 8.0),
+      //   child: Text(
+      //     widget.data,
+      //     style:
+      //         const TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
+      //   ),
+      // ),
+    ],
+  );
+}
+
+Widget _buildBody(String body) {
+  return Text(body);
+}
+
+Widget _buildFloatingActionButton(
+    BuildContext context, String body, String autore) {
+  return PopupMenuButton(
+    color: Colors.white,
+    elevation: 8,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+    ),
+    icon: Container(
+      height: 70,
+      width: 70,
+      decoration: const BoxDecoration(
+        color: Color.fromARGB(0, 255, 255, 255),
+        shape: BoxShape.circle,
+        image: DecorationImage(
+          image: AssetImage('assets/images/ParaLat.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+    ),
+    itemBuilder: (context) => [
+      PopupMenuItem(
+        child: ListTile(
+          leading: const Icon(Icons.generating_tokens, color: Colors.blue),
+          title: const Text("Riassumi l'articolo"),
+          onTap: () {
+            Navigator.pop(context);
+            _showSummaryModal(context, body, autore);
+          },
+        ),
+      ),
+      PopupMenuItem(
+        onTap: () {
+          Clipboard.setData(ClipboardData(text: body));
+        },
+        child: const ListTile(
+          leading: Icon(Icons.copy, color: Colors.green),
+          title: Text("Copia Articolo"),
+        ),
+      ),
+    ],
+  );
+}
+
+void _showSummaryModal(BuildContext context, String body, String autore) {
+  showModalBottomSheet(
+    backgroundColor: Colors.blue.shade50,
+    context: context,
+    builder: (context) => FutureBuilder<String>(
+      future: aiFunction(body, autore),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else {
+          return SingleChildScrollView(
+            child: SizedBox(
+              width: double.maxFinite,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  title: const Row(
+                    children: [
+                      Icon(Icons.generating_tokens,
+                          color: Colors.blue, size: 24),
+                      Text('  Riassunto AI',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                  subtitle: Column(
+                    children: [
+                      // MarkdownBody(
+                      //   data: snapshot.data ?? '',
+                      //   selectable: true,
+                      // ),
+                      Text(snapshot.data ?? ''),
+                      Row(
+                        children: [
+                          const Text(
+                            'Powered by ',
+                            style: TextStyle(fontStyle: FontStyle.italic),
+                          ),
+                          Image.asset('assets/images/ParaLat.png', scale: 9),
+                          IconButton(
+                            onPressed: () {
+                              // shareText(testo: snapshot.data ?? '');
+                            },
+                            icon: const Icon(Icons.share),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              Clipboard.setData(
+                                  ClipboardData(text: snapshot.data ?? ''));
+                            },
+                            icon: const Icon(Icons.copy),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.refresh),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+      },
+    ),
+  );
 }

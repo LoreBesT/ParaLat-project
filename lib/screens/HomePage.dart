@@ -131,7 +131,6 @@ class _HomePageState extends State<HomePage> {
                                       MaterialPageRoute(
                                         builder: (context) => NewsDetailPage(
                                           news: doc,
-                                          isNews: true,
                                         ),
                                       ),
                                     );

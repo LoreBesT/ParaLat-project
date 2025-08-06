@@ -2,10 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:paralat/Components/auth.dart';
+import 'package:paralat/Components/feedNewsCard.dart';
 import 'package:paralat/Components/navfloatbar.dart';
-import 'package:paralat/Components/news_property.dart';
 import 'package:paralat/screens/HomePage.dart';
-import 'package:paralat/screens/dettagli.dart';
 import 'package:paralat/screens/impostazioni_page.dart'; // Assicurati di importare la nuova pagina
 
 class NewsGeneralPage extends StatefulWidget {
@@ -24,7 +23,11 @@ class _NewsPageState extends State<NewsGeneralPage> {
 
   final int _index = 1;
 
-  List<Widget> funzioni = [const HomePage(), const NewsGeneralPage(), const ImpostazioniPage()];
+  List<Widget> funzioni = [
+    const HomePage(),
+    const NewsGeneralPage(),
+    const ImpostazioniPage()
+  ];
   // late BannerAd bannerAd;
   // bool isAdLoaded = false;
   // var adUnit =
@@ -74,35 +77,12 @@ class _NewsPageState extends State<NewsGeneralPage> {
               if (news['to'] != 'everyone' && news['to'] != Auth().getUID()) {
                 return const SizedBox.shrink();
               }
-              return Padding(
-                padding:
-                    const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 0),
-                child: Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.newspaper,
-                      color: NewsProperty()
-                          .setScadColor(news['imp'] ?? Colors.green),
-                    ),
-                    title: Text(news['title']),
-                    subtitle: Text('${news['body']}\n',
-                        overflow: TextOverflow.ellipsis),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NewsDetailPage(
-                            news: news,
-                            isNews: true,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              );
+              return FeedNewsCard(
+                  title: news['title'],
+                  autore: news['autore'],
+                  body: news['body'],
+                  snapshot: news,
+                  image: news['image']);
             },
           );
         },
@@ -115,9 +95,9 @@ class _NewsPageState extends State<NewsGeneralPage> {
       //       )
       //     : SizedBox(),
       bottomNavigationBar: NavFloatBar(
-          index: _index,
-          funzioni: funzioni,
-        ),
+        index: _index,
+        funzioni: funzioni,
+      ),
     );
   }
 }

@@ -1,0 +1,105 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+// import 'package:lecosimo/components/share.dart';
+// import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:paralat/screens/dettagli.dart';
+
+class FeedNewsCard extends StatefulWidget {
+  const FeedNewsCard(
+      {super.key,
+      required this.title,
+      required this.autore,
+      required this.body,
+      required this.image,
+      required this.snapshot});
+
+  final String title;
+  final String autore;
+  final String body;
+  final String image;
+  final DocumentSnapshot snapshot;
+
+  @override
+  State<FeedNewsCard> createState() => _FeedNewsCardState();
+}
+
+class _FeedNewsCardState extends State<FeedNewsCard> {
+  bool isLikePressed = false;
+  late List<String> listaTags;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: InkWell(
+        onTap: () => _navigateToDetailPage(context, widget.snapshot),
+        child: SizedBox(
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            elevation: 2,
+            clipBehavior: Clip.hardEdge,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                _buildImage(widget.image),
+                _buildCardContent(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _navigateToDetailPage(BuildContext context, DocumentSnapshot news) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NewsDetailPage(news: news)),
+    );
+  }
+
+  Widget _buildImage(String imageUrl) {
+    return Image.network(
+      imageUrl,
+      errorBuilder: (context, error, stackTrace) {
+        return Image.asset('assets/images/ParaLat.png', scale: 2.3);
+      },
+    );
+  }
+
+  Widget _buildCardContent() {
+    return ListTile(
+      title: Text(widget.title, overflow: TextOverflow.clip),
+      subtitle: Text("di ${widget.autore}"),
+      isThreeLine: true,
+      leading: IconButton(
+        onPressed: () {
+          setState(() {
+            isLikePressed = !isLikePressed;
+          });
+        },
+        icon: Icon(
+          isLikePressed ? Icons.favorite : Icons.favorite_border,
+          color: isLikePressed ? Colors.red : null,
+        ),
+      ),
+      trailing: IconButton(
+        icon: const Icon(Icons.share),
+        onPressed: () {
+          // shareText(
+          //     testo:
+          //         'Leggi questo articolo di ${widget.autore} e tanto altro solo su ParaLat',
+          //     link: widget.link);
+        },
+      ),
+    );
+  }
+}
