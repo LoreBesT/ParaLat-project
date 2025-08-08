@@ -52,7 +52,7 @@ class _NewsPageState extends State<NewsGeneralPage> {
 
   //   bannerAd.load();
   // }
-
+  bool isToYou = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,12 +77,21 @@ class _NewsPageState extends State<NewsGeneralPage> {
               if (news['to'] != 'everyone' && news['to'] != Auth().getUID()) {
                 return const SizedBox.shrink();
               }
-              return FeedNewsCard(
-                  title: news['title'],
-                  autore: news['autore'],
-                  body: news['body'],
-                  snapshot: news,
-                  image: news['image']);
+              if (news['to'] == Auth().getUID()) {
+                isToYou = true;
+              } else {
+                isToYou = false;
+              }
+              return isToYou
+                  ? SizedBox.shrink()
+                  : FeedNewsCard(
+                      title: news['title'],
+                      autore: news['autore'],
+                      body: news['body'],
+                      snapshot: news,
+                      image: isToYou ? 'null' : news['image'],
+                      toYou: news['to'] == Auth().getUID() ? true : false,
+                    );
             },
           );
         },

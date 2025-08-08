@@ -6,8 +6,10 @@ import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/rounded_buttons.dart';
 import 'package:paralat/Components/space.dart';
+import 'package:paralat/Components/trans.dart';
 import 'package:paralat/screens/dettagli.dart';
 import 'package:paralat/screens/news_general_page.dart';
+import 'package:paralat/screens/notifications_page.dart';
 import 'package:paralat/screens/paralatAI_page.dart';
 import 'package:paralat/screens/search_page.dart';
 
@@ -43,6 +45,23 @@ class _HomePageState extends State<HomePage> {
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
               )),
+          // leading: IconButton(icon: Icon(Icons.notifications), onPressed: (){},),
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.notifications,
+                size: 24,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NotificationsPage(),
+                  ),
+                );
+              },
+            ),
+          ],
           toolbarHeight: 130,
           centerTitle: true,
           automaticallyImplyLeading: false,
@@ -53,8 +72,14 @@ class _HomePageState extends State<HomePage> {
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RoundedButtons(testo: 'ParaLat AI', icon: Icons.generating_tokens, function: GeminiApiPage()),
-                  RoundedButtons(testo: 'Archivio', icon: Icons.archive, function: SearchPage()),
+                  RoundedButtons(
+                      testo: 'ParaLat AI',
+                      icon: Icons.generating_tokens,
+                      function: GeminiApiPage()),
+                  RoundedButtons(
+                      testo: 'Archivio',
+                      icon: Icons.archive,
+                      function: SearchPage()),
                 ],
               ),
               Padding(
@@ -82,7 +107,8 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 250,
                 child: Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
                   elevation: 4,
                   child: Scrollbar(
                     controller: _listViewController,
@@ -102,7 +128,8 @@ class _HomePageState extends State<HomePage> {
                           builder:
                               (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                             if (!snapshot.hasData) {
-                              return const Center(child: CircularProgressIndicator());
+                              return const Center(
+                                  child: CircularProgressIndicator());
                             }
 
                             return Column(
@@ -110,8 +137,8 @@ class _HomePageState extends State<HomePage> {
                               children: snapshot.data!.docs.map((doc) {
                                 var title = doc['title'];
                                 var body = doc['body'];
-                                if (doc['to'] != 'everyone' &&
-                                    doc['to'] != Auth().getUID()) {
+                                if (doc['to'] != 'everyone' ||
+                                    doc['to'] == Auth().getUID()) {
                                   return const SizedBox
                                       .shrink(); // Non mostra nulla per questa notizia
                                 }

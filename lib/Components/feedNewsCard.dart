@@ -8,16 +8,18 @@ class FeedNewsCard extends StatefulWidget {
   const FeedNewsCard(
       {super.key,
       required this.title,
-      required this.autore,
+      required this.autore, 
       required this.body,
-      required this.image,
-      required this.snapshot});
+      required this.image, //Togliere required ad image
+      required this.snapshot,
+      required this.toYou});
 
   final String title;
   final String autore;
   final String body;
   final String image;
   final DocumentSnapshot snapshot;
+  final bool toYou;
 
   @override
   State<FeedNewsCard> createState() => _FeedNewsCardState();
@@ -43,13 +45,15 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            elevation: 2,
+            // elevation: 2,
             clipBehavior: Clip.hardEdge,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _buildImage(widget.image),
+                widget.toYou
+                    ? const SizedBox.shrink()
+                    : _buildImage(widget.image),
                 _buildCardContent(),
               ],
             ),
@@ -70,15 +74,20 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
     return Image.network(
       imageUrl,
       errorBuilder: (context, error, stackTrace) {
-        return Image.asset('assets/images/ParaLat.png', scale: 2.3);
+        return Image.asset('assets/images/logo.png', scale: 2.3);
       },
     );
   }
 
   Widget _buildCardContent() {
     return ListTile(
-      title: Text(widget.title, overflow: TextOverflow.clip),
-      subtitle: Text("di ${widget.autore}"),
+      title: Text(widget.title, overflow: TextOverflow.ellipsis, maxLines: widget.toYou ? 3 : 4,),
+      subtitle: widget.toYou
+          ? const Text(
+              'Per te',
+              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w800),
+            )
+          : Text("di ${widget.autore}"),
       isThreeLine: true,
       leading: IconButton(
         onPressed: () {
@@ -86,13 +95,21 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
             isLikePressed = !isLikePressed;
           });
         },
-        icon: Icon(
-          isLikePressed ? Icons.favorite : Icons.favorite_border,
-          color: isLikePressed ? Colors.red : null,
-        ),
+        icon: widget.toYou
+            ? Icon(Icons.notifications, color: Colors.yellow[600], size: 32)
+            : Icon(
+                isLikePressed ? Icons.favorite : Icons.favorite_border,
+                color: isLikePressed ? Colors.red : null,
+                size: 32,
+              ),
+        alignment: Alignment.centerLeft,
+        iconSize: 32,
+        padding: const EdgeInsets.all(0),
       ),
-      trailing: IconButton(
-        icon: const Icon(Icons.share),
+      trailing: widget.toYou ? SizedBox.shrink() : IconButton(
+        icon: const Icon(
+          Icons.share,
+        ),
         onPressed: () {
           // shareText(
           //     testo:

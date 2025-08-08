@@ -106,21 +106,21 @@ class Auth {
         .add({
           'title': title,
           'body': body,
-          'imp': 'purple',
           'ora': FieldValue.serverTimestamp(),
-          'to': uid
+          'to': uid,
+          'autore': 'ParaLat Team'
         })
         .then((value) {})
         .catchError((error) {});
   }
 
-  Future<void> deleteDocument(DocumentSnapshot documentSnapshot) async {
-    try {
-      // Ottieni la referenza del documento dal DocumentSnapshot
-      final documentRef = documentSnapshot.reference;
-      await documentRef.delete();
-    } catch (e) {}
-  }
+  // Future<void> deleteDocument(DocumentSnapshot documentSnapshot) async {
+  //   try {
+  //     // Ottieni la referenza del documento dal DocumentSnapshot
+  //     final documentRef = documentSnapshot.reference;
+  //     await documentRef.delete();
+  //   } catch (e) {}
+  // }
 
   Future<void> setNameAndSurname(
       {required String name, required String surname}) async {

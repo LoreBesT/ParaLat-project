@@ -18,21 +18,23 @@ class NewsDetailPage extends StatelessWidget {
     final body = news['body'];
 
     final autore = news['autore'];
-    final image = news['image'];
+    dynamic image;
     bool isToYou = false;
 
     final address = news['to'];
     if (address.toString() == Auth().getUID()) {
       isToYou = true;
+      image = 'null'; // Non mostrare l'immagine se è per te
     } else {
       isToYou = false;
+      image = news['image'];
     }
 
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60,
         centerTitle: true,
-        title: Text('ParaLat News'),
+        title: const Text('ParaLat News'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -50,7 +52,7 @@ class NewsDetailPage extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: _buildFloatingActionButton(context, body, autore),
+     floatingActionButton: isToYou ? null : _buildFloatingActionButton(context, body, autore),
     );
   }
 }
@@ -66,10 +68,15 @@ Widget _buildDetailImage(String imageUrl, bool isToYou) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 10),
     child: isToYou
-        ? SizedBox.shrink()
+        ? const SizedBox.shrink()
         : ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
-            child: Image.network(imageUrl),
+            child: Image.network(
+              imageUrl,
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset('assets/images/logo.png', scale: 2.3);
+              },
+            ),
           ),
   );
 }
@@ -86,11 +93,11 @@ Widget _buildAuthorAndDate(String autore, bool isToYou) {
             child: Padding(
               padding: const EdgeInsets.all(1.0),
               child: isToYou
-                  ? Text('Per te',
-                      style: const TextStyle(
+                  ? const Text('Per te',
+                      style: TextStyle(
                         color: Colors.blue,
                         fontSize: 14,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w800,
                       ))
                   : Text(
                       "di $autore",
@@ -104,14 +111,6 @@ Widget _buildAuthorAndDate(String autore, bool isToYou) {
           ),
         ],
       ),
-      // Padding(
-      //   padding: const EdgeInsets.only(top: 8.0),
-      //   child: Text(
-      //     widget.data,
-      //     style:
-      //         const TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
-      //   ),
-      // ),
     ],
   );
 }
@@ -135,7 +134,7 @@ Widget _buildFloatingActionButton(
         color: Color.fromARGB(0, 255, 255, 255),
         shape: BoxShape.circle,
         image: DecorationImage(
-          image: AssetImage('assets/images/ParaLat.png'),
+          image: AssetImage('assets/images/icon.png'),
           fit: BoxFit.cover,
         ),
       ),
@@ -157,7 +156,7 @@ Widget _buildFloatingActionButton(
         },
         child: const ListTile(
           leading: Icon(Icons.copy, color: Colors.green),
-          title: Text("Copia Articolo"),
+          title: Text("Copia l'articolo"),
         ),
       ),
     ],
@@ -176,55 +175,57 @@ void _showSummaryModal(BuildContext context, String body, String autore) {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
-          return SingleChildScrollView(
-            child: SizedBox(
-              width: double.maxFinite,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                  title: const Row(
-                    children: [
-                      Icon(Icons.generating_tokens,
-                          color: Colors.blue, size: 24),
-                      Text('  Riassunto AI',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
-                    ],
-                  ),
-                  subtitle: Column(
-                    children: [
-                      // MarkdownBody(
-                      //   data: snapshot.data ?? '',
-                      //   selectable: true,
-                      // ),
-                      Text(snapshot.data ?? ''),
-                      Row(
-                        children: [
-                          const Text(
-                            'Powered by ',
-                            style: TextStyle(fontStyle: FontStyle.italic),
-                          ),
-                          Image.asset('assets/images/ParaLat.png', scale: 9),
-                          IconButton(
-                            onPressed: () {
-                              // shareText(testo: snapshot.data ?? '');
-                            },
-                            icon: const Icon(Icons.share),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              Clipboard.setData(
-                                  ClipboardData(text: snapshot.data ?? ''));
-                            },
-                            icon: const Icon(Icons.copy),
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.refresh),
-                          ),
-                        ],
-                      ),
-                    ],
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: SizedBox(
+                width: double.maxFinite,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                    title: const Row(
+                      children: [
+                        Icon(Icons.generating_tokens,
+                            color: Colors.blue, size: 24),
+                        Text('  Riassunto AI',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                    subtitle: Column(
+                      children: [
+                        // MarkdownBody(
+                        //   data: snapshot.data ?? '',
+                        //   selectable: true,
+                        // ),
+                        Text(snapshot.data ?? ''),
+                        Row(
+                          children: [
+                            const Text(
+                              'Powered by ',
+                              style: TextStyle(fontStyle: FontStyle.italic),
+                            ),
+                            Image.asset('assets/images/ParaLat.png', scale: 9),
+                            IconButton(
+                              onPressed: () {
+                                // shareText(testo: snapshot.data ?? '');
+                              },
+                              icon: const Icon(Icons.share),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                Clipboard.setData(
+                                    ClipboardData(text: snapshot.data ?? ''));
+                              },
+                              icon: const Icon(Icons.copy),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.refresh),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
