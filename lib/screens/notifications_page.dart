@@ -5,17 +5,19 @@ import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/feedNewsCard.dart';
 
 class NotificationsPage extends StatefulWidget {
-  const NotificationsPage({super.key});
+  const NotificationsPage({super.key,});
 
   @override
   State<NotificationsPage> createState() => _NotificationPageState();
 }
+
 
 class _NotificationPageState extends State<NotificationsPage> {
   @override
   void initState() {
     super.initState();
   }
+
 
   bool isToYou = false;
   @override

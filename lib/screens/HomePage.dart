@@ -22,6 +22,27 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+Stream<bool> areAllReadStream(String collectionName) {
+  return FirebaseFirestore.instance
+      .collection(collectionName)
+      .where('to', isNotEqualTo: 'everyone')
+      .snapshots()
+      .map((querySnapshot) {
+    // Se non ci sono documenti, consideriamo "tutto letto"
+    if (querySnapshot.docs.isEmpty) return true;
+
+    // Se almeno uno è false → ritorna false
+    for (var doc in querySnapshot.docs) {
+      final data = doc.data();
+      if (data['isRead'] == false) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+}
+
 class _HomePageState extends State<HomePage> {
   int _index = 0;
   // List<Widget> funzioni = [HomePage(), NewsPage(), ImpostazioniPage()];
@@ -33,6 +54,11 @@ class _HomePageState extends State<HomePage> {
 
   // Definisci un ScrollController
   final ScrollController _listViewController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +74,18 @@ class _HomePageState extends State<HomePage> {
           // leading: IconButton(icon: Icon(Icons.notifications), onPressed: (){},),
           actions: [
             IconButton(
-              icon: const Icon(
-                Icons.notifications,
-                size: 24,
-              ),
+              icon: StreamBuilder(
+                  stream: areAllReadStream("news"),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Text("Caricamento...");
+                    }
+                    bool tutteLette = snapshot.data!;
+                    return Icon(
+                      tutteLette ? Icons.notifications : Icons.notification_add,
+                      size: 24,
+                    );
+                  }),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -104,70 +138,73 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 250,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  elevation: 4,
-                  child: Scrollbar(
-                    controller: _listViewController,
-                    child: ListView(
+              Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8),
+                child: SizedBox(
+                  height: 250,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    elevation: 4,
+                    child: Scrollbar(
                       controller: _listViewController,
-                      children: [
-                        StreamBuilder(
-                          stream: FirebaseFirestore.instance
-                              .collection(
-                                  'news') // Usa il nome della tua collezione
-                              .orderBy('ora',
-                                  descending:
-                                      true) // Assicurati di avere un campo timestamp per ordinare
-                              .limit(
-                                  5) // Limita i risultati agli ultimi 5 documenti
-                              .snapshots(),
-                          builder:
-                              (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (!snapshot.hasData) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            }
+                      child: ListView(
+                        controller: _listViewController,
+                        children: [
+                          StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection(
+                                    'news') // Usa il nome della tua collezione
+                                .orderBy('ora',
+                                    descending:
+                                        true) // Assicurati di avere un campo timestamp per ordinare
+                                .limit(
+                                    5) // Limita i risultati agli ultimi 5 documenti
+                                .snapshots(),
+                            builder: (context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (!snapshot.hasData) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
 
-                            return Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: snapshot.data!.docs.map((doc) {
-                                var title = doc['title'];
-                                var body = doc['body'];
-                                if (doc['to'] != 'everyone' ||
-                                    doc['to'] == Auth().getUID()) {
-                                  return const SizedBox
-                                      .shrink(); // Non mostra nulla per questa notizia
-                                }
-                                return ListTile(
-                                  title: Text(title),
-                                  subtitle: Text(
-                                    body,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  leading: const Icon(
-                                    Icons.newspaper,
-                                    color: Colors.deepPurple,
-                                  ),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => NewsDetailPage(
-                                          news: doc,
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: snapshot.data!.docs.map((doc) {
+                                  var title = doc['title'];
+                                  var body = doc['body'];
+                                  if (doc['to'] != 'everyone' ||
+                                      doc['to'] == Auth().getUID()) {
+                                    return const SizedBox
+                                        .shrink(); // Non mostra nulla per questa notizia
+                                  }
+                                  return ListTile(
+                                    title: Text(title),
+                                    subtitle: Text(
+                                      body,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    leading: const Icon(
+                                      Icons.newspaper,
+                                      color: Colors.deepPurple,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => NewsDetailPage(
+                                            news: doc,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              }).toList(),
-                            );
-                          },
-                        ),
-                      ],
+                                      );
+                                    },
+                                  );
+                                }).toList(),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -177,6 +214,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         extendBody: true,
+        // floatingActionButton: FloatingActionButton(onPressed: (){}, child: Icon(Icons.translate),),
         bottomNavigationBar: NavFloatBar(
           index: _index,
           funzioni: funzioni,
