@@ -108,7 +108,8 @@ class Auth {
           'body': body,
           'ora': FieldValue.serverTimestamp(),
           'to': uid,
-          'autore': 'ParaLat Team'
+          'autore': 'ParaLat Team',
+          'isRead': false,
         })
         .then((value) {})
         .catchError((error) {});
@@ -158,6 +159,23 @@ class Auth {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Errore: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  Future<void> markAsRead(BuildContext context, String docId) async {
+    final docRef =
+        FirebaseFirestore.instance.collection('news').doc(docId);
+
+    try {
+      await docRef.update({'isRead': true});
+    } catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Errore durante l\'aggiornamento: $e'),
           backgroundColor: Colors.red,
         ),
       );

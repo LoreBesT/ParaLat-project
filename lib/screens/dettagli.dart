@@ -29,7 +29,7 @@ class NewsDetailPage extends StatelessWidget {
       isToYou = false;
       image = news['image'];
     }
-
+    Auth().markAsRead(context, news.id);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60,
@@ -87,27 +87,23 @@ Widget _buildAuthorAndDate(String autore, bool isToYou) {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          InkWell(
-            borderRadius: BorderRadius.circular(25),
-            onTap: () {},
-            child: Padding(
-              padding: const EdgeInsets.all(1.0),
-              child: isToYou
-                  ? const Text('Per te',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w800,
-                      ))
-                  : Text(
-                      "di $autore",
-                      style: const TextStyle(
-                        color: Color.fromARGB(255, 246, 58, 76),
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
+          Padding(
+            padding: const EdgeInsets.all(1.0),
+            child: isToYou
+                ? const Text('Per te',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800,
+                    ))
+                : Text(
+                    "di $autore",
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 246, 58, 76),
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
                     ),
-            ),
+                  ),
           ),
         ],
       ),

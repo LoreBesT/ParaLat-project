@@ -8,7 +8,7 @@ class FeedNewsCard extends StatefulWidget {
   const FeedNewsCard(
       {super.key,
       required this.title,
-      required this.autore, 
+      required this.autore,
       required this.body,
       required this.image, //Togliere required ad image
       required this.snapshot,
@@ -81,7 +81,11 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
 
   Widget _buildCardContent() {
     return ListTile(
-      title: Text(widget.title, overflow: TextOverflow.ellipsis, maxLines: widget.toYou ? 3 : 4,),
+      title: Text(
+        widget.title,
+        overflow: TextOverflow.ellipsis,
+        maxLines: widget.toYou ? 3 : 4,
+      ),
       subtitle: widget.toYou
           ? const Text(
               'Per te',
@@ -106,17 +110,19 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
         iconSize: 32,
         padding: const EdgeInsets.all(0),
       ),
-      trailing: widget.toYou ? SizedBox.shrink() : IconButton(
-        icon: const Icon(
-          Icons.share,
-        ),
-        onPressed: () {
-          // shareText(
-          //     testo:
-          //         'Leggi questo articolo di ${widget.autore} e tanto altro solo su ParaLat',
-          //     link: widget.link);
-        },
-      ),
+      trailing: widget.toYou
+          ? SizedBox.shrink()
+          : IconButton(
+              icon: const Icon(
+                Icons.share,
+              ),
+              onPressed: () {
+                // shareText(
+                //     testo:
+                //         'Leggi questo articolo di ${widget.autore} e tanto altro solo su ParaLat',
+                //     link: widget.link);
+              },
+            ),
     );
   }
 }

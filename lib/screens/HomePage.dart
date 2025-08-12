@@ -78,12 +78,13 @@ class _HomePageState extends State<HomePage> {
                   stream: areAllReadStream("news"),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
-                      return Text("Caricamento...");
+                      return CircularProgressIndicator();
                     }
                     bool tutteLette = snapshot.data!;
                     return Icon(
-                      tutteLette ? Icons.notifications : Icons.notification_add,
-                      size: 24,
+                      tutteLette ? Icons.notifications_none : Icons.notifications_active,
+                      size: tutteLette ? 30 : 30,
+                      color: tutteLette ? null : Colors.deepPurple[700],
                     );
                   }),
               onPressed: () {
@@ -141,11 +142,11 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8),
                 child: SizedBox(
-                  height: 250,
+                  height: 260,
                   child: Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)),
-                    elevation: 4,
+                    elevation: 2,
                     child: Scrollbar(
                       controller: _listViewController,
                       child: ListView(
