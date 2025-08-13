@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 Future<void> openIg(String username) async {
   final nativeUrl = Uri.parse('instagram://user?username=$username');
@@ -12,6 +13,11 @@ Future<void> openIg(String username) async {
     // Altrimenti apri nel browser
     await launchUrl(webUrl, mode: LaunchMode.externalApplication);
   }
+}
+
+Future<void> share(String text) async {
+  ShareResult shareResult;
+  shareResult = await Share.share(text);
 }
 
 Future<void> openTikTok(String username) async {
@@ -53,13 +59,15 @@ Future<void> openTg(String username) async {
   }
 }
 
-Future sendMail(BuildContext context, String email, String titolo, String body) async {
+Future sendMail(
+    BuildContext context, String email, String titolo, String body) async {
   final String subject = Uri.encodeComponent(titolo);
   final String encodedBody = Uri.encodeComponent(body);
 
-  final Uri emailUri = Uri.parse('mailto:$email?subject=$subject&body=$encodedBody');
+  final Uri emailUri =
+      Uri.parse('mailto:$email?subject=$subject&body=$encodedBody');
 
- try {
+  try {
     await launchUrl(emailUri);
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 // import 'package:lecosimo/components/share.dart';
 // import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:paralat/screens/dettagli.dart';
+import 'package:paralat/Components/socialLinks.dart';
+
 
 class FeedNewsCard extends StatefulWidget {
   const FeedNewsCard(
@@ -117,10 +119,7 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
                 Icons.share,
               ),
               onPressed: () {
-                // shareText(
-                //     testo:
-                //         'Leggi questo articolo di ${widget.autore} e tanto altro solo su ParaLat',
-                //     link: widget.link);
+                share('${widget.title}\nScopri questa e tante altre notizie solo su ParaLat.\n⬇️Scaricala ora⬇️\n\nhttps://play.google.com/store/apps/details?id=com.paralat.app');
               },
             ),
     );

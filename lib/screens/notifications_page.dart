@@ -5,19 +5,19 @@ import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/feedNewsCard.dart';
 
 class NotificationsPage extends StatefulWidget {
-  const NotificationsPage({super.key,});
+  const NotificationsPage({
+    super.key,
+  });
 
   @override
   State<NotificationsPage> createState() => _NotificationPageState();
 }
-
 
 class _NotificationPageState extends State<NotificationsPage> {
   @override
   void initState() {
     super.initState();
   }
-
 
   bool isToYou = false;
   @override
@@ -34,9 +34,12 @@ class _NotificationPageState extends State<NotificationsPage> {
             .orderBy('ora', descending: true)
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
+          // if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          //   return const Text('Nessuna notifica');
+          // }
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
@@ -58,7 +61,7 @@ class _NotificationPageState extends State<NotificationsPage> {
                       image: isToYou ? 'null' : news['image'],
                       toYou: news['to'] == Auth().getUID() ? true : false,
                     )
-                  : SizedBox.shrink();
+                  : const SizedBox.shrink();
             },
           );
         },
