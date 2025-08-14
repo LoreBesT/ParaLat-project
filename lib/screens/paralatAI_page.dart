@@ -47,7 +47,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
         throw Exception('Chiave API non trovata su Firestore');
       }
     } catch (e) {
-      // print("Errore nel recupero della chiave API: $e");
+      // print("❤️❤️❤️Errore nel recupero della chiave API: $e");
       setState(() {
         _messages.add(
             {"sender": "bot", "text": "Errore nel recupero della chiave API."});

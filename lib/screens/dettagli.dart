@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:paralat/Components/aiFunction.dart';
 import 'package:paralat/Components/auth.dart';
+import 'package:paralat/Components/socialLinks.dart';
 
 class NewsDetailPage extends StatelessWidget {
   final DocumentSnapshot news;
@@ -52,7 +53,8 @@ class NewsDetailPage extends StatelessWidget {
           ),
         ),
       ),
-     floatingActionButton: isToYou ? null : _buildFloatingActionButton(context, body, autore),
+      floatingActionButton:
+          isToYou ? null : _buildFloatingActionButton(context, body, autore, title),
     );
   }
 }
@@ -116,7 +118,7 @@ Widget _buildBody(String body) {
 }
 
 Widget _buildFloatingActionButton(
-    BuildContext context, String body, String autore) {
+    BuildContext context, String body, String autore, String title) {
   return PopupMenuButton(
     color: Colors.white,
     elevation: 8,
@@ -139,7 +141,7 @@ Widget _buildFloatingActionButton(
       PopupMenuItem(
         child: ListTile(
           leading: const Icon(Icons.generating_tokens, color: Colors.blue),
-          title: const Text("Riassumi l'articolo"),
+          title: const Text("Riassumi"),
           onTap: () {
             Navigator.pop(context);
             _showSummaryModal(context, body, autore);
@@ -152,7 +154,16 @@ Widget _buildFloatingActionButton(
         },
         child: const ListTile(
           leading: Icon(Icons.copy, color: Colors.green),
-          title: Text("Copia l'articolo"),
+          title: Text("Copia"),
+        ),
+      ),
+      PopupMenuItem(
+        onTap: () {
+          share('${title}\n\ndi${autore}\n\n${body}\n\nLeggi questo e tanti altri articoli solo su ParaLat.\n⬇️Scaricalo ora⬇️\n\nhttps://play.google.com/store/apps/details?id=com.paralat.app');
+        },
+        child: const ListTile(
+          leading: Icon(Icons.share, color: Colors.deepPurple),
+          title: Text("Condividi"),
         ),
       ),
     ],
@@ -202,10 +213,11 @@ void _showSummaryModal(BuildContext context, String body, String autore) {
                             ),
                             Image.asset('assets/images/ParaLat.png', scale: 9),
                             IconButton(
+                              icon: Icon(Icons.share),
                               onPressed: () {
-                                // shareText(testo: snapshot.data ?? '');
+                                share(
+                                    "${snapshot.data!}. Accedi anche te a ParaLat AI.\n⬇️Scarica ora la nostra app⬇️\n\nhttps://play.google.com/store/apps/details?id=com.paralat.app");
                               },
-                              icon: const Icon(Icons.share),
                             ),
                             IconButton(
                               onPressed: () {
