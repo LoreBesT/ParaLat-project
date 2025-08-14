@@ -10,6 +10,7 @@ import 'package:paralat/Components/drawerButtonNoAnimatedWithTrailing.dart';
 import 'package:paralat/Components/rounded_buttons_new.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GeminiApiPage extends StatefulWidget {
   const GeminiApiPage({super.key});
@@ -22,8 +23,38 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
   final TextEditingController _controller = TextEditingController();
   final List<Map<String, String>> _messages =
       []; // Cambia a lista di mappe per tracciare chi ha inviato il messaggio
-  final String apiKey =
-      'AIzaSyA8XweciTZnjycM2iwHRSzCle-3YAYzV2o'; // Inserisci la tua API Key
+  String? apiKey;
+  @override
+  void initState() {
+    super.initState();
+    _initApiKey();
+  }
+
+  Future<void> _initApiKey() async {
+    try {
+      // Recupera la chiave API dal documento
+      final doc = await FirebaseFirestore.instance
+          .collection('config')
+          .doc('apiKey')
+          .get();
+
+      if (doc.exists && doc.data() != null) {
+        setState(() {
+          apiKey = doc['value'];
+        });
+        // print("✅✅✅Chiave API caricata correttamente.");
+      } else {
+        throw Exception('Chiave API non trovata su Firestore');
+      }
+    } catch (e) {
+      // print("Errore nel recupero della chiave API: $e");
+      setState(() {
+        _messages.add(
+            {"sender": "bot", "text": "Errore nel recupero della chiave API."});
+      });
+    }
+  }
+
   bool _isLoading = false;
   bool _isPickingImage = false;
   final ImagePicker _picker = ImagePicker();
@@ -56,7 +87,17 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
   }
 
   Future<void> _fetchResponse(String text) async {
-    final model = GenerativeModel(model: "gemini-$models", apiKey: apiKey);
+    if (apiKey == null) {
+      setState(() {
+        _messages.add({
+          "sender": "bot",
+          "text": "Errore: chiave API non disponibile. Riprova più tardi."
+        });
+        _isLoading = false;
+      });
+      return;
+    }
+    final model = GenerativeModel(model: "gemini-$models", apiKey: apiKey!);
     final completeInput =
         'Ciao ho questa versione che devi analizzare secondo le indicazioni che ti do. L\'analisi la incollerò in un file word, perciò dedica una riga per l\'analisi di ciascuna parola. L\'analisi dovrà essere svolta così: subito dopo la parola metti il complemento(oggetto, specificazione, termine, stato in luogo, soggetto ecc... ecc..) per nomi, e pronomi e aggettivi(per gli aggettivi specifica scrivendo ad esempio: Att. del compl di termine); per i verbi metti il modo(indicativo, congiuntivo ecc.. ecc..) per il resto metti invece la parte del discorso(congiunzione, interazione, avverbio ecc...). Dopo tale parte metti il caso per nomi, pronomi e aggettivi ed il tempo per i verbi. In seguito metti il genere(Indica il maschile con M ed il femminile con F) mentre per i verbi metti la persona(Indicandola con 1, 2, 3). Dopo metti il numero(indicandolo con S per il singolare e P per il plurale). Dopo metti per i verbi il paradigma del verbo(Ricorda il paradigma è costituito da 5 voci del verbo: 1 persona indicativo presente, 2 persona indicativo presente, 1 persona indicativo perfetto, supino, infinito presente) mentre per il resto la derivazione(nominativo e genitivo singolare della parola in questione). Infine metti  la corrispettiva traduzione italiana di ogni parola. Un ultima precisazione non fornirmi l\'output in markdown e fornisci l\'analisi completa NON DEVI BLOCCARTI A META\' ANALISI. N.B. Se qualcuna delle precedenti voci dovesse risultare vuota allora non metti direttamente la voce successiva. Questo è un esempio di come fare l\'analisi: Vocas = indicativo, presente 2 S, voco-vocas-vocavi-vocatum-vocare trad: chiami. Oppure per una congiunzione: et = congiunzione trad: e. Per un nome invece ad esempio: rosam = Compl. Oggetto, accusativo, F, S, rosa-rosae, trad: la rosa. Questa è la versione da analizzare: $text';
     setState(() {
@@ -268,8 +309,8 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                   CircleAvatar(
                     radius: 23,
                     child: IconButton(
-                      icon:
-                          const Icon(Icons.image), // Si può sostituire con icons.add
+                      icon: const Icon(
+                          Icons.image), // Si può sostituire con icons.add
                       onPressed: () {
                         showModalBottomSheet(
                           context: context,

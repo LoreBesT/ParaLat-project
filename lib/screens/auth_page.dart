@@ -102,158 +102,162 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SizedBox(
-      height: double.maxFinite,
-      width: double.maxFinite,
-      child: DecoratedBox(
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(colors: [
-          Color.fromARGB(255, 67, 157, 231),
-          Color.fromARGB(255, 208, 118, 224)
-        ], transform: GradientRotation(3.14))),
-        child: Column(
-          children: [
-            const Space(
-              heigth: 70,
-              width: double.maxFinite,
-            ),
-            const Text(
-              'Benvenuto su ParaLat',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 55, right: 20, left: 20),
-              child: Column(
-                children: [
-                  const Text(
-                    'Accedi o Iscriviti per continuare',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  const Space(heigth: 30, width: double.infinity),
-                  if (isLogin == false)
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: _nome,
-                            decoration:
-                                const InputDecoration(label: Text('nome')),
-                          ),
-                        ),
-                        const Space(heigth: 20, width: 40),
-                        Expanded(
-                          child: TextField(
-                            controller: _cognome,
-                            decoration:
-                                const InputDecoration(label: Text('cognome')),
-                          ),
-                        ),
-                      ],
+        body: SafeArea(
+          child: SizedBox(
+                height: double.maxFinite,
+                width: double.maxFinite,
+                child: DecoratedBox(
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(colors: [
+            Color.fromARGB(255, 67, 157, 231),
+            Color.fromARGB(255, 208, 118, 224)
+          ], transform: GradientRotation(3.14))),
+          child: Column(
+            children: [
+              const Space(
+                heigth: 70,
+                width: double.maxFinite,
+              ),
+              const Text(
+                'Benvenuto su ParaLat',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 55, right: 20, left: 20),
+                child: Column(
+                  children: [
+                    const Text(
+                      'Accedi o Iscriviti per continuare',
+                      style: TextStyle(fontSize: 20),
                     ),
-                  TextField(
-                    controller: _email,
-                    decoration: const InputDecoration(label: Text('email')),
-                  ),
-                  TextField(
-                    controller: _password,
-                    obscureText: isObscure,
-                    decoration: InputDecoration(
-                      label: const Text('password'),
-                      suffixIcon: IconButton(
-                        icon: Icon(isObscure
-                            ? Icons.visibility_off
-                            : Icons.visibility),
-                        onPressed: () {
-                          setState(() {
-                            isObscure = !isObscure;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  if (isLogin == true)
-                    TextButton(
-                      child: const Row(
+                    const Space(heigth: 30, width: double.infinity),
+                    if (isLogin == false)
+                      Row(
                         children: [
-                          Text('Password dimenticata?  '),
-                          Icon(Icons.key),
+                          Expanded(
+                            child: TextField(
+                              controller: _nome,
+                              decoration:
+                                  const InputDecoration(label: Text('nome')),
+                            ),
+                          ),
+                          const Space(heigth: 20, width: 40),
+                          Expanded(
+                            child: TextField(
+                              controller: _cognome,
+                              decoration:
+                                  const InputDecoration(label: Text('cognome')),
+                            ),
+                          ),
                         ],
                       ),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                                title: const Text(
-                                    'Inserisci una mail per consentire il recupero della password'),
-                                content: SizedBox(
-                                  height: 140,
-                                  child: Column(
-                                    children: [
-                                      TextField(
-                                        controller: _email,
-                                        decoration: const InputDecoration(
-                                            label: Text('email')),
-                                      ),
-                                      const Space(heigth: 30),
-                                      TextButton(
-                                          onPressed: () {
-                                            Auth().reimpostaPassword(
-                                                context, true, _email.text);
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content:
-                                                    const Text('Email inviata'),
-                                                backgroundColor:
-                                                    Theme.of(context)
-                                                        .colorScheme
-                                                        .inversePrimary,
-                                              ),
-                                            );
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text('Invia email')),
-                                    ],
-                                  ),
-                                )));
-                        // Navigator
-                        // Auth().reimpostaPassword(context);
-                      },
+                    TextField(
+                      controller: _email,
+                      decoration: const InputDecoration(label: Text('email')),
                     ),
-                  const Space(
-                    heigth: 6,
-                    width: double.maxFinite,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        FocusScope.of(context).unfocus();
-                        isLogin ? signIn(context) : createUser(context);
-                      },
-                      child: Text(isLogin ? 'Accedi' : 'Registrati')),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(isLogin
-                          ? 'Non hai un account?'
-                          : 'Hai già un account?'),
-                      TextButton(
+                    TextField(
+                      controller: _password,
+                      obscureText: isObscure,
+                      decoration: InputDecoration(
+                        label: const Text('password'),
+                        suffixIcon: IconButton(
+                          icon: Icon(isObscure
+                              ? Icons.visibility_off
+                              : Icons.visibility),
                           onPressed: () {
                             setState(() {
-                              isLogin = !isLogin;
+                              isObscure = !isObscure;
                             });
                           },
-                          child: Text(
-                            isLogin ? 'Registrati' : 'Accedi',
-                            style: TextStyle(color: Colors.purple[200]),
-                          ))
-                    ],
-                  ),
-                ],
+                        ),
+                      ),
+                    ),
+                    if (isLogin == true)
+                      TextButton(
+                        child: const Row(
+                          children: [
+                            Text('Password dimenticata?  '),
+                            Icon(Icons.key),
+                          ],
+                        ),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                  title: const Text(
+                                      'Inserisci una mail per consentire il recupero della password'),
+                                  content: SizedBox(
+                                    height: 140,
+                                    child: Column(
+                                      children: [
+                                        TextField(
+                                          controller: _email,
+                                          keyboardType:
+                                              TextInputType.emailAddress,
+                                          decoration: const InputDecoration(
+                                              label: Text('email')),
+                                        ),
+                                        const Space(heigth: 30),
+                                        TextButton(
+                                            onPressed: () {
+                                              Auth().reimpostaPassword(
+                                                  context, true, _email.text);
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content:
+                                                      const Text('Email inviata'),
+                                                  backgroundColor:
+                                                      Theme.of(context)
+                                                          .colorScheme
+                                                          .inversePrimary,
+                                                ),
+                                              );
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('Invia email')),
+                                      ],
+                                    ),
+                                  )));
+                          // Navigator
+                          // Auth().reimpostaPassword(context);
+                        },
+                      ),
+                    const Space(
+                      heigth: 6,
+                      width: double.maxFinite,
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
+                          isLogin ? signIn(context) : createUser(context);
+                        },
+                        child: Text(isLogin ? 'Accedi' : 'Registrati')),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(isLogin
+                            ? 'Non hai un account?'
+                            : 'Hai già un account?'),
+                        TextButton(
+                            onPressed: () {
+                              setState(() {
+                                isLogin = !isLogin;
+                              });
+                            },
+                            child: Text(
+                              isLogin ? 'Registrati' : 'Accedi',
+                              style: TextStyle(color: Colors.purple[200]),
+                            ))
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    ));
+            ],
+          ),
+                ),
+              ),
+        ));
   }
 }
