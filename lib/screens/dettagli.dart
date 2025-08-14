@@ -23,7 +23,7 @@ class NewsDetailPage extends StatelessWidget {
     bool isToYou = false;
 
     final address = news['to'];
-    if (address.toString() == Auth().getUID()) {
+    if (address.toString() == Auth().getUID() || address.toString() == 'avviso') {
       isToYou = true;
       image = 'null'; // Non mostrare l'immagine se è per te
     } else {
@@ -35,7 +35,7 @@ class NewsDetailPage extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 60,
         centerTitle: true,
-        title: const Text('ParaLat News'),
+        title: Text(isToYou ? 'Avviso' : 'ParaLat News'),
       ),
       body: SingleChildScrollView(
         child: Padding(

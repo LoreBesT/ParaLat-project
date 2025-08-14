@@ -44,10 +44,10 @@ class _NotificationPageState extends State<NotificationsPage> {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var news = snapshot.data!.docs[index];
-              if (news['to'] != 'everyone' && news['to'] != Auth().getUID()) {
+              if (news['to'] != 'news' && news['to'] != Auth().getUID() && news['to'] != 'avviso') {
                 return const SizedBox.shrink();
               }
-              if (news['to'] == Auth().getUID()) {
+              if (news['to'] == Auth().getUID() || news['to'] == 'avviso') {
                 isToYou = true;
               } else {
                 isToYou = false;
@@ -59,7 +59,7 @@ class _NotificationPageState extends State<NotificationsPage> {
                       body: news['body'],
                       snapshot: news,
                       image: isToYou ? 'null' : news['image'],
-                      toYou: news['to'] == Auth().getUID() ? true : false,
+                      toYou: news['to'] == Auth().getUID() || news['to'] == 'avviso' ? true : false,
                     )
                   : const SizedBox.shrink();
             },

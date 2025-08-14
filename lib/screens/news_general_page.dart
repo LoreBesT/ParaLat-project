@@ -74,10 +74,10 @@ class _NewsPageState extends State<NewsGeneralPage> {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var news = snapshot.data!.docs[index];
-              if (news['to'] != 'everyone' && news['to'] != Auth().getUID()) {
+              if (news['to'] != 'news' && news['to'] != Auth().getUID() && news['to'] != 'avviso') {
                 return const SizedBox.shrink();
               }
-              if (news['to'] == Auth().getUID()) {
+              if (news['to'] == Auth().getUID() || news['to'] == 'avviso') {
                 isToYou = true;
               } else {
                 isToYou = false;

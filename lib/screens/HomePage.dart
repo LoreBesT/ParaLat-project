@@ -78,12 +78,15 @@ class _HomePageState extends State<HomePage> {
                   stream: areAllReadStream("news"),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
-                      return CircularProgressIndicator();
+                      return Icon(
+                        Icons.notifications_none,
+                        size: 30,
+                      );
                     }
                     bool tutteLette = snapshot.data!;
                     return Icon(
                       tutteLette ? Icons.notifications_none : Icons.notifications_active,
-                      size: tutteLette ? 30 : 30,
+                      size: 30,
                       color: tutteLette ? null : Colors.deepPurple[700],
                     );
                   }),
@@ -174,8 +177,7 @@ class _HomePageState extends State<HomePage> {
                                 children: snapshot.data!.docs.map((doc) {
                                   var title = doc['title'];
                                   var body = doc['body'];
-                                  if (doc['to'] != 'everyone' ||
-                                      doc['to'] == Auth().getUID()) {
+                                  if (doc['to'] != 'news') {
                                     return const SizedBox
                                         .shrink(); // Non mostra nulla per questa notizia
                                   }
