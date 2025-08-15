@@ -103,10 +103,10 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-          child: SizedBox(
-                height: double.maxFinite,
-                width: double.maxFinite,
-                child: DecoratedBox(
+      child: SizedBox(
+        height: double.maxFinite,
+        width: double.maxFinite,
+        child: DecoratedBox(
           decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
             Color.fromARGB(255, 67, 157, 231),
@@ -205,8 +205,8 @@ class _AuthPageState extends State<AuthPage> {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 SnackBar(
-                                                  content:
-                                                      const Text('Email inviata'),
+                                                  content: const Text(
+                                                      'Email inviata'),
                                                   backgroundColor:
                                                       Theme.of(context)
                                                           .colorScheme
@@ -256,8 +256,8 @@ class _AuthPageState extends State<AuthPage> {
               ),
             ],
           ),
-                ),
-              ),
-        ));
+        ),
+      ),
+    ));
   }
 }

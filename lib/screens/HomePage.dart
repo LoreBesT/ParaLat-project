@@ -84,7 +84,9 @@ class _HomePageState extends State<HomePage> {
                     }
                     bool tutteLette = snapshot.data!;
                     return Icon(
-                      tutteLette ? Icons.notifications_none : Icons.notifications_active,
+                      tutteLette
+                          ? Icons.notifications_none
+                          : Icons.notifications_active,
                       size: 30,
                       color: tutteLette ? null : Colors.deepPurple[700],
                     );
@@ -110,13 +112,17 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   RoundedButtons(
-                      testo: 'ParaLat AI',
-                      icon: Icons.generating_tokens,
-                      function: GeminiApiPage()),
+                    testo: 'ParaLat AI',
+                    icon: Icons.generating_tokens,
+                    function: GeminiApiPage(),
+                    iconColor: Colors.deepPurple,
+                  ),
                   RoundedButtons(
-                      testo: 'Archivio',
-                      icon: Icons.archive,
-                      function: SearchPage()),
+                    testo: 'Archivio',
+                    icon: Icons.archive,
+                    function: SearchPage(),
+                    iconColor: Colors.deepPurple,
+                  ),
                 ],
               ),
               Padding(
@@ -162,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                                     descending:
                                         true) // Assicurati di avere un campo timestamp per ordinare
                                 .limit(
-                                    5) // Limita i risultati agli ultimi 5 documenti
+                                    8) // Limita i risultati agli ultimi 5 documenti dove 'to' == 'news'
                                 .snapshots(),
                             builder: (context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {

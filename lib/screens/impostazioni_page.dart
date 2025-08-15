@@ -54,12 +54,6 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
                           funzione: WorkPage(),
                           testo: '   Cambia lingua')),
                   const SizedBox(
-                      width: double.infinity,
-                      child: Button(
-                          icona: Icons.accessibility_new,
-                          funzione: WorkPage(),
-                          testo: '   Accessibilità')),
-                  const SizedBox(
                     height: 20,
                   ),
                   const Padding(
@@ -86,7 +80,8 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
                               animationDuration: Duration(seconds: 1),
                             ),
                             onPressed: () {
-                              openSite(context, 'https://ko-fi.com/paralatstudy');
+                              openSite(
+                                  context, 'https://ko-fi.com/paralatstudy');
                             },
                             child: Animate(
                               effects: const [ScaleEffect()],
