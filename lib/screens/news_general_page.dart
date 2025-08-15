@@ -15,44 +15,41 @@ class NewsGeneralPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsGeneralPage> {
-  @override
-  void initState() {
-    super.initState();
-    // initBannerAd();
-  }
-
   final int _index = 1;
+  bool isToYou = false;
+
+  int _limit = 15; // inizialmente 10 news
+  final int _limitIncrement = 15; // ogni volta ne aggiungiamo 10
+  final ScrollController _scrollController = ScrollController();
 
   List<Widget> funzioni = [
     const HomePage(),
     const NewsGeneralPage(),
     const ImpostazioniPage()
   ];
-  // late BannerAd bannerAd;
-  // bool isAdLoaded = false;
-  // var adUnit =
-  //     "ca-app-pub-3940256099942544/9214589741"; //Questo ID è DI TEST. IN PRODUZIONE SOSTITUIRE CON IL REALE ID DI ADMOB!
 
-  // initBannerAd() {
-  //   bannerAd = BannerAd(
-  //       size: AdSize.banner,
-  //       adUnitId: adUnit,
-  //       listener: BannerAdListener(
-  //         onAdLoaded: (ad) {
-  //           setState(() {
-  //             isAdLoaded = true;
-  //           });
-  //         },
-  //         onAdFailedToLoad: (ad, error) {
-  //           ad.dispose();
-  //           print(error);
-  //         },
-  //       ),
-  //       request: AdRequest());
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
 
-  //   bannerAd.load();
-  // }
-  bool isToYou = false;
+  void _scrollListener() {
+    if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      setState(() {
+        _limit += _limitIncrement;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,16 +62,31 @@ class _NewsPageState extends State<NewsGeneralPage> {
         stream: FirebaseFirestore.instance
             .collection('news')
             .orderBy('ora', descending: true)
+            .limit(_limit)
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
           return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
+            controller: _scrollController,
+            itemCount: snapshot.data!.docs.length + 1,
             itemBuilder: (context, index) {
+              if (index == snapshot.data!.docs.length) {
+                // questo è il loader in fondo
+                if (snapshot.data!.docs.length < _limit) {
+                  return const SizedBox.shrink(); // niente da caricare
+                } else {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+              }
               var news = snapshot.data!.docs[index];
-              if (news['to'] != 'news' && news['to'] != Auth().getUID() && news['to'] != 'avviso') {
+              if (news['to'] != 'news' &&
+                  news['to'] != Auth().getUID() &&
+                  news['to'] != 'avviso') {
                 return const SizedBox.shrink();
               }
               if (news['to'] == Auth().getUID() || news['to'] == 'avviso') {
@@ -83,26 +95,19 @@ class _NewsPageState extends State<NewsGeneralPage> {
                 isToYou = false;
               }
               return isToYou
-                  ? SizedBox.shrink()
+                  ? const SizedBox.shrink()
                   : FeedNewsCard(
                       title: news['title'],
                       autore: news['autore'],
                       body: news['body'],
                       snapshot: news,
                       image: isToYou ? 'null' : news['image'],
-                      toYou: news['to'] == Auth().getUID() ? true : false,
+                      toYou: news['to'] == Auth().getUID(),
                     );
             },
           );
         },
       ),
-      // bottomNavigationBar: isAdLoaded
-      //     ? SizedBox(
-      //         height: bannerAd.size.height.toDouble(),
-      //         width: bannerAd.size.width.toDouble(),
-      //         child: AdWidget(ad: bannerAd),
-      //       )
-      //     : SizedBox(),
       bottomNavigationBar: NavFloatBar(
         index: _index,
         funzioni: funzioni,

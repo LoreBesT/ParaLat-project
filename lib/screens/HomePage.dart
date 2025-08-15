@@ -1,7 +1,6 @@
 //Implementare verifica se un utente ha sanzioni con espulsione o meno in homepage. Se vi è una sanzione con espulsione permabannare account e inibire l'accesso all'app
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/rounded_buttons.dart';
@@ -78,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                   stream: areAllReadStream("news"),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
-                      return Icon(
+                      return const Icon(
                         Icons.notifications_none,
                         size: 30,
                       );

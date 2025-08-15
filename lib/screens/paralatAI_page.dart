@@ -345,9 +345,6 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                                       ],
                                     ),
                                     const Divider(),
-                                    ButtonNoAnimatedTr(testo: 'PDF'),
-                                    ButtonNoAnimatedTr(testo: 'DOC'),
-                                    const Divider(),
                                     ButtonNoAnimatedTr(
                                       testo: 'AI PRO',
                                     ),
@@ -371,7 +368,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                         controller: _controller,
                         autocorrect: false,
                         decoration: InputDecoration(
-                          labelText: 'Scrivi qui',
+                          labelText: 'Inserisci la tua versione',
                           border: const OutlineInputBorder(),
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
