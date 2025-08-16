@@ -100,7 +100,7 @@ class Auth {
   Future<void> createNews(String nome, String uid) async {
     String title = 'Ciao $nome, benvenuto su ParaLat!';
     String body =
-        'Ciao $nome e benvenuto su ParaLat. Siamo lieti di accoglierti all\'interno della nostra community.\nTi informarmiamo che avrai a disposizione molteplici funzionalità totalmente gratuite e senza limite. Qualora avessi bisogno di ulteriori strumenti potrai abbonarti a ParaLat Premium in forma mensile o annuale\nIn caso di problemi con ParaLat siamo sempre a tua disposizione.\n\nUn saluto, il tuo ParaLat Team';
+        'Ciao $nome e benvenuto su ParaLat. Siamo lieti di accoglierti all\'interno della nostra community.\nIl nostro obiettivo è aiutare gli studenti nello studio del latino. Vogliamo, infatti, offrire un\'esperienza semplice, utile e piacevole così da permetterti di ottimizzare il tuo studio al meglio.\nPer qualsiasi dubbio o difficoltà, non preoccuparti: il nostro team è sempre pronto a supportarti in ogni momento.\n\nUn saluto\nil ParaLat Team';
     CollectionReference reports = FirebaseFirestore.instance.collection('news');
     return reports
         .add({

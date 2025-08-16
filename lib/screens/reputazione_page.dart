@@ -25,7 +25,7 @@ class _MyWidgetState extends State<ProfiloPage> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16)),
                 margin: const EdgeInsets.all(8),
-                elevation: 7,
+                elevation: 2,
                 child: Column(
                   children: [
                     ListTile(

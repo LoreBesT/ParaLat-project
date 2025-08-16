@@ -23,7 +23,8 @@ class NewsDetailPage extends StatelessWidget {
     bool isToYou = false;
 
     final address = news['to'];
-    if (address.toString() == Auth().getUID() || address.toString() == 'avviso') {
+    if (address.toString() == Auth().getUID() ||
+        address.toString() == 'avviso') {
       isToYou = true;
       image = 'null'; // Non mostrare l'immagine se è per te
     } else {
@@ -36,14 +37,62 @@ class NewsDetailPage extends StatelessWidget {
         toolbarHeight: 60,
         centerTitle: true,
         title: Text(isToYou ? 'Avviso' : 'ParaLat News'),
-        actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.format_size)),
-        ],
+        // actions: [
+        //     IconButton(
+        //       onPressed: () {
+        //       showDialog(
+        //         context: context,
+        //         builder: (context) {
+        //         double _start = 1;
+        //         double _end = 3;
+        //         return StatefulBuilder(
+        //           builder: (context, setState) {
+        //           return AlertDialog(
+        //             title: const Text('Seleziona dimensione testo'),
+        //             content: SizedBox(
+        //             height: 80, // Limita l'altezza del contenuto
+        //             child: Column(
+        //               mainAxisSize: MainAxisSize.min,
+        //               children: [
+        //               RangeSlider(
+        //                 values: RangeValues(_start, _end),
+        //                 min: 1,
+        //                 max: 3,
+        //                 divisions: 2,
+        //                 labels: RangeLabels(
+        //                 _start.toStringAsFixed(0),
+        //                 _end.toStringAsFixed(0),
+        //                 ),
+        //                 onChanged: (RangeValues values) {
+        //                 setState(() {
+        //                   _start = values.start;
+        //                   _end = values.end;
+        //                 });
+        //                 },
+        //               ),
+        //               ],
+        //             ),
+        //             ),
+        //             actions: [
+        //             TextButton(
+        //               onPressed: () => Navigator.pop(context),
+        //               child: const Text('OK'),
+        //             ),
+        //             ],
+        //           );
+        //           },
+        //         );
+        //         },
+        //       );
+        //       },
+        //       icon: Icon(Icons.format_size)),
+        // ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -58,8 +107,9 @@ class NewsDetailPage extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton:
-          isToYou ? null : _buildFloatingActionButton(context, body, autore, title),
+      floatingActionButton: isToYou
+          ? null
+          : _buildFloatingActionButton(context, body, autore, title),
     );
   }
 }
@@ -119,13 +169,16 @@ Widget _buildAuthorAndDate(String autore, bool isToYou) {
 }
 
 Widget _buildBody(String body) {
-  return Text(body, style: TextStyle(fontSize: 16),);
+  return Text(
+    body,
+    style: TextStyle(fontSize: 18),
+  );
 }
 
 Widget _buildFloatingActionButton(
     BuildContext context, String body, String autore, String title) {
   return PopupMenuButton(
-    color: Colors.white,
+    // color: Colors.white,
     elevation: 8,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(15),
@@ -164,7 +217,8 @@ Widget _buildFloatingActionButton(
       ),
       PopupMenuItem(
         onTap: () {
-          share('${title}\n\ndi${autore}\n\n${body}\n\nLeggi questo e tanti altri articoli solo su ParaLat.\n⬇️Scaricalo ora⬇️\n\nhttps://play.google.com/store/apps/details?id=com.paralat.app');
+          share(
+              '${title}\n\ndi${autore}\n\n${body}\n\nLeggi questo e tanti altri articoli solo su ParaLat.\n⬇️Scaricalo ora⬇️\n\nhttps://play.google.com/store/apps/details?id=com.paralat.app');
         },
         child: const ListTile(
           leading: Icon(Icons.share, color: Colors.deepPurple),

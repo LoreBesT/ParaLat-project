@@ -346,7 +346,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                                     ),
                                     const Divider(),
                                     ButtonNoAnimatedTr(
-                                      testo: 'AI PRO',
+                                      testo: 'AI PRO - In arrivo',
                                     ),
                                   ],
                                 ),

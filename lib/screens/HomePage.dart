@@ -11,6 +11,7 @@ import 'package:paralat/screens/news_general_page.dart';
 import 'package:paralat/screens/notifications_page.dart';
 import 'package:paralat/screens/paralatAI_page.dart';
 import 'package:paralat/screens/search_page.dart';
+import 'package:paralat/screens/work_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -120,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                   RoundedButtons(
                     testo: 'Archivio',
                     icon: Icons.archive,
-                    function: SearchPage(),
+                    function: WorkPage(),
                     iconColor: Colors.deepPurple,
                   ),
                 ],

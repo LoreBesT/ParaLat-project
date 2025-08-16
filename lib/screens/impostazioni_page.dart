@@ -60,14 +60,14 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
                     padding: EdgeInsets.only(bottom: 10),
                     child: Text('Altro'),
                   ),
-                  if (Verify().verifyUser(context) != Verify().typeUser(0))
-                    const SizedBox(
-                        width: double.infinity,
-                        child: Button(
-                          icona: Icons.diamond,
-                          funzione: SubPage(),
-                          testo: '    ParaLat Premium',
-                        )),
+                  // if (Verify().verifyUser(context) != Verify().typeUser(0))
+                  //   const SizedBox(
+                  //       width: double.infinity,
+                  //       child: Button(
+                  //         icona: Icons.diamond,
+                  //         funzione: SubPage(),
+                  //         testo: '    ParaLat Premium',
+                  //       )),
                   SizedBox(
                       width: double.infinity,
                       child: Padding(
@@ -116,7 +116,7 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Text(
-                        'Versione 1.0.0.0-D\nMade by Lorenzo Della Bona',
+                        'Versione 1.0.0',
                         style: TextStyle(color: Colors.grey, fontSize: 12),
                         textAlign: TextAlign.center,
                       ),
