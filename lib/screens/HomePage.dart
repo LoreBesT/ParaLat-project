@@ -106,120 +106,122 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           automaticallyImplyLeading: false,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RoundedButtons(
-                    testo: 'ParaLat AI',
-                    icon: Icons.generating_tokens,
-                    function: GeminiApiPage(),
-                    iconColor: Colors.deepPurple,
-                  ),
-                  RoundedButtons(
-                    testo: 'Archivio',
-                    icon: Icons.archive,
-                    function: WorkPage(),
-                    iconColor: Colors.deepPurple,
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 0, bottom: 0, left: 12, right: 12),
-                child: Row(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Expanded(
-                      child: Text('Ultime Notizie'),
+                    RoundedButtons(
+                      testo: 'ParaLat AI',
+                      icon: Icons.generating_tokens,
+                      function: GeminiApiPage(),
+                      iconColor: Colors.deepPurple,
                     ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const NewsGeneralPage(),
-                          ),
-                        );
-                      },
-                      child: const Text('Vedi tutte'),
+                    RoundedButtons(
+                      testo: 'Archivio',
+                      icon: Icons.archive,
+                      function: WorkPage(),
+                      iconColor: Colors.deepPurple,
                     ),
                   ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8),
-                child: SizedBox(
-                  height: 260,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
-                    elevation: 2,
-                    child: Scrollbar(
-                      controller: _listViewController,
-                      child: ListView(
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 0, bottom: 0, left: 12, right: 12),
+                  child: Row(
+                    children: [
+                      const Expanded(
+                        child: Text('Ultime Notizie'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const NewsGeneralPage(),
+                            ),
+                          );
+                        },
+                        child: const Text('Vedi tutte'),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: SizedBox(
+                    height: 260,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)),
+                      elevation: 2,
+                      child: Scrollbar(
                         controller: _listViewController,
-                        children: [
-                          StreamBuilder(
-                            stream: FirebaseFirestore.instance
-                                .collection(
-                                    'news') // Usa il nome della tua collezione
-                                .orderBy('ora',
-                                    descending:
-                                        true) // Assicurati di avere un campo timestamp per ordinare
-                                .limit(
-                                    8) // Limita i risultati agli ultimi 5 documenti dove 'to' == 'news'
-                                .snapshots(),
-                            builder: (context,
-                                AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if (!snapshot.hasData) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
-
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: snapshot.data!.docs.map((doc) {
-                                  var title = doc['title'];
-                                  var body = doc['body'];
-                                  if (doc['to'] != 'news') {
-                                    return const SizedBox
-                                        .shrink(); // Non mostra nulla per questa notizia
-                                  }
-                                  return ListTile(
-                                    title: Text(title),
-                                    subtitle: Text(
-                                      body,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    leading: const Icon(
-                                      Icons.newspaper,
-                                      color: Colors.deepPurple,
-                                    ),
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => NewsDetailPage(
-                                            news: doc,
+                        child: ListView(
+                          controller: _listViewController,
+                          children: [
+                            StreamBuilder(
+                              stream: FirebaseFirestore.instance
+                                  .collection(
+                                      'news') // Usa il nome della tua collezione
+                                  .orderBy('ora',
+                                      descending:
+                                          true) // Assicurati di avere un campo timestamp per ordinare
+                                  .limit(
+                                      8) // Limita i risultati agli ultimi 5 documenti dove 'to' == 'news'
+                                  .snapshots(),
+                              builder: (context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                if (!snapshot.hasData) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                }
+          
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: snapshot.data!.docs.map((doc) {
+                                    var title = doc['title'];
+                                    var body = doc['body'];
+                                    if (doc['to'] != 'news') {
+                                      return const SizedBox
+                                          .shrink(); // Non mostra nulla per questa notizia
+                                    }
+                                    return ListTile(
+                                      title: Text(title),
+                                      subtitle: Text(
+                                        body,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      leading: const Icon(
+                                        Icons.newspaper,
+                                        color: Colors.deepPurple,
+                                      ),
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => NewsDetailPage(
+                                              news: doc,
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                }).toList(),
-                              );
-                            },
-                          ),
-                        ],
+                                        );
+                                      },
+                                    );
+                                  }).toList(),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              const Space(heigth: 100),
-            ],
+                const Space(heigth: 100),
+              ],
+            ),
           ),
         ),
         extendBody: true,
