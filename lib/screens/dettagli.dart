@@ -44,7 +44,7 @@ class NewsDetailPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildTitle(title),
-              _buildDetailImage(image, isToYou),
+              _buildDetailImage(image, isToYou, news.id),
               const Divider(),
               _buildAuthorAndDate(autore, isToYou),
               const Divider(),
@@ -66,18 +66,21 @@ Widget _buildTitle(String title) {
   );
 }
 
-Widget _buildDetailImage(String imageUrl, bool isToYou) {
+Widget _buildDetailImage(String imageUrl, bool isToYou, String docId) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 10),
     child: isToYou
         ? const SizedBox.shrink()
         : ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
-            child: Image.network(
-              imageUrl,
-              errorBuilder: (context, error, stackTrace) {
-                return Image.asset('assets/images/logo.png', scale: 2.3);
-              },
+            child: Hero(
+              tag: docId, // 👈 stesso tag della card
+              child: Image.network(
+                imageUrl,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset('assets/images/logo.png', scale: 2.3);
+                },
+              ),
             ),
           ),
   );

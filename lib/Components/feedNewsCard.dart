@@ -73,11 +73,14 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
   }
 
   Widget _buildImage(String imageUrl) {
-    return Image.network(
-      imageUrl,
-      errorBuilder: (context, error, stackTrace) {
-        return Image.asset('assets/images/logo.png', scale: 2.3);
-      },
+    return Hero(
+      tag: widget.snapshot.id,
+      child: Image.network(
+        imageUrl,
+        errorBuilder: (context, error, stackTrace) {
+          return Image.asset('assets/images/logo.png', scale: 2.3);
+        },
+      ),
     );
   }
 
