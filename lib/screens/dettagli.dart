@@ -37,19 +37,21 @@ class NewsDetailPage extends StatelessWidget {
         centerTitle: true,
         title: Text(isToYou ? 'Avviso' : 'ParaLat News'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildTitle(title),
-              _buildDetailImage(image, isToYou, news.id),
-              const Divider(),
-              _buildAuthorAndDate(autore, isToYou),
-              const Divider(),
-              _buildBody(body),
-            ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildTitle(title),
+                _buildDetailImage(image, isToYou, news.id),
+                const Divider(),
+                _buildAuthorAndDate(autore, isToYou),
+                const Divider(),
+                _buildBody(body),
+              ],
+            ),
           ),
         ),
       ),
@@ -117,7 +119,7 @@ Widget _buildAuthorAndDate(String autore, bool isToYou) {
 }
 
 Widget _buildBody(String body) {
-  return Text(body);
+  return Text(body, style: TextStyle(fontSize: 18),);
 }
 
 Widget _buildFloatingActionButton(

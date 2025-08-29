@@ -53,12 +53,12 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
                           icona: Icons.language,
                           funzione: WorkPage(),
                           testo: '   Cambia lingua')),
-                  const SizedBox(
-                      width: double.infinity,
-                      child: Button(
-                          icona: Icons.accessibility_new,
-                          funzione: WorkPage(),
-                          testo: '   Accessibilità')),
+                  // const SizedBox(
+                  //     width: double.infinity,
+                  //     child: Button(
+                  //         icona: Icons.accessibility_new,
+                  //         funzione: WorkPage(),
+                  //         testo: '   Accessibilità')),
                   const SizedBox(
                     height: 20,
                   ),
@@ -66,14 +66,14 @@ class _ImpostazioniPageState extends State<ImpostazioniPage> {
                     padding: EdgeInsets.only(bottom: 10),
                     child: Text('Altro'),
                   ),
-                  if (Verify().verifyUser(context) != Verify().typeUser(0))
-                    const SizedBox(
-                        width: double.infinity,
-                        child: Button(
-                          icona: Icons.diamond,
-                          funzione: SubPage(),
-                          testo: '    ParaLat Premium',
-                        )),
+                  // if (Verify().verifyUser(context) != Verify().typeUser(0))
+                  //   const SizedBox(
+                  //       width: double.infinity,
+                  //       child: Button(
+                  //         icona: Icons.diamond,
+                  //         funzione: SubPage(),
+                  //         testo: '    ParaLat Premium',
+                  //       )),
                   SizedBox(
                       width: double.infinity,
                       child: Padding(
