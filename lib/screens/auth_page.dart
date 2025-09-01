@@ -14,18 +14,22 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   final _email = TextEditingController();
   final _password = TextEditingController();
+  final _repassword = TextEditingController();
   final _nome = TextEditingController();
   final _cognome = TextEditingController();
   bool isLogin = true;
   bool isObscure = true;
+  bool isReObscure = true;
   bool isPlay = true;
 
   Future<void> signIn(BuildContext context) async {
     try {
       if (_password.text.isEmpty || _email.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Tutti i campi devono essere compilati'),
+          SnackBar(
+            content: SafeArea(
+              child: const Text('Tutti i campi devono essere compilati'),
+            ),
             backgroundColor: Colors.red,
           ),
         );
@@ -54,7 +58,7 @@ class _AuthPageState extends State<AuthPage> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(message),
+          content: SafeArea(child: Text(message)),
           backgroundColor: Colors.red,
         ),
       );
@@ -69,7 +73,15 @@ class _AuthPageState extends State<AuthPage> {
           _password.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Tutti i campi devono essere compilati'),
+            content:
+                SafeArea(child: Text('Tutti i campi devono essere compilati')),
+            backgroundColor: Colors.red,
+          ),
+        );
+      } else if (_password.text != _repassword.text) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: SafeArea(child: Text('La password non coincide')),
             backgroundColor: Colors.red,
           ),
         );
@@ -92,7 +104,7 @@ class _AuthPageState extends State<AuthPage> {
       }
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(message),
+          content: SafeArea(child: Text(message)),
           backgroundColor: Colors.red,
         ),
       );
@@ -103,10 +115,10 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-          child: SizedBox(
-                height: double.maxFinite,
-                width: double.maxFinite,
-                child: DecoratedBox(
+      child: SizedBox(
+        height: double.maxFinite,
+        width: double.maxFinite,
+        child: DecoratedBox(
           decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
             Color.fromARGB(255, 67, 157, 231),
@@ -136,6 +148,7 @@ class _AuthPageState extends State<AuthPage> {
                         children: [
                           Expanded(
                             child: TextField(
+                              textInputAction: TextInputAction.next,
                               controller: _nome,
                               decoration:
                                   const InputDecoration(label: Text('nome')),
@@ -144,6 +157,7 @@ class _AuthPageState extends State<AuthPage> {
                           const Space(heigth: 20, width: 40),
                           Expanded(
                             child: TextField(
+                              textInputAction: TextInputAction.next,
                               controller: _cognome,
                               decoration:
                                   const InputDecoration(label: Text('cognome')),
@@ -152,10 +166,13 @@ class _AuthPageState extends State<AuthPage> {
                         ],
                       ),
                     TextField(
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.emailAddress,
                       controller: _email,
                       decoration: const InputDecoration(label: Text('email')),
                     ),
                     TextField(
+                      textInputAction: TextInputAction.done,
                       controller: _password,
                       obscureText: isObscure,
                       decoration: InputDecoration(
@@ -172,57 +189,81 @@ class _AuthPageState extends State<AuthPage> {
                         ),
                       ),
                     ),
-                    if (isLogin == true)
-                      TextButton(
-                        child: const Row(
-                          children: [
-                            Text('Password dimenticata?  '),
-                            Icon(Icons.key),
-                          ],
-                        ),
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) => AlertDialog(
-                                  title: const Text(
-                                      'Inserisci una mail per consentire il recupero della password'),
-                                  content: SizedBox(
-                                    height: 140,
-                                    child: Column(
-                                      children: [
-                                        TextField(
-                                          controller: _email,
-                                          keyboardType:
-                                              TextInputType.emailAddress,
-                                          decoration: const InputDecoration(
-                                              label: Text('email')),
-                                        ),
-                                        const Space(heigth: 30),
-                                        TextButton(
-                                            onPressed: () {
-                                              Auth().reimpostaPassword(
-                                                  context, true, _email.text);
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                  content:
-                                                      const Text('Email inviata'),
-                                                  backgroundColor:
-                                                      Theme.of(context)
-                                                          .colorScheme
-                                                          .inversePrimary,
+                    isLogin
+                        ? TextButton(
+                            child: const Row(
+                              children: [
+                                Text('Password dimenticata?  '),
+                                Icon(Icons.key),
+                              ],
+                            ),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                          title: const Text(
+                                              'Inserisci una mail per consentire il recupero della password'),
+                                          content: SizedBox(
+                                            height: 140,
+                                            child: Column(
+                                              children: [
+                                                TextField(
+                                                  controller: _email,
+                                                  keyboardType: TextInputType
+                                                      .emailAddress,
+                                                  decoration:
+                                                      const InputDecoration(
+                                                          label: Text('email')),
                                                 ),
-                                              );
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text('Invia email')),
-                                      ],
-                                    ),
-                                  )));
-                          // Navigator
-                          // Auth().reimpostaPassword(context);
-                        },
-                      ),
+                                                const Space(heigth: 30),
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Auth().reimpostaPassword(
+                                                          context,
+                                                          true,
+                                                          _email.text);
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: const Text(
+                                                              'Email inviata'),
+                                                          backgroundColor: Theme
+                                                                  .of(context)
+                                                              .colorScheme
+                                                              .inversePrimary,
+                                                        ),
+                                                      );
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: const Text(
+                                                        'Invia email')),
+                                              ],
+                                            ),
+                                          )));
+                              // Navigator
+                              // Auth().reimpostaPassword(context);
+                            },
+                          )
+                        : TextField(
+                            controller: _repassword,
+                            textInputAction: TextInputAction.done,
+                            obscureText: isReObscure,
+                            decoration: InputDecoration(
+                              label: const Text('Conferma password'),
+                              suffixIcon: IconButton(
+                                icon: Icon(isReObscure
+                                    ? Icons.visibility_off
+                                    : Icons.visibility),
+                                onPressed: () {
+                                  setState(() {
+                                    isReObscure = !isReObscure;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
                     const Space(
                       heigth: 6,
                       width: double.maxFinite,
@@ -256,8 +297,8 @@ class _AuthPageState extends State<AuthPage> {
               ),
             ],
           ),
-                ),
-              ),
-        ));
+        ),
+      ),
+    ));
   }
 }

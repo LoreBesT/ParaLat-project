@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+10
+version: 1.0.1+11
 
 environment:
   sdk: '>=3.4.3 <4.0.0'
@@ -60,10 +60,15 @@ dependencies:
   # google_sign_in: ^6.1.0
 
 flutter_launcher_icons:
-  android: "launcher_icon"
+  android: true
   ios: true
-  image_path: "assets/images/icon.png"
   min_sdk_android: 21
+
+  # Icona base (necessaria per evitare l'errore)
+  image_path: "assets/images/logoApp.png"
+
+  # Adaptive icons (solo per Android 8+)
+  adaptive_icon_foreground: "assets/images/logoApp.png"
   adaptive_icon_background: "#00055E"
 
 dev_dependencies:
@@ -97,6 +102,7 @@ flutter:
    - assets\images\ParaLat.png
    - assets\images\logo.png
    - assets\images\icon.png
+   - assets\images\logoApp.png
    - assets/docs/template.docx
   #   - images/a_dot_ham.jpeg
 
