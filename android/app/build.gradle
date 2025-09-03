@@ -23,18 +23,18 @@ if (localPropertiesFile.exists()) {
 
 def flutterVersionCode = localProperties.getProperty("flutter.versionCode")
 if (flutterVersionCode == null) {
-    flutterVersionCode = "11"
+    flutterVersionCode = "12"
 }
 
 def flutterVersionName = localProperties.getProperty("flutter.versionName")
 if (flutterVersionName == null) {
-    flutterVersionName = "1.0.1"
+    flutterVersionName = "1.1.0"
 }
 
 android {
     namespace = "com.paralat.app"
     compileSdk = 35
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "28.2.13676358"
 
     signingConfigs {
         release {
