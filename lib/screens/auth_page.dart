@@ -151,7 +151,7 @@ class _AuthPageState extends State<AuthPage> {
                               textInputAction: TextInputAction.next,
                               controller: _nome,
                               decoration:
-                                  const InputDecoration(label: Text('nome')),
+                                  const InputDecoration(label: Text('Nome')),
                             ),
                           ),
                           const Space(heigth: 20, width: 40),
@@ -160,7 +160,7 @@ class _AuthPageState extends State<AuthPage> {
                               textInputAction: TextInputAction.next,
                               controller: _cognome,
                               decoration:
-                                  const InputDecoration(label: Text('cognome')),
+                                  const InputDecoration(label: Text('Cognome')),
                             ),
                           ),
                         ],
@@ -169,14 +169,14 @@ class _AuthPageState extends State<AuthPage> {
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.emailAddress,
                       controller: _email,
-                      decoration: const InputDecoration(label: Text('email')),
+                      decoration: const InputDecoration(label: Text('Email')),
                     ),
                     TextField(
                       textInputAction: TextInputAction.done,
                       controller: _password,
                       obscureText: isObscure,
                       decoration: InputDecoration(
-                        label: const Text('password'),
+                        label: const Text('Password'),
                         suffixIcon: IconButton(
                           icon: Icon(isObscure
                               ? Icons.visibility_off

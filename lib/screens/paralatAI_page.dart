@@ -348,7 +348,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                                     // ButtonNoAnimatedTr(testo: 'PDF'),
                                     // ButtonNoAnimatedTr(testo: 'DOC'),
                                     const Divider(),
-                                    ButtonNoAnimatedTr(
+                                    const ButtonNoAnimatedTr(
                                       testo: 'AI PRO',
                                     ),
                                   ],
