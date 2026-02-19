@@ -83,7 +83,7 @@ class _NewsPageState extends State<NewsGeneralPage> {
                 isToYou = false;
               }
               return isToYou
-                  ? SizedBox.shrink()
+                  ? const SizedBox.shrink()
                   : FeedNewsCard(
                       title: news['title'],
                       autore: news['autore'],

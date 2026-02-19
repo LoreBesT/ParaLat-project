@@ -119,7 +119,7 @@ Widget _buildAuthorAndDate(String autore, bool isToYou) {
 }
 
 Widget _buildBody(String body) {
-  return Text(body, style: TextStyle(fontSize: 18),);
+  return Text(body, style: const TextStyle(fontSize: 18),);
 }
 
 Widget _buildFloatingActionButton(
@@ -164,7 +164,7 @@ Widget _buildFloatingActionButton(
       ),
       PopupMenuItem(
         onTap: () {
-          share('${title}\n\ndi${autore}\n\n${body}\n\nLeggi questo e tanti altri articoli solo su ParaLat.\n⬇️Scaricalo ora⬇️\n\nhttps://play.google.com/store/apps/details?id=com.paralat.app');
+          share('$title\n\ndi$autore\n\n$body\n\nLeggi questo e tanti altri articoli solo su ParaLat.\n⬇️Scaricalo ora⬇️\n\nhttps://play.google.com/store/apps/details?id=com.paralat.app');
         },
         child: const ListTile(
           leading: Icon(Icons.share, color: Colors.deepPurple),
@@ -218,7 +218,7 @@ void _showSummaryModal(BuildContext context, String body, String autore) {
                             ),
                             Image.asset('assets/images/ParaLat.png', scale: 9),
                             IconButton(
-                              icon: Icon(Icons.share),
+                              icon: const Icon(Icons.share),
                               onPressed: () {
                                 share(
                                     "${snapshot.data!}. Accedi anche te a ParaLat AI.\n⬇️Scarica ora la nostra app⬇️\n\nhttps://play.google.com/store/apps/details?id=com.paralat.app");

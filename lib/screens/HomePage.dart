@@ -45,7 +45,7 @@ Stream<bool> areAllReadStream(String collectionName) {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _index = 0;
+  final int _index = 0;
   // List<Widget> funzioni = [HomePage(), NewsPage(), ImpostazioniPage()];
   bool isFavorite = false;
   List<int> lista = [1, 2, 3, 4];
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                   stream: areAllReadStream("news"),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
-                      return Icon(
+                      return const Icon(
                         Icons.notifications_none,
                         size: 30,
                       );

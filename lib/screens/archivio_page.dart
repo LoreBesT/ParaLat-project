@@ -77,7 +77,7 @@ class _ArchivioPageState extends State<ArchivioPage> {
 class FolderPage extends StatefulWidget {
   final String folderPath;
 
-  const FolderPage({required this.folderPath});
+  const FolderPage({super.key, required this.folderPath});
 
   @override
   _FolderPageState createState() => _FolderPageState();

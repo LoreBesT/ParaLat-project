@@ -54,7 +54,7 @@ class _ActionButtonsState extends State<ActionButtons> {
             _nomeFileSelezionato!.substring(_nomeFileSelezionato!.length - 4);
         DateTime now = DateTime.now();
         String newFileName =
-            '${_nomeVersione.text}_${_autore.text}_${now.day}-${now.month}-${now.year}_${now.hour}${now.minute}${now.second}${Verify().nameUser(4).replaceAll(' ', '_')}${estensione}';
+            '${_nomeVersione.text}_${_autore.text}_${now.day}-${now.month}-${now.year}_${now.hour}${now.minute}${now.second}${Verify().nameUser(4).replaceAll(' ', '_')}$estensione';
         String nomeFile = newFileName;
         String percorso = 'Versioni/Community/$nomeFile';
         FirebaseStorage storage = FirebaseStorage.instance;
@@ -90,7 +90,7 @@ class _ActionButtonsState extends State<ActionButtons> {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return AlertDialog(
-              title: Text('Carica una versione'),
+              title: const Text('Carica una versione'),
               content: SizedBox(
                 height: 385,
                 child: Column(
@@ -98,36 +98,36 @@ class _ActionButtonsState extends State<ActionButtons> {
                   children: [
                     TextField(
                       controller: _nomeVersione,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         label: Text('Nome della Versione'),
                       ),
                     ),
                     TextField(
                       controller: _testoVersione,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         label: Text('Versione'),
                       ),
                     ),
                     TextField(
                       controller: _autore,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         label: Text('Autore'),
                       ),
                     ),
                     TextField(
                       controller: _traduzione,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         label: Text('Traduzione'),
                       ),
                     ),
-                    Space(heigth: 10),
+                    const Space(heigth: 10),
                     TextButton(
                       onPressed: () => _selezionaDocumento(setState),
                       child: Text(
                           _nomeFileSelezionato ?? 'Seleziona un documento'),
                     ),
                     if (_staCaricamento)
-                      CircularProgressIndicator()
+                      const CircularProgressIndicator()
                     else
                       ElevatedButton(
                         onPressed: () async {
@@ -146,7 +146,7 @@ class _ActionButtonsState extends State<ActionButtons> {
                               );
                             } catch (e) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
+                                const SnackBar(
                                   content: Text(
                                       'Si è verificato un errore. Riprova'),
                                   backgroundColor: Colors.red,
@@ -163,21 +163,21 @@ class _ActionButtonsState extends State<ActionButtons> {
                             }
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
+                              const SnackBar(
                                 content: Text('Compilare tutti i campi!'),
                                 backgroundColor: Colors.red,
                               ),
                             );
                           }
                         },
-                        child: Text('Carica'),
+                        child: const Text('Carica'),
                       ),
                     if (_percentualeCaricamento != null)
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Text(
                           '${_percentualeCaricamento?.toStringAsFixed(2)}% completato',
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                          style: const TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ),
                   ],
@@ -193,7 +193,7 @@ class _ActionButtonsState extends State<ActionButtons> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: SizedBox(
         height: 80,
         child: Card(
@@ -218,7 +218,7 @@ class _ActionButtonsState extends State<ActionButtons> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Icon(widget.icona),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -226,7 +226,7 @@ class _ActionButtonsState extends State<ActionButtons> {
                       Text(
                         widget.testoMaiuscolo ?? '',
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Color.fromARGB(255, 126, 126, 126),
                         ),

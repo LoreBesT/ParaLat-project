@@ -116,7 +116,7 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
         padding: const EdgeInsets.all(0),
       ),
       trailing: widget.toYou
-          ? SizedBox.shrink()
+          ? const SizedBox.shrink()
           : IconButton(
               icon: const Icon(
                 Icons.share,

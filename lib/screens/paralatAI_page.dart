@@ -25,11 +25,13 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
       []; // Cambia a lista di mappe per tracciare chi ha inviato il messaggio
   String? apiKey;
   String? models;
+  String? input;
   @override
   void initState() {
     super.initState();
     _initApiKey();
     _initModels();
+    _initInput();
   }
 
   Future<void> _initApiKey() async {
@@ -67,6 +69,30 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
       if (doc.exists && doc.data() != null) {
         setState(() {
           models = doc['value'];
+        });
+        // print("✅✅✅Chiave API caricata correttamente.");
+      } else {
+        throw Exception('Errore nella connessione al server');
+      }
+    } catch (e) {
+      // print("❤️❤️❤️Errore nel recupero della chiave API: $e");
+      setState(() {
+        _messages.add(
+            {"sender": "bot", "text": "Errore nella connessione al server"});
+      });
+    }
+  }
+
+  Future<void> _initInput() async {
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('config')
+          .doc('input')
+          .get();
+
+      if (doc.exists && doc.data() != null) {
+        setState(() {
+          input = doc['value'];
         });
         // print("✅✅✅Chiave API caricata correttamente.");
       } else {
@@ -124,9 +150,9 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
       return;
     }
     final model = GenerativeModel(model: "gemini-$models", apiKey: apiKey!);
-    print("$models ciaooooooooooooooooooo");
-    final completeInput =
-        'Ciao ho questa versione che devi analizzare secondo le indicazioni che ti do. L\'analisi la incollerò in un file word, perciò dedica una riga per l\'analisi di ciascuna parola. L\'analisi dovrà essere svolta così: subito dopo la parola metti il complemento(oggetto, specificazione, termine, stato in luogo, soggetto ecc... ecc..) per nomi, e pronomi e aggettivi(per gli aggettivi specifica scrivendo ad esempio: Att. del compl di termine); per i verbi metti il modo(indicativo, congiuntivo ecc.. ecc..) per il resto metti invece la parte del discorso(congiunzione, interazione, avverbio ecc...). Dopo tale parte metti il caso per nomi, pronomi e aggettivi ed il tempo per i verbi. In seguito metti il genere(Indica il maschile con M ed il femminile con F) mentre per i verbi metti la persona(Indicandola con 1, 2, 3). Dopo metti il numero(indicandolo con S per il singolare e P per il plurale). Dopo metti per i verbi il paradigma del verbo(Ricorda il paradigma è costituito da 5 voci del verbo: 1 persona indicativo presente, 2 persona indicativo presente, 1 persona indicativo perfetto, supino, infinito presente) mentre per il resto la derivazione(nominativo e genitivo singolare della parola in questione). Infine metti  la corrispettiva traduzione italiana di ogni parola. Un ultima precisazione non fornirmi l\'output in markdown e fornisci l\'analisi completa NON DEVI BLOCCARTI A META\' ANALISI. N.B. Se qualcuna delle precedenti voci dovesse risultare vuota allora non metti direttamente la voce successiva. Questo è un esempio di come fare l\'analisi: Vocas = indicativo, presente 2 S, voco-vocas-vocavi-vocatum-vocare trad: chiami. Oppure per una congiunzione: et = congiunzione trad: e. Per un nome invece ad esempio: rosam = Compl. Oggetto, accusativo, F, S, rosa-rosae, trad: la rosa. Questa è la versione da analizzare: $text';
+    //final completeInput =
+    //'Ciao ho questa versione che devi analizzare secondo le indicazioni che ti do. L\'analisi la incollerò in un file word, perciò dedica una riga per l\'analisi di ciascuna parola. L\'analisi dovrà essere svolta così: subito dopo la parola metti il complemento(oggetto, specificazione, termine, stato in luogo, soggetto ecc... ecc..) per nomi, e pronomi e aggettivi(per gli aggettivi specifica scrivendo ad esempio: Att. del compl di termine); per i verbi metti il modo(indicativo, congiuntivo ecc.. ecc..) per il resto metti invece la parte del discorso(congiunzione, interazione, avverbio ecc...). Dopo tale parte metti il caso per nomi, pronomi e aggettivi ed il tempo per i verbi. In seguito metti il genere(Indica il maschile con M ed il femminile con F) mentre per i verbi metti la persona(Indicandola con 1, 2, 3). Dopo metti il numero(indicandolo con S per il singolare e P per il plurale). Dopo metti per i verbi il paradigma del verbo(Ricorda il paradigma è costituito da 5 voci del verbo: 1 persona indicativo presente, 2 persona indicativo presente, 1 persona indicativo perfetto, supino, infinito presente) mentre per il resto la derivazione(nominativo e genitivo singolare della parola in questione). Infine metti  la corrispettiva traduzione italiana di ogni parola. Un ultima precisazione non fornirmi l\'output in markdown e fornisci l\'analisi completa NON DEVI BLOCCARTI A META\' ANALISI. PRIMA DI PROCEDERE ALL\'ANALISI LOGICA VOGLIO CHE MI FORNISCI LA TRADUZIONE COMPLESSIVA DELLA VERSIONE SCRIVERNDO PRIMA " Traduzione:" ed incollandola di seguito. Poi staccati di uno spazio ed incolla l\'analisi preceduta da una scritta "Analisi della versione:". N.B. Se qualcuna delle precedenti voci dovesse risultare vuota allora non metti direttamente la voce successiva. Questo è un esempio di come fare l\'analisi: Vocas = indicativo, presente 2 S, voco-vocas-vocavi-vocatum-vocare trad: chiami. Oppure per una congiunzione: et = congiunzione trad: e. Per un nome invece ad esempio: rosam = Compl. Oggetto, accusativo, F, S, rosa-rosae, trad: la rosa. Questa è la versione da analizzare: $text';
+    final completeInput = '$input $text';
     setState(() {
       _messages.add({"sender": "user", "text": text});
       _isLoading = true;

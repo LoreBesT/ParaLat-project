@@ -131,7 +131,7 @@ class _SearchPageState extends State<SearchPage> {
                     controller: _scrollController,
                     child: ListView(
                       controller: _scrollController,
-                      children: [],
+                      children: const [],
                     ),
                   ),
                 ),

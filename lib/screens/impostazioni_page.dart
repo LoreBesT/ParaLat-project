@@ -18,7 +18,7 @@ class ImpostazioniPage extends StatefulWidget {
 }
 
 class _ImpostazioniPageState extends State<ImpostazioniPage> {
-  int _index = 2;
+  final int _index = 2;
 
   // List<Widget> funzioni = [HomePage(), NewsPage(), ImpostazioniPage()];
   @override

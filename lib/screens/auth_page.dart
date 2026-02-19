@@ -26,9 +26,9 @@ class _AuthPageState extends State<AuthPage> {
     try {
       if (_password.text.isEmpty || _email.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: SafeArea(
-              child: const Text('Tutti i campi devono essere compilati'),
+              child: Text('Tutti i campi devono essere compilati'),
             ),
             backgroundColor: Colors.red,
           ),
