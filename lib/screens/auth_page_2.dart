@@ -1,0 +1,264 @@
+import 'package:flutter/material.dart';
+import 'package:paralat/Components/custom_snackbar.dart';
+import 'package:paralat/Components/text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:paralat/Components/auth.dart';
+
+class AuthPage2 extends StatefulWidget {
+  const AuthPage2({super.key});
+  @override
+  State<AuthPage2> createState() => _AuthPage2State();
+}
+
+class _AuthPage2State extends State<AuthPage2> {
+  final _email = TextEditingController();
+  final _password = TextEditingController();
+  final _repassword = TextEditingController();
+  final _nome = TextEditingController();
+  final _cognome = TextEditingController();
+  bool isLogin = true;
+
+  Future<void> signIn(BuildContext context) async {
+    try {
+      if (_password.text.isEmpty || _email.text.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          customSnackBar("Tutti i campi devono essere compilati",
+              type: SnackBarType.error),
+        );
+      } else {
+        await Auth().signInWithEmailAndPassword(
+            email: _email.text, password: _password.text);
+      }
+    } on FirebaseAuthException catch (error) {
+      String message;
+      switch (error.toString()) {
+        case '[firebase_auth/invalid-credential] The supplied auth credential is incorrect, malformed or has expired.':
+          message = 'Email o password errata';
+          break;
+        case '[firebase_auth/invalid-email] The email address is badly formatted.':
+          message = 'L\'indirizzo email fornito è invalido';
+          break;
+
+        case '[firebase_auth/too-many-requests] We have blocked all requests from this device due to unusual activity. Try again later.':
+          message =
+              'L\'accesso al tuo account è stato temporaneamente sospeso per troppi tentantivi errati. Riprova più tardi.';
+          break;
+
+        default:
+          message = 'Si è verificato un errore. Riprova.';
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        customSnackBar(message, type: SnackBarType.error),
+      );
+    }
+  }
+
+  Future<void> createUser(BuildContext context) async {
+    try {
+      if (_nome.text.isEmpty ||
+          _cognome.text.isEmpty ||
+          _email.text.isEmpty ||
+          _password.text.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          customSnackBar("Tutti i campi devono essere compilati",
+              type: SnackBarType.error),
+        );
+      } else if (_password.text != _repassword.text) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          customSnackBar("Le password non coincidono",
+              type: SnackBarType.error),
+        );
+      } else {
+        await Auth().createUserWithEmailAndPassword(
+            email: _email.text, password: _password.text);
+        await Auth()
+            .setNameAndSurname(name: _nome.text, surname: _cognome.text);
+        Auth().createNews(_nome.text, Auth().getUID().toString());
+      }
+    } on FirebaseAuthException catch (error) {
+      String message;
+      switch (error.toString()) {
+        case '[firebase_auth/invalid-email] The email address is badly formatted.':
+          message = 'L\'indirizzo email fornito è invalido';
+          break;
+        default:
+          message = 'Errore nella creazione dell\'account. Riprova più tardi.';
+          break;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        customSnackBar(message, type: SnackBarType.error),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: SafeArea(
+          child: SizedBox(
+            height: double.maxFinite,
+            width: double.maxFinite,
+            child: DecoratedBox(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFF7B2FF7), // viola
+                    Color.fromARGB(255, 237, 7, 241), // fucsia
+                  ],
+                ),
+              ),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              r'assets/images/logoApp.png',
+                              height: 100,
+                              width: 100,
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              isLogin
+                                  ? 'Bentornato su ParaLat'
+                                  : 'Crea il tuo account',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              isLogin
+                                  ? 'Accedi al tuo account'
+                                  : 'Compila i campi per registrarti',
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.grey),
+                            ),
+                            const SizedBox(height: 18),
+                            if (isLogin == false)
+                              Row(
+                                children: [
+                                  Expanded(
+                                      child: NewTextField(
+                                          controller: _nome,
+                                          hint: "Nome",
+                                          icon: Icons.person_outline)),
+                                  SizedBox(width: 20),
+                                  Expanded(
+                                      child: NewTextField(
+                                          controller: _cognome,
+                                          hint: "Cognome",
+                                          icon: Icons.person_outline)),
+                                ],
+                              ),
+                            NewTextField(
+                                controller: _email,
+                                hint: "Email",
+                                icon: Icons.email),
+                            NewTextField(
+                              controller: _password,
+                              hint: "Password",
+                              icon: Icons.lock_outline_rounded,
+                              isPassword: true,
+                              paddingBottom: isLogin ? 0.0 : 12.0,
+                            ),
+                            if (isLogin == true)
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: TextButton(
+                                  onPressed: () {
+                                    //Gestire password dimenticata con card dal basso stile Lecosimò AI
+                                  },
+                                  child: Text(
+                                    "Password dimenticata?",
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 132, 64, 242),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            if (isLogin == false)
+                              NewTextField(
+                                  controller: _repassword,
+                                  hint: "Conferma Password",
+                                  icon: Icons.lock_outline_rounded,
+                                  isPassword: true),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14),
+                                gradient: LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                  colors: [
+                                    Color.fromARGB(255, 132, 64, 242), // viola
+                                    Color.fromARGB(255, 237, 7, 241), // fucsia
+                                  ],
+                                ),
+                              ),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  FocusScope.of(context).unfocus();
+                                  isLogin
+                                      ? signIn(context)
+                                      : createUser(context);
+                                },
+                                child: Text(
+                                  isLogin ? "Accedi" : "Registrati",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.transparent,
+                                  shadowColor: Colors.transparent,
+                                  minimumSize: const Size.fromHeight(50),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(isLogin
+                                    ? 'Non hai un account?'
+                                    : 'Hai già un account?'),
+                                TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isLogin = !isLogin;
+                                      });
+                                    },
+                                    child: Text(
+                                      isLogin ? 'Registrati' : 'Accedi',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 132, 64, 242),
+                                          fontWeight: FontWeight.bold),
+                                    ))
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ));
+  }
+}

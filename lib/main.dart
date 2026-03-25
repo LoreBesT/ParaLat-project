@@ -5,7 +5,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'firebase_options.dart';
 import 'package:paralat/Components/notifiche.dart';
 import 'Components/auth.dart';
-import 'screens/auth_page.dart';
+import 'screens/auth_page_2.dart';
 import 'screens/HomePage.dart';
 
 /// ✅ AdMob initializer con lazy loading automatico dopo l'avvio
@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
           color: Theme.of(context).colorScheme.inversePrimary,
           toolbarHeight: 100,
         ),
-        bottomAppBarTheme: const BottomAppBarTheme(),
+        // bottomAppBarTheme: const BottomAppBarTheme(),
         scrollbarTheme: ScrollbarThemeData(
           thumbVisibility: const WidgetStatePropertyAll(true),
           thumbColor: WidgetStatePropertyAll(Colors.deepPurple.shade100),
@@ -84,7 +84,7 @@ class _MyAppState extends State<MyApp> {
           if (snapshot.hasData) {
             return const HomePage();
           } else {
-            return const AuthPage();
+            return const AuthPage2();
           }
         },
       ),
