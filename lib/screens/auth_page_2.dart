@@ -135,7 +135,7 @@ class _AuthPage2State extends State<AuthPage2> {
                               isLogin
                                   ? 'Bentornato su ParaLat'
                                   : 'Crea il tuo account',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -182,9 +182,104 @@ class _AuthPage2State extends State<AuthPage2> {
                                 alignment: Alignment.centerRight,
                                 child: TextButton(
                                   onPressed: () {
-                                    //Gestire password dimenticata con card dal basso stile Lecosimò AI
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled:
+                                          true, // 🔥 importantissimo per la tastiera
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(20)),
+                                      ),
+                                      builder: (BuildContext context) {
+                                        return SafeArea(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                              left: 20,
+                                              right: 20,
+                                              top: 20,
+                                              bottom: MediaQuery.of(context)
+                                                      .viewInsets
+                                                      .bottom +
+                                                  20,
+                                            ),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                const Text(
+                                                  'Inserisci una mail per consentire il recupero della password',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                const SizedBox(height: 20),
+                                                NewTextField(
+                                                  controller: _email,
+                                                  hint: "Email",
+                                                  icon: Icons.email,
+                                                ),
+                                                SizedBox(height: 20),
+                                                SizedBox(
+                                                  width: double.infinity,
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(14),
+                                                      gradient: const LinearGradient(
+                                                        begin: Alignment.centerLeft,
+                                                        end: Alignment.centerRight,
+                                                        colors: [
+                                                          Color.fromARGB(
+                                                              255,
+                                                              132,
+                                                              64,
+                                                              242), // viola
+                                                          Color.fromARGB(
+                                                              255,
+                                                              237,
+                                                              7,
+                                                              241), // fucsia
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    child: ElevatedButton(
+                                                      onPressed: () {
+                                                        Auth()
+                                                            .reimpostaPassword(
+                                                          context,
+                                                          true,
+                                                          _email.text,
+                                                        );
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          customSnackBar(
+                                                              'Email inviata! Controlla la tua casella di posta',
+                                                              type: SnackBarType
+                                                                  .success),
+                                                        );
+                                                        Navigator.pop(context);
+                                                      },
+                                                      style: ElevatedButton.styleFrom(
+                                                        backgroundColor: Colors.transparent,
+                                                        shadowColor: Colors.transparent,
+                                                      ),
+                                                      child: const Text(
+                                                          'Invia email', 
+                                                          style: TextStyle(color: Colors.white),
+                                                      ),
+                                                
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                             )
+                                          ),
+                                        );
+                                      },
+                                    );
                                   },
-                                  child: Text(
+                                  child:const Text(
                                     "Password dimenticata?",
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 132, 64, 242),
@@ -201,7 +296,7 @@ class _AuthPage2State extends State<AuthPage2> {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(14),
-                                gradient: LinearGradient(
+                                gradient: const LinearGradient(
                                   begin: Alignment.centerLeft,
                                   end: Alignment.centerRight,
                                   colors: [
@@ -217,14 +312,14 @@ class _AuthPage2State extends State<AuthPage2> {
                                       ? signIn(context)
                                       : createUser(context);
                                 },
-                                child: Text(
-                                  isLogin ? "Accedi" : "Registrati",
-                                  style: TextStyle(color: Colors.white),
-                                ),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.transparent,
                                   shadowColor: Colors.transparent,
                                   minimumSize: const Size.fromHeight(50),
+                                ),
+                                child:Text(
+                                  isLogin ? "Accedi" : "Registrati",
+                                  style: const TextStyle(color: Colors.white),
                                 ),
                               ),
                             ),
@@ -243,7 +338,7 @@ class _AuthPage2State extends State<AuthPage2> {
                                     },
                                     child: Text(
                                       isLogin ? 'Registrati' : 'Accedi',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color:
                                               Color.fromARGB(255, 132, 64, 242),
                                           fontWeight: FontWeight.bold),
