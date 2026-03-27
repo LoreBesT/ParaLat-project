@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class ButtonNoAnimatedTr extends StatefulWidget {
@@ -45,10 +46,10 @@ class _ButtonNoAnimatedTrState extends State<ButtonNoAnimatedTr> {
           color: value
               ? Theme.of(context).colorScheme.primary
               : Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: AppRadius.circularBorder,
         ),
         child: InkWell(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: AppRadius.circularBorder,
           onTap: () {
             setState(() {
               value = !value;

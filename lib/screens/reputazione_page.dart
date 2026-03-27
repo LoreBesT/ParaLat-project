@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
 
@@ -23,7 +24,7 @@ class _MyWidgetState extends State<ProfiloPage> {
             children: [
               Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16)),
+                    borderRadius: AppRadius.circularBorder),
                 margin: const EdgeInsets.all(8),
                 elevation: 7,
                 child: Column(

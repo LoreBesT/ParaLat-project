@@ -1,5 +1,6 @@
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/auth.dart';
 
 class NavFloatBar extends StatefulWidget {
@@ -24,7 +25,7 @@ class _NavFloatBarState extends State<NavFloatBar> {
       unselectedItemColor: isDarkTheme ? Colors.white : Colors.black,
       selectedBackgroundColor: const Color.fromARGB(255, 250, 219, 255),
       elevation: 4,
-      borderRadius: 20,
+      borderRadius: AppRadius.circular,
       // onTap: (int val) => setState(() => _index = val),
       onTap: (int val) {
         setState(() {

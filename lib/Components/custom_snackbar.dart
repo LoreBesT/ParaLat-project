@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paralat/Components/colors.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 
 SnackBar customSnackBar(String message, {SnackBarType type = SnackBarType.error}) {
   Color bgColor;
@@ -29,7 +29,7 @@ SnackBar customSnackBar(String message, {SnackBarType type = SnackBarType.error}
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppRadius.circularBorder,
         boxShadow: [
           BoxShadow(
             color: Colors.black26,

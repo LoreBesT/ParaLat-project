@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 // import 'package:lecosimo/components/share.dart';
 // import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:paralat/screens/dettagli.dart';
@@ -45,7 +46,7 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
         child: SizedBox(
           child: Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: AppRadius.circularBorder,
             ),
             // elevation: 2,
             clipBehavior: Clip.hardEdge,

@@ -7,3 +7,8 @@ class AppColors {
   static  Color errorRed = Colors.red.shade600; 
   static  Color infoBlue = Colors.blue.shade700;
 }
+
+class AppRadius {
+  static const double circular = 14.0;
+  static const BorderRadius circularBorder = BorderRadius.all(Radius.circular(circular));
+}

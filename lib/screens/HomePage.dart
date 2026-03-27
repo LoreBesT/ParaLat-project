@@ -1,6 +1,7 @@
 //Implementare verifica se un utente ha sanzioni con espulsione o meno in homepage. Se vi è una sanzione con espulsione permabannare account e inibire l'accesso all'app
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
@@ -149,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                   height: 260,
                   child: Card(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
+                        borderRadius: AppRadius.circularBorder),
                     elevation: 2,
                     child: Scrollbar(
                       controller: _listViewController,

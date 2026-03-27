@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 
 class Feedcard extends StatefulWidget {
   const Feedcard({
@@ -24,7 +25,7 @@ class _FeedcardState extends State<Feedcard> {
       child: SizedBox(
         child: Card(
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              RoundedRectangleBorder(borderRadius: AppRadius.circularBorder),
           elevation: 2,
           clipBehavior: Clip.hardEdge,
           child: Column(

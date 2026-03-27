@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 
 class RoundedButtons extends StatefulWidget {
   final String testo;
@@ -24,7 +25,7 @@ class _RoundedButtonsState extends State<RoundedButtons> {
         width: 160,
         child: Card(
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              RoundedRectangleBorder(borderRadius: AppRadius.circularBorder),
           elevation: 2,
           child: InkWell(
             onTap: () {

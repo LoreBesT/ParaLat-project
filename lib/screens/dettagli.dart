@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:paralat/Components/aiFunction.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/socialLinks.dart';
 
@@ -74,7 +75,7 @@ Widget _buildDetailImage(String imageUrl, bool isToYou, String docId) {
     child: isToYou
         ? const SizedBox.shrink()
         : ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: AppRadius.circularBorder,
             child: Hero(
               tag: docId, // 👈 stesso tag della card
               child: Image.network(
@@ -128,7 +129,7 @@ Widget _buildFloatingActionButton(
     color: Colors.white,
     elevation: 8,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: AppRadius.circularBorder,
     ),
     icon: Container(
       height: 70,

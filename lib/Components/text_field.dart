@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/auth.dart';
 
 class NewTextField extends StatefulWidget {
@@ -62,7 +63,7 @@ class _NewTextFieldState extends State<NewTextField> {
           contentPadding: const EdgeInsets.symmetric(vertical: 18),
 
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: AppRadius.circularBorder,
             borderSide: BorderSide.none,
           ),
         ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paralat/Components/colors.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/custom_snackbar.dart';
 import 'package:paralat/Components/text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -117,7 +117,7 @@ class _AuthPage2State extends State<AuthPage2> {
                   child: Card(
                     elevation: 10,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: AppRadius.circularBorder,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(24.0),
@@ -224,7 +224,7 @@ class _AuthPage2State extends State<AuthPage2> {
                                                   width: double.infinity,
                                                   child: Container(
                                                     decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(14),
+                                                      borderRadius: AppRadius.circularBorder,
                                                       gradient: const LinearGradient(
                                                         begin: Alignment.centerLeft,
                                                         end: Alignment.centerRight,
@@ -284,7 +284,7 @@ class _AuthPage2State extends State<AuthPage2> {
                                   isPassword: true),
                             Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14),
+                                borderRadius: AppRadius.circularBorder,
                                 gradient: const LinearGradient(
                                   begin: Alignment.centerLeft,
                                   end: Alignment.centerRight,

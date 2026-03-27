@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paralat/Components/action_buttons.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/feed.dart';
 import 'package:paralat/screens/archivio_page.dart';
 import 'package:paralat/screens/work_page.dart';
@@ -35,7 +36,7 @@ class _SearchPageState extends State<SearchPage> {
                   width: double.infinity,
                   child: Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100),
+                      borderRadius: AppRadius.circularBorder,
                     ),
                     child: TextField(
                       controller: _versione,

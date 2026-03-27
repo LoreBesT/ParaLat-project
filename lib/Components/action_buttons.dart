@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/space.dart';
@@ -198,9 +199,9 @@ class _ActionButtonsState extends State<ActionButtons> {
         height: 80,
         child: Card(
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+              const RoundedRectangleBorder(borderRadius: AppRadius.circularBorder),
           child: InkWell(
-            borderRadius: BorderRadius.circular(100),
+            borderRadius: AppRadius.circularBorder,
             onTap: () {
               if (widget.icona == Icons.search_off ||
                   widget.icona == Icons.camera_alt ||

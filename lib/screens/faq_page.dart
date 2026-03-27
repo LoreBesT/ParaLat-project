@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 
 class Faqpage extends StatefulWidget {
   const Faqpage({super.key});
@@ -61,7 +62,7 @@ class FAQButtons extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.circularBorder),
         child: Theme(
           data: Theme.of(context).copyWith(
             dividerColor: Colors.transparent,
