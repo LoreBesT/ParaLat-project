@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/auth.dart';
 
 class NewTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -35,7 +36,7 @@ class _NewTextFieldState extends State<NewTextField> {
         textInputAction: widget.action,
         decoration: InputDecoration(
           hintText: widget.hint,
-          hintStyle: const TextStyle(color: Colors.grey),
+          hintStyle: TextStyle(color: Colors.grey),
 
           prefixIcon: Icon(widget.icon),
 
@@ -56,7 +57,7 @@ class _NewTextFieldState extends State<NewTextField> {
               : null,
 
           filled: true,
-          fillColor: const Color.fromRGBO(236, 236, 249, 1),
+          fillColor: Auth().isDarkTheme(context) ? const Color.fromARGB(255, 47, 47, 47) : const Color.fromRGBO(236, 236, 249, 1),
 
           contentPadding: const EdgeInsets.symmetric(vertical: 18),
 

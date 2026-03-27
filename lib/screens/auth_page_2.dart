@@ -4,6 +4,8 @@ import 'package:paralat/Components/text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:paralat/Components/auth.dart';
 
+//fixare il fatto che con la dark mode nn si leggono bene i testi
+
 class AuthPage2 extends StatefulWidget {
   const AuthPage2({super.key});
   @override
