@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/colors.dart';
 import 'package:paralat/Components/custom_snackbar.dart';
 import 'package:paralat/Components/text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -107,10 +108,7 @@ class _AuthPage2State extends State<AuthPage2> {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFF7B2FF7), // viola
-                    Color.fromARGB(255, 237, 7, 241), // fucsia
-                  ],
+                  colors: [AppColors.gradientStart, AppColors.gradientEnd],
                 ),
               ),
               child: Center(
@@ -149,7 +147,7 @@ class _AuthPage2State extends State<AuthPage2> {
                                   : 'Compila i campi per registrarti',
                               textAlign: TextAlign.center,
                               style:
-                                  TextStyle(fontSize: 16, color: Colors.grey),
+                                  const TextStyle(fontSize: 16, color: Colors.grey),
                             ),
                             const SizedBox(height: 18),
                             if (isLogin == false)
@@ -160,7 +158,7 @@ class _AuthPage2State extends State<AuthPage2> {
                                           controller: _nome,
                                           hint: "Nome",
                                           icon: Icons.person_outline)),
-                                  SizedBox(width: 20),
+                                  const SizedBox(width: 20),
                                   Expanded(
                                       child: NewTextField(
                                           controller: _cognome,
@@ -221,7 +219,7 @@ class _AuthPage2State extends State<AuthPage2> {
                                                   hint: "Email",
                                                   icon: Icons.email,
                                                 ),
-                                                SizedBox(height: 20),
+                                                const SizedBox(height: 20),
                                                 SizedBox(
                                                   width: double.infinity,
                                                   child: Container(
@@ -230,18 +228,7 @@ class _AuthPage2State extends State<AuthPage2> {
                                                       gradient: const LinearGradient(
                                                         begin: Alignment.centerLeft,
                                                         end: Alignment.centerRight,
-                                                        colors: [
-                                                          Color.fromARGB(
-                                                              255,
-                                                              132,
-                                                              64,
-                                                              242), // viola
-                                                          Color.fromARGB(
-                                                              255,
-                                                              237,
-                                                              7,
-                                                              241), // fucsia
-                                                        ],
+                                                        colors: [AppColors.gradientStart, AppColors.gradientEnd],
                                                       ),
                                                     ),
                                                     child: ElevatedButton(
@@ -284,7 +271,7 @@ class _AuthPage2State extends State<AuthPage2> {
                                   child:const Text(
                                     "Password dimenticata?",
                                     style: TextStyle(
-                                      color: Color.fromARGB(255, 132, 64, 242),
+                                      color: AppColors.gradientStart,
                                     ),
                                   ),
                                 ),
@@ -301,10 +288,7 @@ class _AuthPage2State extends State<AuthPage2> {
                                 gradient: const LinearGradient(
                                   begin: Alignment.centerLeft,
                                   end: Alignment.centerRight,
-                                  colors: [
-                                    Color.fromARGB(255, 132, 64, 242), // viola
-                                    Color.fromARGB(255, 237, 7, 241), // fucsia
-                                  ],
+                                  colors: [AppColors.gradientStart, AppColors.gradientEnd],
                                 ),
                               ),
                               child: ElevatedButton(
@@ -341,8 +325,7 @@ class _AuthPage2State extends State<AuthPage2> {
                                     child: Text(
                                       isLogin ? 'Registrati' : 'Accedi',
                                       style: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 132, 64, 242),
+                                          color: AppColors.gradientStart,
                                           fontWeight: FontWeight.bold),
                                     ))
                               ],

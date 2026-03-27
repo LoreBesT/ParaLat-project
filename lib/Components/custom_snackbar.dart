@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/colors.dart';
 
 SnackBar customSnackBar(String message, {SnackBarType type = SnackBarType.error}) {
   Color bgColor;
@@ -6,16 +7,16 @@ SnackBar customSnackBar(String message, {SnackBarType type = SnackBarType.error}
 
   switch (type) {
     case SnackBarType.success:
-      bgColor = Colors.green.shade600;
+      bgColor = AppColors.successGreen;
       icon = Icons.check_circle_outline;
       break;
     case SnackBarType.info:
-      bgColor = Colors.blue.shade600;
+      bgColor = AppColors.infoBlue;
       icon = Icons.info_outline;
       break;
     case SnackBarType.error:
     default:
-      bgColor = Colors.red.shade700;
+      bgColor = AppColors.errorRed;
       icon = Icons.error_outline;
       break;
   }

@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    // ✅ Lazy loading automatico di AdMob
+
     Future.microtask(() async {
       await AdManager.init();
     });
@@ -60,24 +60,48 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
+    // ✅ Definisci UNA volta il tuo schema colori
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: const Color(0xFF7B2FF7),
+    );
+
     return MaterialApp(
       title: 'ParaLat',
       navigatorKey: widget.navigatorKey,
+
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
-        iconTheme: const IconThemeData(color: Colors.deepPurple),
+        colorScheme: colorScheme,
+
+        // ✅ Usa il colorScheme, NON Theme.of(context)
         appBarTheme: AppBarTheme(
-          color: Theme.of(context).colorScheme.inversePrimary,
+          backgroundColor: colorScheme.primary,
+          foregroundColor: Colors.white,
           toolbarHeight: 100,
         ),
-        // bottomAppBarTheme: const BottomAppBarTheme(),
+
+        iconTheme: const IconThemeData(
+          color: Color(0xFF7B2FF7),
+        ),
+
         scrollbarTheme: ScrollbarThemeData(
           thumbVisibility: const WidgetStatePropertyAll(true),
-          thumbColor: WidgetStatePropertyAll(Colors.deepPurple.shade100),
+          thumbColor: WidgetStatePropertyAll(
+            colorScheme.primary.withOpacity(0.3),
+          ),
         ),
       ),
-      darkTheme: ThemeData.dark(),
+
+      // ✅ Dark theme coerente
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF7B2FF7),
+          brightness: Brightness.dark,
+        ),
+      ),
+
       home: StreamBuilder(
         stream: Auth().authStateChanges,
         builder: (context, snapshot) {

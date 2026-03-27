@@ -38,9 +38,10 @@ class _NavFloatBarState extends State<NavFloatBar> {
       },
       currentIndex: widget.index,
       items: [
-        FloatingNavbarItem(icon: Icons.home, title: 'Home'),
-        FloatingNavbarItem(icon: Icons.newspaper, title: 'Notizie'),
-        FloatingNavbarItem(icon: Icons.settings, title: 'Impostazioni'),
+        FloatingNavbarItem(icon: Icons.chat_bubble_outline, title: 'Chat'),
+        FloatingNavbarItem(icon: Icons.archive_outlined, title: 'Archivio'),
+        FloatingNavbarItem(icon: Icons.newspaper_outlined, title: 'Notizie'),
+        FloatingNavbarItem(icon: Icons.settings_outlined, title: 'Impostazioni'),
       ],
     );
   }
