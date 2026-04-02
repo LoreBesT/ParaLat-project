@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 
 import 'firebase_options.dart';
 import 'package:paralat/Components/notifiche.dart';
@@ -78,11 +79,17 @@ class _MyAppState extends State<MyApp> {
         appBarTheme: AppBarTheme(
           backgroundColor: colorScheme.primary,
           foregroundColor: Colors.white,
-          toolbarHeight: 100,
+          toolbarHeight: 70,
         ),
 
+
         iconTheme: const IconThemeData(
-          color: Color(0xFF7B2FF7),
+          color: AppColors.gradientStart,
+        ),
+
+        textTheme: TextTheme().apply(
+          bodyColor: AppColors.text,
+          displayColor: AppColors.text,
         ),
 
         scrollbarTheme: ScrollbarThemeData(

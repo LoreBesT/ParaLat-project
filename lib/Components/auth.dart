@@ -151,6 +151,11 @@ class Auth {
     return utente!.uid.toString();
   }
 
+  String? getEmail() {
+    User? utente = _firebaseAuth.currentUser;
+    return utente!.email.toString();
+  }
+
   Future<void> signOut(context) async {
     try {
       await _firebaseAuth.currentUser?.reload();

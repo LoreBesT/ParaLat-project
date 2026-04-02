@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/screens/HomePage.dart';
 import 'package:paralat/screens/impostazioni_page.dart';
+import 'package:paralat/screens/impostazioni_page_2.dart';
 import 'package:paralat/screens/news_general_page.dart';
+import 'package:paralat/screens/work_page.dart';
 //COMPLETARE QUESTA PAGINA E REPUTAZIONE PAGE
 
 class Verify {
@@ -33,7 +35,7 @@ class Verify {
   }
 
   List<Widget>? funzioniBottAppBar(BuildContext context) {
-    return [const HomePage(), const NewsGeneralPage(), const ImpostazioniPage()];
+    return [const HomePage(), const NewsGeneralPage(), const ImpostazioniPage2(), const WorkPage()];
   }
 
   ///Function to set the icon for admin, free and premium users
@@ -67,6 +69,8 @@ class Verify {
   ///
   ///For i = 4 the function returns the complete name and surname
   ///
+  ///For i = 5 the function returns the first letter of name
+  ///
   ///For default the function returns the complete name and surname
   String nameUser(int i) {
     String? nome = Auth().getUserDisplayName();
@@ -84,8 +88,10 @@ class Verify {
         return nomeCognome[1];
       case 2:
         return ('${nomeCognome[1]} ${nomeCognome[2]}');
-      case 4:
+      case 3:
         return nome;
+      case 4:
+        return nome[0];  
       default:
         return nome;
     }
