@@ -278,4 +278,44 @@ class Auth {
     }
     return null;
   }
+
+  Future<void> creaNotifiche(String uid) async {
+  final db = FirebaseFirestore.instance;
+
+  try {
+    final now = DateTime.now();
+    final limite = Timestamp.fromDate(
+      now.subtract(Duration(days: 14)),
+    );
+
+    final querySnapshot = await db
+        .collection('avvisi')
+        .where('ora', isGreaterThanOrEqualTo: limite)
+        .get();
+
+    for (var doc in querySnapshot.docs) {
+      final data = doc.data();
+
+      final idNotifica = '${doc.id}_$uid';
+
+      final notificaRef =
+          db.collection('notifiche_personali').doc(idNotifica);
+
+      final notificaSnap = await notificaRef.get();
+
+      if (notificaSnap.exists) continue;
+
+      await notificaRef.set({
+        'title': data['title'],
+        'body': data['body'],
+        'ora': data['ora'],
+        'letto': false,
+      });
+    }
+
+    print('Notifiche create correttamente');
+  } catch (e) {
+    print('Errore: $e');
+  }
+}
 }
