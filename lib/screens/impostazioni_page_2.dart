@@ -81,6 +81,7 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
               stream: FirebaseFirestore.instance
                   .collection('notifiche_personali')
                   .orderBy('ora', descending: true)
+                  .limit(3)
                   .snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
