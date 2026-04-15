@@ -70,8 +70,9 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
               ),
             ),
             SizedBox(height: 20),
-
+            Divider(),
             DesignSettings().sectionTile(
+              context: context,
                 title: "Notifiche Personali",
                 icon: Icons.notifications_outlined,
                 badgeCount: 4),
@@ -124,6 +125,9 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
                 );
               },
             ),
+            Divider(),
+            DesignSettings().sectionTile(title: "Preferenze", icon: Icons.settings_outlined, context: context),
+            Divider(),
           ]),
         ),
       ),

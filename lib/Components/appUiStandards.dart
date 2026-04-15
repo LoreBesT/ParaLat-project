@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paralat/screens/notifications_page.dart';
 
 class AppColors {
   static const Color gradientStart = Color(0xFF9839ff); // viola
@@ -18,6 +19,7 @@ class AppRadius {
 
 class DesignSettings {
   Widget sectionTile({
+  required BuildContext context,
   required String title,
   required IconData icon,
   int? badgeCount,
@@ -61,27 +63,36 @@ class DesignSettings {
         Positioned(
           right: 0, 
           // Centriamolo verticalmente (se l'altezza dello stack è 40 e il badge ~20, top: 10 lo centra)
-          top: 10, 
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-            decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            constraints: const BoxConstraints(
-              minWidth: 28,
-              minHeight: 18,
-            ),
-            child: Center(
-              child: Text(
-                badgeCount.toString(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
+          top: -6, 
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextButton(onPressed: (){
+                Navigator.push( context ,MaterialPageRoute(builder: (context) => NotificationsPage()),
+    );
+              }, child: Text("Vedi Tutte")),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                constraints: const BoxConstraints(
+                  minWidth: 28,
+                  minHeight: 18,
+                ),
+                child: Center(
+                  child: Text(
+                    badgeCount.toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
     ],
