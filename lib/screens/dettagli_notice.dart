@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:paralat/Components/appUiStandards.dart';
+import 'package:paralat/Components/auth.dart';
 
 
 class NoticeDetailPage extends StatelessWidget {
@@ -17,7 +18,11 @@ class NoticeDetailPage extends StatelessWidget {
     final title = news['title'];
     final body = news['body'];
     final ora = news['ora'];
-    // Auth().markAsRead(context, news.id);
+    String? uid = Auth().getUID();
+    Auth().markAsRead(context, news.id);
+    if(news['letto'] == false) {
+      Auth().incrementaCounter(uid!, false);
+    }
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60,

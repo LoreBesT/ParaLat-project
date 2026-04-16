@@ -55,9 +55,72 @@ class Auth {
     required String email,
     required String password,
   }) async {
-    await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
+    final credential = await _firebaseAuth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+
+    final uid = credential.user!.uid;
+
+    await FirebaseFirestore.instance.collection('users').doc(uid).set({
+      'toRead': 0,
+    });
   }
+
+  Future<void> creaProfiloSeNonEsiste(String uid) async {
+    await FirebaseFirestore.instance.collection('users').doc(uid).set({
+      'toRead': 0,
+    });
+  }
+
+  Future<void> incrementaCounter(String uid, bool isIncrement) async {
+    const int maxAttempts = 10;
+    int attempts = 0;
+
+    while (attempts < maxAttempts) {
+      try {
+        final docRef = FirebaseFirestore.instance.collection('users').doc(uid);
+
+        await docRef.update({
+          'toRead': isIncrement ? FieldValue.increment(1) : FieldValue.increment(-1),
+        });
+
+        // se va a buon fine esci
+        return;
+      } catch (e) {
+        attempts++;
+
+        // se il documento non esiste o errore simile
+        try {
+          await creaProfiloSeNonEsiste(uid);
+        } catch (_) {
+          // ignoriamo errori di creazione e ritentiamo
+        }
+
+        // piccolo delay per evitare spam Firestore
+        await Future.delayed(const Duration(milliseconds: 200));
+      }
+    }
+
+    throw Exception(
+        "Impossibile incrementare counter dopo $maxAttempts tentativi");
+  }
+
+  Stream<int> getUnreadCountStream(String uid) {
+  return FirebaseFirestore.instance
+      .collection('users')
+      .doc(uid)
+      .snapshots()
+      .map((doc) {
+        final data = doc.data();
+        if (data == null) return 0;
+
+        final value = data['toRead'];
+        if (value == null) return 0;
+
+        return (value as num).toInt();
+      });
+}
 
   Future<void> createReport(String title, String description, String userId,
       BuildContext context) async {
@@ -172,12 +235,10 @@ class Auth {
 
   Future<void> markAsRead(BuildContext context, String docId) async {
     final docRef =
-        FirebaseFirestore.instance.collection('news').doc(docId);
-
+        FirebaseFirestore.instance.collection('notifiche_personali').doc(docId);
     try {
-      await docRef.update({'isRead': true});
+      await docRef.update({'letto': true});
     } catch (e) {
-      print(e);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Errore durante l\'aggiornamento: $e'),
@@ -280,42 +341,47 @@ class Auth {
   }
 
   Future<void> creaNotifiche(String uid) async {
-  final db = FirebaseFirestore.instance;
+    final db = FirebaseFirestore.instance;
 
-  try {
-    final now = DateTime.now();
-    final limite = Timestamp.fromDate(
-      now.subtract(Duration(days: 14)),
-    );
+    try {
+      final now = DateTime.now();
+      final limite = Timestamp.fromDate(
+        now.subtract(const Duration(days: 14)),
+      );
 
-    final querySnapshot = await db
-        .collection('avvisi')
-        .where('ora', isGreaterThanOrEqualTo: limite)
-        .get();
+      final querySnapshot = await db
+          .collection('avvisi')
+          .where('ora', isGreaterThanOrEqualTo: limite)
+          .get();
 
-    for (var doc in querySnapshot.docs) {
-      final data = doc.data();
+      for (var doc in querySnapshot.docs) {
+        final data = doc.data();
 
-      final idNotifica = '${doc.id}_$uid';
+        final idNotifica = '${doc.id}_$uid';
 
-      final notificaRef =
-          db.collection('notifiche_personali').doc(idNotifica);
+        final notificaRef =
+            db.collection('notifiche_personali').doc(idNotifica);
 
-      final notificaSnap = await notificaRef.get();
+        final notificaSnap = await notificaRef.get();
 
-      if (notificaSnap.exists) continue;
+        // 🔴 già esiste → non fare nulla
+        if (notificaSnap.exists) continue;
 
-      await notificaRef.set({
-        'title': data['title'],
-        'body': data['body'],
-        'ora': data['ora'],
-        'letto': false,
-      });
+        // 🟢 crea notifica
+        await notificaRef.set({
+          'title': data['title'],
+          'body': data['body'],
+          'ora': data['ora'],
+          'letto': false,
+        });
+
+        // 🔥 incrementa counter SOLO se creata davvero
+        await incrementaCounter(uid, true);
+      }
+
+      print('Notifiche create correttamente');
+    } catch (e) {
+      print('Errore: $e');
     }
-
-    print('Notifiche create correttamente');
-  } catch (e) {
-    print('Errore: $e');
   }
-}
 }

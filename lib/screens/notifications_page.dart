@@ -15,7 +15,6 @@ class NotificationsPage extends StatefulWidget {
 
 class _NotificationPageState extends State<NotificationsPage> {
   late String? uid;
-  bool isToYou = false;
 
   @override
   void initState() {
@@ -73,6 +72,7 @@ class _NotificationPageState extends State<NotificationsPage> {
                         title: notifica['title'],
                         body: notifica['body'],
                         snapshot: notifica,
+                        isRead: notifica['letto']
                       );
               },
             );

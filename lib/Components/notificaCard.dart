@@ -8,12 +8,14 @@ class NotificaCard extends StatefulWidget {
     super.key,
     required this.title,
     required this.body,
+    required this.isRead,
     required this.snapshot,
   });
 
   final String title;
   final String body;
   final DocumentSnapshot snapshot;
+  final bool isRead;
 
   @override
   State<NotificaCard> createState() => _NotificaCardState();
@@ -60,6 +62,7 @@ class _NotificaCardState extends State<NotificaCard> {
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),
+        trailing: widget.isRead ? SizedBox.shrink() : Icon(Icons.circle, color: AppColors.text, size: 15,),
         isThreeLine: false,
         // leading: Icon(Icons.notifications, color: Colors.yellow[600], size: 32),
       ),

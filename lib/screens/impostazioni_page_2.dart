@@ -71,12 +71,28 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
             ),
             SizedBox(height: 20),
             Divider(),
-            DesignSettings().sectionTile(
-              context: context,
-                title: "Notifiche Personali",
-                icon: Icons.notifications_outlined,
-                badgeCount: 4),
+            StreamBuilder<int>(
+              stream: Auth().getUnreadCountStream(uid.toString()),
+              builder: (context, snapshot) {
+                final count = snapshot.data ?? 0;
 
+                if (snapshot.hasError) {
+                  return DesignSettings().sectionTile(
+                    context: context,
+                    title: "Notifiche Personali",
+                    icon: Icons.notifications_outlined,
+                    badgeCount: 0,
+                  );
+                }
+
+                return DesignSettings().sectionTile(
+                  context: context,
+                  title: "Notifiche Personali",
+                  icon: Icons.notifications_outlined,
+                  badgeCount: count,
+                );
+              },
+            ),
             StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection('notifiche_personali')
@@ -121,13 +137,17 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
                       title: notifica['title'],
                       body: notifica['body'],
                       snapshot: notifica,
+                      isRead: notifica['letto'],
                     );
                   },
                 );
               },
             ),
             Divider(),
-            DesignSettings().sectionTile(title: "Preferenze", icon: Icons.settings_outlined, context: context),
+            DesignSettings().sectionTile(
+                title: "Preferenze",
+                icon: Icons.settings_outlined,
+                context: context),
             Divider(),
           ]),
         ),
