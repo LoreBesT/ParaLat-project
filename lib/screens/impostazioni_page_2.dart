@@ -3,6 +3,7 @@ import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/notificaCard.dart';
 
 class ImpostazioniPage2 extends StatefulWidget {
@@ -14,7 +15,7 @@ class ImpostazioniPage2 extends StatefulWidget {
 
 class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
   String? uid;
-
+  final int _index = 3;
   @override
   void initState() {
     super.initState();
@@ -33,6 +34,7 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget>? funzioni = Verify().funzioniBottAppBar(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Impostazioni'),
@@ -151,6 +153,10 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
             Divider(),
           ]),
         ),
+      ),
+      bottomNavigationBar: NavFloatBar(
+        index: _index,
+        funzioni: funzioni,
       ),
     );
   }

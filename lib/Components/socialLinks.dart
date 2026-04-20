@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/custom_snackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -71,10 +72,8 @@ Future sendMail(
     await launchUrl(emailUri);
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Impossibile aprire il client email.'),
-        backgroundColor: Colors.red,
-      ),
+      customSnackBar("Errore, impossibile aprire il client email!",
+          type: SnackBarType.error),
     );
   }
 }
@@ -89,10 +88,8 @@ Future<void> openSite(BuildContext context, String sito) async {
     }
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Errore: impossibile aprire il sito."),
-        backgroundColor: Colors.red,
-      ),
+      customSnackBar("Errore, impossibile aprire il sito!",
+          type: SnackBarType.error),
     );
   }
 }

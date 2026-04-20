@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
+import 'package:paralat/Components/custom_snackbar.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:path_provider/path_provider.dart';
 // import 'package:battery_plus/battery_plus.dart';
@@ -47,7 +48,9 @@ class Auth {
     } catch (e) {
       // print('Errore durante il download del file: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Errore durante il download: $e')));
+        customSnackBar("Errore durante il download: $e!",
+            type: SnackBarType.error),
+      );
     }
   }
 
@@ -82,7 +85,8 @@ class Auth {
         final docRef = FirebaseFirestore.instance.collection('users').doc(uid);
 
         await docRef.update({
-          'toRead': isIncrement ? FieldValue.increment(1) : FieldValue.increment(-1),
+          'toRead':
+              isIncrement ? FieldValue.increment(1) : FieldValue.increment(-1),
         });
 
         // se va a buon fine esci
@@ -107,20 +111,20 @@ class Auth {
   }
 
   Stream<int> getUnreadCountStream(String uid) {
-  return FirebaseFirestore.instance
-      .collection('users')
-      .doc(uid)
-      .snapshots()
-      .map((doc) {
-        final data = doc.data();
-        if (data == null) return 0;
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .snapshots()
+        .map((doc) {
+      final data = doc.data();
+      if (data == null) return 0;
 
-        final value = data['toRead'];
-        if (value == null) return 0;
+      final value = data['toRead'];
+      if (value == null) return 0;
 
-        return (value as num).toInt();
-      });
-}
+      return (value as num).toInt();
+    });
+  }
 
   Future<void> createReport(String title, String description, String userId,
       BuildContext context) async {
@@ -225,10 +229,8 @@ class Auth {
       await _firebaseAuth.signOut();
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Errore: $e'),
-          backgroundColor: Colors.red,
-        ),
+        customSnackBar("Errore durante il signout: $e",
+            type: SnackBarType.error),
       );
     }
   }
@@ -240,10 +242,8 @@ class Auth {
       await docRef.update({'letto': true});
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Errore durante l\'aggiornamento: $e'),
-          backgroundColor: Colors.red,
-        ),
+        customSnackBar("Errore nell'aggiornamento dei dati sulle notifiche",
+            type: SnackBarType.error),
       );
     }
   }
@@ -257,10 +257,9 @@ class Auth {
             email: utente!.email.toString());
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-                'Errore nell\'invio della mail di password reset\nCodice errore ${e.message}'),
-            backgroundColor: Colors.red,
+          customSnackBar(
+            'Errore nell\'invio della mail di password reset\nCodice errore ${e.message}',
+            type: SnackBarType.error,
           ),
         );
       }
@@ -269,11 +268,9 @@ class Auth {
         await _firebaseAuth.sendPasswordResetEmail(email: email);
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-                'Errore nell\'invio della mail di password reset\nCodice errore ${e.message}'),
-            backgroundColor: Colors.red,
-          ),
+          customSnackBar(
+              'Errore nell\'invio della mail di password reset\nCodice errore ${e.message}',
+              type: SnackBarType.error),
         );
       }
     }
@@ -285,10 +282,9 @@ class Auth {
       utente?.delete();
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-              'Errore nell\'eliminazione dell\'account\nCodice errore ${e.message}'),
-          backgroundColor: Colors.red,
+        customSnackBar(
+          'Errore nell\'eliminazione dell\'account\nCodice errore ${e.message}',
+          type: SnackBarType.error,
         ),
       );
     }
@@ -330,11 +326,9 @@ class Auth {
       }
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-              'Errore nell\'invio della mail di password reset\nCodice errore ${e.message}'),
-          backgroundColor: Colors.red,
-        ),
+        customSnackBar(
+            'Errore nell\'invio della mail di password reset\nCodice errore ${e.message}',
+            type: SnackBarType.error),
       );
     }
     return null;

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:http/http.dart';
 import 'package:open_file/open_file.dart';
+import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/drawerButtonNoAnimatedWithTrailing.dart';
 import 'package:paralat/Components/rounded_buttons_new.dart';
 import 'package:path_provider/path_provider.dart';
@@ -334,7 +335,15 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chatta con ParaLat AI'),
-        toolbarHeight: 130,
+        // automaticallyImplyLeading: false,
+        centerTitle: true,
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(child: Text("Cronologia")),
+          ],
+        ),
       ),
       body: SafeArea(
         child: Column(
@@ -419,7 +428,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                   Expanded(
                     child: Card(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100)),
+                          borderRadius: AppRadius.circularBorder,),
                       child: TextField(
                         controller: _controller,
                         autocorrect: false,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/feedNewsCard.dart';
+import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/screens/HomePage.dart';
 import 'package:paralat/screens/impostazioni_page.dart'; // Assicurati di importare la nuova pagina
@@ -21,13 +22,7 @@ class _NewsPageState extends State<NewsGeneralPage> {
     // initBannerAd();
   }
 
-  final int _index = 1;
-
-  List<Widget> funzioni = [
-    const HomePage(),
-    const NewsGeneralPage(),
-    const ImpostazioniPage()
-  ];
+  final int _index = 2;
   // late BannerAd bannerAd;
   // bool isAdLoaded = false;
   // var adUnit =
@@ -55,6 +50,7 @@ class _NewsPageState extends State<NewsGeneralPage> {
   bool isToYou = false;
   @override
   Widget build(BuildContext context) {
+    List<Widget>? funzioni = Verify().funzioniBottAppBar(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notizie ed Eventi'),

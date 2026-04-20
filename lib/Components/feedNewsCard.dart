@@ -6,7 +6,6 @@ import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/screens/dettagli.dart';
 import 'package:paralat/Components/socialLinks.dart';
 
-
 class FeedNewsCard extends StatefulWidget {
   const FeedNewsCard(
       {super.key,
@@ -123,7 +122,8 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
                 Icons.share,
               ),
               onPressed: () {
-                share('${widget.title}\nScopri questa e tante altre notizie solo su ParaLat.\n⬇️Scaricala ora⬇️\n\nhttps://play.google.com/store/apps/details?id=com.paralat.app');
+                share(
+                    '${widget.title}\nScopri questa e tante altre notizie solo su ParaLat.\n⬇️Scaricala ora⬇️\n\nhttps://play.google.com/store/apps/details?id=com.paralat.app');
               },
             ),
     );

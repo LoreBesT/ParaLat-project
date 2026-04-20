@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/auth.dart';
+import 'package:paralat/Components/custom_snackbar.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/space.dart';
 import 'dart:io';
@@ -164,10 +165,7 @@ class _ActionButtonsState extends State<ActionButtons> {
                             }
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Compilare tutti i campi!'),
-                                backgroundColor: Colors.red,
-                              ),
+                              customSnackBar("Errore, compilare tutti i campi!", type: SnackBarType.error),
                             );
                           }
                         },

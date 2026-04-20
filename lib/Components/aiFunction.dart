@@ -32,7 +32,7 @@ Future<String> aiFunction(
   }
 
   final model = GenerativeModel(
-    model: "gemini-2.0-flash-lite",
+    model: "gemini-2.5-flash",
     apiKey: apiKey,
   );
 

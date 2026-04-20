@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:paralat/Components/appUiStandards.dart';
+import 'package:paralat/screens/paralatAI_page.dart';
 
 import 'firebase_options.dart';
 import 'package:paralat/Components/notifiche.dart';
