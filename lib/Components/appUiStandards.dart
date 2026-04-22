@@ -9,6 +9,7 @@ class AppColors {
   static Color infoBlue = Colors.blue.shade700;
   static const Color cardTile = Color.fromRGBO(236, 236, 249, 1);
   static const Color text = Color.fromARGB(255, 88, 22, 139);
+  static const Color deepPurple = Colors.deepPurple;
 }
 
 class AppRadius {

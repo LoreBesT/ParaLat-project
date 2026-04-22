@@ -7,7 +7,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:http/http.dart';
 import 'package:open_file/open_file.dart';
 import 'package:paralat/Components/appUiStandards.dart';
-import 'package:paralat/Components/drawerButtonNoAnimatedWithTrailing.dart';
+import 'package:paralat/Components/drawer_buttons/drawerSwitchButton.dart';
 import 'package:paralat/Components/rounded_buttons_new.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -411,6 +411,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                                     // ButtonNoAnimatedTr(testo: 'DOC'),
                                     const Divider(),
                                     const ButtonNoAnimatedTr(
+                                      icona: Icons.diamond_outlined,
                                       testo: 'AI PRO',
                                     ),
                                   ],

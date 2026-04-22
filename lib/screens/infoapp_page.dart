@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paralat/Components/Drawer_buttons.dart';
+import 'package:paralat/Components/drawer_buttons/drawerButton.dart';
 import 'package:paralat/screens/terms.dart';
 
 class InfoappPage extends StatelessWidget {
@@ -23,7 +23,7 @@ class InfoappPage extends StatelessWidget {
             ),
             const Text('Versione 1.0.0',style: TextStyle(color: Colors.grey),),
             const SizedBox(height: 20,),
-            Image.asset(r'assets\images\ParaLat.png'),
+            Image.asset(r'assets/images/ParaLat.png'),
             const SizedBox(height: 20,),
             const Text('Tutti i diritti sono riservati',style: TextStyle(color: Colors.grey),),
             const SizedBox(height: 30,),

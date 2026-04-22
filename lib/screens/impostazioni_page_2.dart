@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/drawer_buttons/drawerButton.dart';
 import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/auth.dart';
+import 'package:paralat/Components/drawer_buttons/drawerButtonfunction.dart';
+import 'package:paralat/Components/drawer_buttons/drawerSwitchButton.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/notificaCard.dart';
+import 'package:paralat/screens/assistenza_page.dart';
+import 'package:paralat/screens/infoapp_page.dart';
 
 class ImpostazioniPage2 extends StatefulWidget {
   const ImpostazioniPage2({super.key});
@@ -43,36 +48,37 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(children: [
             ListTile(
-              contentPadding: EdgeInsets.all(8),
-              shape: RoundedRectangleBorder(
+              contentPadding: const EdgeInsets.all(8),
+              shape: const RoundedRectangleBorder(
                 borderRadius: AppRadius.circularBorder,
               ),
               tileColor: AppColors.cardTile,
               leading: CircleAvatar(
+                  radius: 30,
+                  backgroundColor: AppColors.gradientStart,
                   child: Text(Verify().nameUser(4),
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
-                          fontSize: 20)),
-                  radius: 30,
-                  backgroundColor: AppColors.gradientStart),
+                          fontSize: 20))),
               title: Text(
                 Verify().nameUser(3),
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: AppColors.text),
               ),
               subtitle: Text(
                 Auth().getEmail() ?? 'No email',
-                style: TextStyle(fontSize: 12, color: AppColors.gradientStart),
+                style: const TextStyle(
+                    fontSize: 12, color: AppColors.gradientStart),
               ),
             ),
-            SizedBox(height: 20),
-            Divider(),
+            const SizedBox(height: 20),
+            const Divider(),
             StreamBuilder<int>(
               stream: Auth().getUnreadCountStream(uid.toString()),
               builder: (context, snapshot) {
@@ -130,7 +136,7 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
 
                 return ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: filteredDocs.length,
                   itemBuilder: (context, index) {
                     var notifica = filteredDocs[index];
@@ -145,12 +151,56 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
                 );
               },
             ),
-            Divider(),
+            const Divider(),
             DesignSettings().sectionTile(
                 title: "Preferenze",
                 icon: Icons.settings_outlined,
                 context: context),
-            Divider(),
+            const ButtonNoAnimatedTr(
+                testo: "Modalità scura", icona: Icons.wb_sunny_outlined),
+            const ButtonNoAnimatedTr(
+                testo: "Notifiche Push",
+                icona: Icons.notifications_none_rounded),
+            ButtonFunction(
+              icona: Icons.key,
+              funzione: (context) async {
+                await Auth().reimpostaPassword(context, false);
+              },
+              testo: "Reimposta Password",
+              snackmessage:
+                  "Email inviata, controlla la tua casella di posta elettronica.",
+            ),
+            const Divider(),
+            DesignSettings().sectionTile(
+                title: "Altro",
+                icon: Icons.space_dashboard_outlined,
+                context: context),
+            const Button(
+                icona: Icons.help_outline,
+                funzione: AssistenzaPage(),
+                testo: "Centro Assistenza"),
+            const Button(
+                icona: Icons.info_outline_rounded,
+                funzione: InfoappPage(),
+                testo: "Informazioni"),
+            ButtonFunction(
+              icona: Icons.exit_to_app_rounded,
+              funzione: (context) async {
+                await Auth().signOut(context);
+              },
+              testo: "Log out",
+              snackmessage: "Log out effettuato.",
+              isWarming: true,
+            ),
+            ButtonFunction(
+              icona: Icons.cancel_outlined,
+              funzione: (context) async {
+                // await Auth().deleteAccount(context);
+              },
+              testo: "Elimina account",
+              snackmessage: "Funzione momentaneamente non disponibile",
+              isWarming: true,
+            ),
           ]),
         ),
       ),
