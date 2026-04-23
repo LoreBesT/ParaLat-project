@@ -9,6 +9,7 @@ class ButtonFunction extends StatefulWidget {
     required this.icona,
     required this.funzione,
     required this.testo,
+    required this.subtitle,
     required this.snackmessage,
     this.isWarming,
     this.isPremium,
@@ -17,6 +18,7 @@ class ButtonFunction extends StatefulWidget {
   final Future<void> Function(BuildContext context) funzione; // 👈 chiave
   final IconData icona;
   final String testo;
+  final String subtitle;
   final String snackmessage;
   final bool? isPremium;
   final bool? isWarming;
@@ -61,13 +63,21 @@ class _ButtonFunctionState extends State<ButtonFunction> {
                     : AppColors.gradientStart,
               ),
               const SizedBox(width: 8),
-              Text(
-                widget.testo,
-                style: TextStyle(
-                  color: isWarning
-                      ? AppColors.errorRed
-                      : AppColors.text,
-                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.testo,
+                    style: TextStyle(
+                      // fontSize: 14,
+                      color: isWarning
+                          ? AppColors.errorRed
+                          : AppColors.text,
+                    ),
+                  ),
+                  Text(widget.subtitle, style: TextStyle(fontSize: 12),),
+                ],
               ),
             ],
           ),

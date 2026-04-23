@@ -4,6 +4,7 @@ import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/socialLinks.dart';
 import 'package:paralat/screens/Faq_page.dart';
+import 'package:paralat/screens/info_page.dart';
 import 'package:paralat/screens/infoapp_page.dart';
 import 'package:paralat/screens/terms.dart';
 
@@ -24,7 +25,7 @@ class _AssistenzaPageState extends State<AssistenzaPage> {
         title: const Text('Assistenza'),
       ),
       body: const Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
             Button(
@@ -32,9 +33,13 @@ class _AssistenzaPageState extends State<AssistenzaPage> {
                 funzione: Faqpage(),
                 testo: 'FAQ'),
             Button(
-                icona: Icons.privacy_tip,
+                icona: Icons.privacy_tip_outlined,
                 funzione: TermsPage(),
-                testo: 'Termini e Privacy'),
+                testo: 'Termini e condizioni d\'uso'),
+            Button(
+                icona: Icons.person_outline_rounded,
+                funzione: InfoPage(),
+                testo: 'Credits'),    
             Button(
                 icona: Icons.info_outline,
                 funzione: InfoappPage(),

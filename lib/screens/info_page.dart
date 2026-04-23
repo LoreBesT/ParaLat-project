@@ -29,7 +29,7 @@ class InfoPage extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
-                  child: Image.asset(r'assets\images\ParaLat.png'),
+                  child: Image.asset('assets/images/ParaLat.png'),
                 ),
                 ],
               ),

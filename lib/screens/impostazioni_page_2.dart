@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/donation_button.dart';
 import 'package:paralat/Components/drawer_buttons/drawerButton.dart';
 import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/auth.dart';
@@ -9,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/notificaCard.dart';
 import 'package:paralat/screens/assistenza_page.dart';
+import 'package:paralat/screens/auth_page_2.dart';
 import 'package:paralat/screens/infoapp_page.dart';
 
 class ImpostazioniPage2 extends StatefulWidget {
@@ -77,8 +79,9 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
                     fontSize: 12, color: AppColors.gradientStart),
               ),
             ),
-            const SizedBox(height: 20),
-            const Divider(),
+            const SizedBox(height: 10),
+            // SupportCard(),
+            Divider(),
             StreamBuilder<int>(
               stream: Auth().getUnreadCountStream(uid.toString()),
               builder: (context, snapshot) {
@@ -152,6 +155,8 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
               },
             ),
             const Divider(),
+            SupportCard(),
+            Divider(),
             DesignSettings().sectionTile(
                 title: "Preferenze",
                 icon: Icons.settings_outlined,
@@ -167,6 +172,7 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
                 await Auth().reimpostaPassword(context, false);
               },
               testo: "Reimposta Password",
+              subtitle: "Modifica la password del tuo account",
               snackmessage:
                   "Email inviata, controlla la tua casella di posta elettronica.",
             ),
@@ -187,8 +193,16 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
               icona: Icons.exit_to_app_rounded,
               funzione: (context) async {
                 await Auth().signOut(context);
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const AuthPage2(),
+                //   ),
+                // );
+                //valutare di mettere un spostamento sulla pagina di auth
               },
               testo: "Log out",
+              subtitle: "Disconnetti il tuo account",
               snackmessage: "Log out effettuato.",
               isWarming: true,
             ),
@@ -198,8 +212,20 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
                 // await Auth().deleteAccount(context);
               },
               testo: "Elimina account",
+              subtitle: "Rimuovi permanentemente il tuo account",
               snackmessage: "Funzione momentaneamente non disponibile",
               isWarming: true,
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Text(
+                  'Powered by ParaLat Group\n© 2026 All rights reserved',
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
           ]),
         ),
