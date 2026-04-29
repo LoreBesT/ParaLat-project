@@ -4,6 +4,7 @@ import 'package:paralat/screens/HomePage.dart';
 import 'package:paralat/screens/impostazioni_page.dart';
 import 'package:paralat/screens/impostazioni_page_2.dart';
 import 'package:paralat/screens/news_general_page.dart';
+import 'package:paralat/screens/paralatAI_page.dart';
 import 'package:paralat/screens/work_page.dart';
 //COMPLETARE QUESTA PAGINA E REPUTAZIONE PAGE
 
@@ -35,7 +36,7 @@ class Verify {
   }
 
   List<Widget>? funzioniBottAppBar(BuildContext context) {
-    return [const HomePage(), const WorkPage(), const NewsGeneralPage(), const ImpostazioniPage2()];
+    return [const GeminiApiPage(), const WorkPage(), const NewsGeneralPage(), const ImpostazioniPage2()];
   }
 
   ///Function to set the icon for admin, free and premium users

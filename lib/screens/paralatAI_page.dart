@@ -8,6 +8,8 @@ import 'package:http/http.dart';
 import 'package:open_file/open_file.dart';
 import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/drawer_buttons/drawerSwitchButton.dart';
+import 'package:paralat/Components/level_user.dart';
+import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/rounded_buttons_new.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,6 +23,7 @@ class GeminiApiPage extends StatefulWidget {
 }
 
 class _GeminiApiPageState extends State<GeminiApiPage> {
+  final int _index = 0;
   final TextEditingController _controller = TextEditingController();
   final List<Map<String, String>> _messages =
       []; // Cambia a lista di mappe per tracciare chi ha inviato il messaggio
@@ -332,18 +335,24 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget>? funzioni = Verify().funzioniBottAppBar(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chatta con ParaLat AI'),
-        // automaticallyImplyLeading: false,
-        centerTitle: true,
-      ),
-      drawer: Drawer(
-        child: ListView(
+        title: Row(
           children: [
-            DrawerHeader(child: Text("Cronologia")),
+            Image.asset('assets/images/logoApp.png', scale: 9,),
+            SizedBox(width: 8,),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('ParaLat AI'),
+                Text("Analisi logica latina", style: TextStyle(fontSize: 12),),
+              ],
+            ),
           ],
         ),
+        automaticallyImplyLeading: false,
+        // centerTitle: true,
       ),
       body: SafeArea(
         child: Column(
@@ -434,7 +443,8 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                         controller: _controller,
                         autocorrect: false,
                         decoration: InputDecoration(
-                          labelText: 'Scrivi qui',
+                          labelText: 'Incolla qui la tua versione',
+                          // hint: ,
                           border: const OutlineInputBorder(),
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -462,6 +472,10 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
           ],
         ),
       ),
+      bottomNavigationBar: NavFloatBar(
+          index: _index,
+          funzioni: funzioni,
+        ),
     );
   }
 }

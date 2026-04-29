@@ -114,7 +114,7 @@ class _MyAppState extends State<MyApp> {
         stream: Auth().authStateChanges,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const HomePage();
+            return const GeminiApiPage();
           } else {
             return const AuthPage2();
           }
