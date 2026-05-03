@@ -101,14 +101,14 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
 
-      // ✅ Dark theme coerente
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF7B2FF7),
-          brightness: Brightness.dark,
-        ),
-      ),
+      // Dark theme disabilitata temporaneamente
+      // darkTheme: ThemeData(
+      //   useMaterial3: true,
+      //   colorScheme: ColorScheme.fromSeed(
+      //     seedColor: const Color(0xFF7B2FF7),
+      //     brightness: Brightness.dark,
+      //   ),
+      // ),
 
       home: StreamBuilder(
         stream: Auth().authStateChanges,

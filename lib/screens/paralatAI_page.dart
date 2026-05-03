@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:docx_template/docx_template.dart' as docxTemp;
+import 'package:cleartec_docx_template/cleartec_docx_template.dart' as docxTemp;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -76,13 +76,13 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
         });
         // print("✅✅✅Chiave API caricata correttamente.");
       } else {
-        throw Exception('Errore nella connessione al server');
+        throw Exception('Errore nell\'inizializzazione del modello AI. Riprova più tardi.');
       }
     } catch (e) {
       // print("❤️❤️❤️Errore nel recupero della chiave API: $e");
       setState(() {
         _messages.add(
-            {"sender": "bot", "text": "Errore nella connessione al server"});
+            {"sender": "bot", "text": "Errore nell'inizializzazione del modello AI. Riprova più tardi."});
       });
     }
   }
@@ -221,7 +221,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
       setState(() {
         _messages.add({
           "sender": "bot",
-          "text": "Errore: ParaLat AI ha impiegato troppo tempo a rispondere."
+          "text": "Errore: ParaLat AI ha impiegato troppo tempo a rispondere. Riprova più tardi"
         });
         _isLoading = false;
       });
@@ -257,7 +257,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
         _messages.add({
           "sender": "bot",
           "text":
-              "Errore: A causa di contenuti potenzialmente inappropriati ParaLat AI Safety system ha bloccato la risposta alla tua domanda ${e.toString()}"
+              "Errore nell'accesso ai modelli di ParaLat AI. Riprova più tardi. ${e.toString()}"
         });
         _isLoading = false;
       });
@@ -266,7 +266,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
         _messages.add({
           "sender": "bot",
           "text":
-              "Errore: ParaLat AI ha riscontrato un errore sconosciuto durante il processo della tua richiesta. Riprova più tardi"
+              "Errore: ParaLat AI ha riscontrato un errore sconosciuto durante il processo della tua richiesta. Riprova più tardi. ${e.toString()}"
         });
         _isLoading = false;
       });

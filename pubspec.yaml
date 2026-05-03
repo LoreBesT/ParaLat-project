@@ -46,7 +46,7 @@ dependencies:
   open_file: ^3.3.2
   http: ^1.2.2
   google_generative_ai: ^0.4.3
-  docx_template: ^0.4.0
+  cleartec_docx_template: ^0.4.1
   # archive: ^3.6.1
   floating_bottom_navigation_bar: ^1.5.2
   flutter_launcher_icons: ^0.14.4

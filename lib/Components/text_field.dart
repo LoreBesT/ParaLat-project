@@ -72,9 +72,9 @@ class _NewTextFieldState extends State<NewTextField> {
               : null,
 
           filled: true,
-          fillColor: Auth().isDarkTheme(context)
+          fillColor: /*Auth().isDarkTheme(context)
               ? const Color.fromARGB(255, 47, 47, 47)
-              : const Color.fromRGBO(236, 236, 249, 1),
+              :*/ const Color.fromRGBO(236, 236, 249, 1),
 
           contentPadding: const EdgeInsets.symmetric(vertical: 18),
 
