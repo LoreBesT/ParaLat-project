@@ -11,6 +11,7 @@ import 'package:paralat/Components/drawer_buttons/drawerSwitchButton.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/rounded_buttons_new.dart';
+import 'package:paralat/Components/tipsChat.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -30,6 +31,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
   String? apiKey;
   String? models;
   String? input;
+  bool isMessage = false;
   @override
   void initState() {
     super.initState();
@@ -76,13 +78,17 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
         });
         // print("✅✅✅Chiave API caricata correttamente.");
       } else {
-        throw Exception('Errore nell\'inizializzazione del modello AI. Riprova più tardi.');
+        throw Exception(
+            'Errore nell\'inizializzazione del modello AI. Riprova più tardi.');
       }
     } catch (e) {
       // print("❤️❤️❤️Errore nel recupero della chiave API: $e");
       setState(() {
-        _messages.add(
-            {"sender": "bot", "text": "Errore nell'inizializzazione del modello AI. Riprova più tardi."});
+        _messages.add({
+          "sender": "bot",
+          "text":
+              "Errore nell'inizializzazione del modello AI. Riprova più tardi."
+        });
       });
     }
   }
@@ -221,7 +227,8 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
       setState(() {
         _messages.add({
           "sender": "bot",
-          "text": "Errore: ParaLat AI ha impiegato troppo tempo a rispondere. Riprova più tardi"
+          "text":
+              "Errore: ParaLat AI ha impiegato troppo tempo a rispondere. Riprova più tardi"
         });
         _isLoading = false;
       });
@@ -340,13 +347,21 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
       appBar: AppBar(
         title: Row(
           children: [
-            Image.asset('assets/images/logoApp.png', scale: 9,),
-            SizedBox(width: 8,),
+            Image.asset(
+              'assets/images/logoApp.png',
+              scale: 9,
+            ),
+            SizedBox(
+              width: 8,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text('ParaLat AI'),
-                Text("Analisi logica latina", style: TextStyle(fontSize: 12),),
+                Text(
+                  "Analisi logica latina",
+                  style: TextStyle(fontSize: 12),
+                ),
               ],
             ),
           ],
@@ -360,16 +375,42 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
             Expanded(
               child: SingleChildScrollView(
                 reverse:
-                    true, // Scorri automaticamente verso il basso quando vengono aggiunti nuovi messaggi
-                padding: const EdgeInsets.all(16.0),
+                    isMessage ? true : false, // Scorri automaticamente verso il basso quando vengono aggiunti nuovi messaggi
+                padding: const EdgeInsets.only(top: 26, bottom: 26, left: 30, right: 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _messages
-                      .map((message) => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: _buildMessage(message),
-                          ))
-                      .toList(),
+                  children: [
+                    if (!isMessage)
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text("Traduci e analizza", style: TextStyle(fontSize: 30, color: AppColors.text, fontWeight: FontWeight.w600),),
+                          Row(
+                            // mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("il ", style: TextStyle(fontSize: 30, color: AppColors.text, fontWeight: FontWeight.w600),),
+                              Text("latino ", style: TextStyle(fontSize: 30, color: AppColors.gradientStart, fontWeight: FontWeight.w600),),
+                              Text("con l'AI", style: TextStyle(fontSize: 30, color: AppColors.text, fontWeight: FontWeight.w600),),
+                            ],
+                          ),
+                          SizedBox(height: 6,),
+                          Text("Incolla la tua versione latina ed ottieni traduzione ed analisi logica in pochi secondi.", style: TextStyle(color: Colors.black87)),  
+                          SizedBox(height: 12,),
+                          Tip(icon: Icons.translate, title: "Traduzione accurata", subtitle: "Traduzioni fedeli e contestualizzate"),
+                          SizedBox(height: 10,),
+                          Tip(icon: Icons.account_tree, title: "Analisi logica completa", subtitle: "Analisi logico grammaticale dettagliata di ogni parola"),
+                          SizedBox(height: 10,),
+                          Tip(icon: Icons.bolt, title: "Risultati istantanei", subtitle: "Risposte rapide e chiare sempre a portata di mano"),
+                        ],
+                      ),
+                    /*inserire qui widget temporanei */
+                    ..._messages.map((message) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          child: _buildMessage(message),
+                        )),
+                  ],
                 ),
               ),
             ),
@@ -438,7 +479,8 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                   Expanded(
                     child: Card(
                       shape: RoundedRectangleBorder(
-                          borderRadius: AppRadius.circularBorder,),
+                        borderRadius: AppRadius.circularBorder,
+                      ),
                       child: TextField(
                         controller: _controller,
                         autocorrect: false,
@@ -455,6 +497,9 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                                   icon: const Icon(Icons.send),
                                   onPressed: () {
                                     FocusScope.of(context).unfocus();
+                                    setState(() {
+                                      isMessage = true;
+                                    });
                                     if (_controller.text.isNotEmpty) {
                                       _fetchResponse(_controller.text);
                                       _controller
@@ -473,9 +518,9 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
         ),
       ),
       bottomNavigationBar: NavFloatBar(
-          index: _index,
-          funzioni: funzioni,
-        ),
+        index: _index,
+        funzioni: funzioni,
+      ),
     );
   }
 }

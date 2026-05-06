@@ -40,10 +40,6 @@ class _AssistenzaPageState extends State<AssistenzaPage> {
                 icona: Icons.person_outline_rounded,
                 funzione: InfoPage(),
                 testo: 'Credits'),    
-            Button(
-                icona: Icons.info_outline,
-                funzione: InfoappPage(),
-                testo: 'Info app'),
           ],
         ),
       ),
