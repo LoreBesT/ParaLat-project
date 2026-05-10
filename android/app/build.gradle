@@ -23,17 +23,17 @@ if (localPropertiesFile.exists()) {
 
 def flutterVersionCode = localProperties.getProperty("flutter.versionCode")
 if (flutterVersionCode == null) {
-    flutterVersionCode = "13"
+    flutterVersionCode = "20"
 }
 
 def flutterVersionName = localProperties.getProperty("flutter.versionName")
 if (flutterVersionName == null) {
-    flutterVersionName = "1.1.1"
+    flutterVersionName = "2.0.0"
 }
 
 android {
     namespace = "com.paralat.app"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = "28.2.13676358"
 
     signingConfigs {
@@ -48,7 +48,7 @@ android {
     defaultConfig {
         applicationId = "com.paralat.app"
         minSdkVersion = flutter.minSdkVersion
-        targetSdk = 35
+        targetSdk = 36
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
     }

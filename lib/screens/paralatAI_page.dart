@@ -207,7 +207,8 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
 
       // Salva e apri
       final directory = await getTemporaryDirectory();
-      final path = '${directory.path}/documento.docx';
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+      final path = '${directory.path}/documento_$timestamp.docx';
       await File(path).writeAsBytes(generatedDocx);
 
       Future.delayed(const Duration(milliseconds: 900), () async {
@@ -282,58 +283,92 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
 
   Widget _buildMessage(Map<String, String> message) {
     bool isUserMessage = message["sender"] == "user";
+
     return Align(
       alignment: isUserMessage ? Alignment.centerLeft : Alignment.centerRight,
       child: SizedBox(
         width: 300,
         child: Card(
-          color: isUserMessage ? Colors.blue[100] : Colors.grey[300],
+          elevation: 0,
+          color: Colors.transparent,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: AppRadius.circularBorder,
           ),
-          child: Row(
-            crossAxisAlignment:
-                CrossAxisAlignment.start, // Allinea gli elementi all'inizio
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.all(8), // Distanza tra l'icona e il testo
-                child: isUserMessage
-                    ? const Icon(
-                        Icons.person,
-                        color: Colors.deepPurple,
-                      )
-                    : const Icon(
-                        Icons.generating_tokens,
-                        color: Colors.deepPurple,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: AppRadius.circularBorder,
+              gradient: isUserMessage
+                  ? const LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color.fromARGB(255, 167, 98, 242),
+                        Color.fromARGB(255, 191, 85, 226),
+                        Color.fromARGB(255, 214, 77, 196),
+                      ],
+                      stops: [0.0, 0.45, 1.0],
+                    )
+                  : LinearGradient(
+                      colors: [
+                        // Colors.grey.shade100,
+                        // Colors.grey.shade200,
+                        const Color(0xFFF5F7FA),
+                        const Color(0xFFE8EDF3),
+                      ],
+                    ),
+              boxShadow: isUserMessage
+                  ? [
+                      const BoxShadow(
+                        color: Color.fromARGB(40, 180, 80, 220),
+                        blurRadius: 18,
+                        offset: Offset(0, 8),
                       ),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8, right: 8),
-                      child: Text(
-                        isUserMessage ? 'User' : 'ParaLat AI',
-                        textAlign: TextAlign.left,
-                        style: const TextStyle(
+                    ]
+                  : [],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: isUserMessage
+                        ? const Icon(
+                            Icons.person,
+                            color: Colors.white,
+                          )
+                        : const Icon(
+                            Icons.generating_tokens,
+                            color: Colors.black,
+                          ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          isUserMessage ? 'Tu' : 'ParaLat AI',
+                          style: TextStyle(
                             fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
-                      ),
+                            fontWeight: FontWeight.w600,
+                            color: isUserMessage ? Colors.white : Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          message["text"] ?? "",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: isUserMessage ? Colors.white : Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                        height: 2), // Distanza tra il titolo e il sottotitolo
-                    Text(
-                      message["text"] ?? "",
-                      style: const TextStyle(fontSize: 16, color: Colors.black),
-                      textAlign: TextAlign.left,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -374,9 +409,11 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
           children: [
             Expanded(
               child: SingleChildScrollView(
-                reverse:
-                    isMessage ? true : false, // Scorri automaticamente verso il basso quando vengono aggiunti nuovi messaggi
-                padding: const EdgeInsets.only(top: 26, bottom: 26, left: 30, right: 30),
+                reverse: isMessage
+                    ? true
+                    : false, // Scorri automaticamente verso il basso quando vengono aggiunti nuovi messaggi
+                padding: const EdgeInsets.only(
+                    top: 26, bottom: 26, left: 30, right: 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -386,23 +423,68 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Text("Traduci e analizza", style: TextStyle(fontSize: 30, color: AppColors.text, fontWeight: FontWeight.w600),),
+                          Text(
+                            "Traduci e analizza",
+                            style: TextStyle(
+                                fontSize: 30,
+                                color: AppColors.text,
+                                fontWeight: FontWeight.w600),
+                          ),
                           Row(
                             // mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("il ", style: TextStyle(fontSize: 30, color: AppColors.text, fontWeight: FontWeight.w600),),
-                              Text("latino ", style: TextStyle(fontSize: 30, color: AppColors.gradientStart, fontWeight: FontWeight.w600),),
-                              Text("con l'AI", style: TextStyle(fontSize: 30, color: AppColors.text, fontWeight: FontWeight.w600),),
+                              Text(
+                                "il ",
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    color: AppColors.text,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                "latino ",
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    color: AppColors.gradientStart,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                "con l'AI",
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    color: AppColors.text,
+                                    fontWeight: FontWeight.w600),
+                              ),
                             ],
                           ),
-                          SizedBox(height: 6,),
-                          Text("Incolla la tua versione latina ed ottieni traduzione ed analisi logica in pochi secondi.", style: TextStyle(color: Colors.black87)),  
-                          SizedBox(height: 12,),
-                          Tip(icon: Icons.translate, title: "Traduzione accurata", subtitle: "Traduzioni fedeli e contestualizzate"),
-                          SizedBox(height: 10,),
-                          Tip(icon: Icons.account_tree, title: "Analisi logica completa", subtitle: "Analisi logico grammaticale dettagliata di ogni parola"),
-                          SizedBox(height: 10,),
-                          Tip(icon: Icons.bolt, title: "Risultati istantanei", subtitle: "Risposte rapide e chiare sempre a portata di mano"),
+                          SizedBox(
+                            height: 6,
+                          ),
+                          Text(
+                              "Incolla la tua versione latina ed ottieni traduzione ed analisi logica in pochi secondi.",
+                              style: TextStyle(color: Colors.black87)),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Tip(
+                              icon: Icons.translate,
+                              title: "Traduzione accurata",
+                              subtitle: "Traduzioni fedeli e contestualizzate"),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Tip(
+                              icon: Icons.account_tree,
+                              title: "Analisi logica completa",
+                              subtitle:
+                                  "Analisi logico grammaticale dettagliata di ogni parola"),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Tip(
+                              icon: Icons.bolt,
+                              title: "Risultati istantanei",
+                              subtitle:
+                                  "Risposte rapide e chiare sempre a portata di mano"),
                         ],
                       ),
                     /*inserire qui widget temporanei */
@@ -459,11 +541,11 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                                     // const Divider(),
                                     // ButtonNoAnimatedTr(testo: 'PDF'),
                                     // ButtonNoAnimatedTr(testo: 'DOC'),
-                                    const Divider(),
-                                    const ButtonNoAnimatedTr(
-                                      icona: Icons.diamond_outlined,
-                                      testo: 'AI PRO',
-                                    ),
+                                    // const Divider(),
+                                    // const ButtonNoAnimatedTr(
+                                    //   icona: Icons.diamond_outlined,
+                                    //   testo: 'AI PRO',
+                                    // ),
                                   ],
                                 ),
                               ),

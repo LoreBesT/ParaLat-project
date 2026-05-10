@@ -13,7 +13,7 @@ class AppColors {
 }
 
 class AppRadius {
-  static const double circular = 14.0;
+  static const double circular = 18.0;
   static const BorderRadius circularBorder =
       BorderRadius.all(Radius.circular(circular));
 }
