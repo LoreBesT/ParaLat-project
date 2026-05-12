@@ -53,7 +53,7 @@ class _NewsPageState extends State<NewsGeneralPage> {
     List<Widget>? funzioni = Verify().funzioniBottAppBar(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notizie ed Eventi'),
+        title: const Text('Lezioni e Notizie'),
         automaticallyImplyLeading: false,
         centerTitle: true,
       ),

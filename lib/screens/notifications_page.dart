@@ -38,42 +38,42 @@ class _NotificationPageState extends State<NotificationsPage> {
               .orderBy('ora', descending: true)
               .snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             }
-        
+
             if (!snapshot.hasData) {
-                    return const Text('Errore caricamento');
+              return const Text('Errore caricamento');
             }
-        
+
             final filteredDocs = snapshot.data!.docs.where((doc) {
-                    if (uid == null) return false;
-        
-                    final docId = doc.id;
-        
-                    // prende parte dopo "_"
-                    if (!docId.contains('_')) return false;
-        
-                    final docUid = docId.split('_').last;
-        
-                    return docUid == uid;
-                  }).toList();
-        
-                  if (filteredDocs.isEmpty) {
-                    return const Text('Nessuna notifica');
+              if (uid == null) return false;
+
+              final docId = doc.id;
+
+              // prende parte dopo "_"
+              if (!docId.contains('_')) return false;
+
+              final docUid = docId.split('_').last;
+
+              return docUid == uid;
+            }).toList();
+
+            if (filteredDocs.isEmpty) {
+              return const Text('Nessuna notifica');
             }
-        
+
             return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
+              itemCount: filteredDocs.length,
               itemBuilder: (context, index) {
                 var notifica = filteredDocs[index];
+
                 return NotificaCard(
-                        title: notifica['title'],
-                        body: notifica['body'],
-                        snapshot: notifica,
-                        isRead: notifica['letto']
-                      );
+                  title: notifica['title'],
+                  body: notifica['body'],
+                  snapshot: notifica,
+                  isRead: notifica['letto'],
+                );
               },
             );
           },

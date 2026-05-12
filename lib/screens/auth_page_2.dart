@@ -78,7 +78,7 @@ class _AuthPage2State extends State<AuthPage2> {
             email: _email.text, password: _password.text);
         await Auth()
             .setNameAndSurname(name: _nome.text, surname: _cognome.text);
-        Auth().createNews(_nome.text, Auth().getUID().toString());
+        Auth().createAvvisoBenvenuto(_nome.text, Auth().getUID().toString());
       }
     } on FirebaseAuthException catch (error) {
       String message;
@@ -87,7 +87,7 @@ class _AuthPage2State extends State<AuthPage2> {
           message = 'L\'indirizzo email fornito è invalido';
           break;
         default:
-          message = 'Errore nella creazione dell\'account. Riprova più tardi.';
+          message = 'Errore nella creazione dell\'account. Riprova più tardi.\nErrore: ${error.toString()}';
           break;
       }
       ScaffoldMessenger.of(context).showSnackBar(

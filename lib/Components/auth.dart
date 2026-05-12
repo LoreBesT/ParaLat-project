@@ -164,22 +164,24 @@ class Auth {
         });
   }
 
-  Future<void> createNews(String nome, String uid) async {
+  Future<void> createAvvisoBenvenuto(String nome, String uid) async {
     String title = 'Ciao $nome, benvenuto su ParaLat!';
     String body =
         'Ciao $nome e benvenuto su ParaLat. Siamo lieti di accoglierti all\'interno della nostra community.\nTi informarmiamo che avrai a disposizione molteplici funzionalità totalmente gratuite e senza limite. Qualora avessi bisogno di ulteriori strumenti potrai abbonarti a ParaLat Premium in forma mensile o annuale\nIn caso di problemi con ParaLat siamo sempre a tua disposizione.\n\nUn saluto, il tuo ParaLat Team';
-    CollectionReference reports = FirebaseFirestore.instance.collection('news');
+    CollectionReference reports = FirebaseFirestore.instance.collection('notifiche_personali');
     return reports
-        .add({
+        .doc("Benvenuto_$uid")
+        .set({
           'title': title,
           'body': body,
           'ora': FieldValue.serverTimestamp(),
-          'to': uid,
-          'autore': 'ParaLat Team',
-          'isRead': false,
+          'letto': false,
         })
-        .then((value) {})
+        .then((value) {
+          incrementaCounter(uid, true);
+        })
         .catchError((error) {});
+    
   }
 
   // Future<void> deleteDocument(DocumentSnapshot documentSnapshot) async {
