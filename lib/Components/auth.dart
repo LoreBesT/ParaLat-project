@@ -167,7 +167,7 @@ class Auth {
   Future<void> createAvvisoBenvenuto(String nome, String uid) async {
     String title = 'Ciao $nome, benvenuto su ParaLat!';
     String body =
-        'Ciao $nome e benvenuto su ParaLat. Siamo lieti di accoglierti all\'interno della nostra community.\nTi informarmiamo che avrai a disposizione molteplici funzionalità totalmente gratuite e senza limite. Qualora avessi bisogno di ulteriori strumenti potrai abbonarti a ParaLat Premium in forma mensile o annuale\nIn caso di problemi con ParaLat siamo sempre a tua disposizione.\n\nUn saluto, il tuo ParaLat Team';
+        'Ciao $nome e benvenuto su ParaLat.\n\nSiamo lieti di accoglierti all’interno della nostra community. Con ParaLat avrai accesso a numerosi strumenti e funzionalità pensati per supportarti nello studio e nella produttività quotidiana.\n\nPer qualsiasi problema, dubbio o suggerimento siamo sempre a tua disposizione.\n\nUn saluto,\nIl team ParaLat';
     CollectionReference reports = FirebaseFirestore.instance.collection('notifiche_personali');
     return reports
         .doc("Benvenuto_$uid")
