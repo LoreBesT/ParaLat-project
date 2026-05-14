@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/screens/HomePage.dart';
-import 'package:paralat/screens/impostazioni_page.dart';
 import 'package:paralat/screens/impostazioni_page_2.dart';
 import 'package:paralat/screens/news_general_page.dart';
 import 'package:paralat/screens/paralatAI_page.dart';

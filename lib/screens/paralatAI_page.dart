@@ -189,7 +189,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
       String response2 = response.text ?? "";
       String response3 = response2.replaceAll("*", "").replaceAll("#", "");
       String response4 =
-          '$response3\n\nVersione generata con ParaLat AI - Model $models\nParaLat AI può commettere errori. Ricorda di controllare accuratamente la tua analisi prima di utilizzarla.';
+          '$response3\n\nVersione generata con ParaLat AI\nParaLat AI può commettere errori. Ricorda di controllare accuratamente la tua analisi prima di utilizzarla.';
 
       // Carica il template DOCX
       final ByteData data = await rootBundle.load(r'assets/docs/template.docx');

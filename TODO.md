@@ -1,3 +1,8 @@
+## implementare Markdown body per news e lezioni così da poter inserire elementi grafici più complessi
+## inserire il sistema di condivisione con un amico e crediti AI
+## fixare notifiche che se meno di 3 già lette non appaiono più nella impostazioni page
+## implementare gestione update in app con Google Play In-App Updates API
+
 # Monetization Plan
 ### Implementare visualizzazione di inserzioni attraverso Google adMob
 ## Posizionamento annunci

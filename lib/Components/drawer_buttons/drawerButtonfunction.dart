@@ -50,6 +50,8 @@ class _ButtonFunctionState extends State<ButtonFunction> {
           ),
           onPressed: () async {
             await widget.funzione(context);
+            if (!mounted) return;
+
             ScaffoldMessenger.of(context).showSnackBar(
         customSnackBar(widget.snackmessage, type: SnackBarType.success),
       );

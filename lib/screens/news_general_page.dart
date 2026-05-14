@@ -6,7 +6,6 @@ import 'package:paralat/Components/feedNewsCard.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/screens/HomePage.dart';
-import 'package:paralat/screens/impostazioni_page.dart'; // Assicurati di importare la nuova pagina
 
 class NewsGeneralPage extends StatefulWidget {
   const NewsGeneralPage({super.key});

@@ -31,7 +31,6 @@ class NewsDetailPage extends StatelessWidget {
       isToYou = false;
       image = news['image'];
     }
-    Auth().markAsRead(context, news.id);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60,

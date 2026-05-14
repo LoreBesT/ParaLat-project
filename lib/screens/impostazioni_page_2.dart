@@ -10,7 +10,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/notificaCard.dart';
 import 'package:paralat/screens/assistenza_page.dart';
-import 'package:paralat/screens/auth_page_2.dart';
 import 'package:paralat/screens/infoapp_page.dart';
 
 class ImpostazioniPage2 extends StatefulWidget {
@@ -193,13 +192,9 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
               icona: Icons.exit_to_app_rounded,
               funzione: (context) async {
                 await Auth().signOut(context);
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => const AuthPage2(),
-                //   ),
-                // );
-                //valutare di mettere un spostamento sulla pagina di auth
+                if (!context.mounted) return;
+
+                Navigator.of(context).popUntil((route) => route.isFirst);
               },
               testo: "Log out",
               subtitle: "Disconnetti il tuo account",

@@ -40,10 +40,10 @@ class _FaqpageState extends State<Faqpage> {
                   question: 'Per usare l\'app serve Internet?',
                   solutions:
                       'Si.\nAl momento l\'app è utilizzabile solo con accesso ad Internet. In futuro prevediamo di implementare un sistema di caching così da garantire le funzionalità di base anche senza connessione.'),
-              FAQButtons(
+              /*FAQButtons(
                 question: 'Perchè esiste ParaLat Premium', 
                 solutions: 'il progetto ParaLat è nato per essere accessibili a tutti senza alcuna barriera economica o sociale. Ogni tecnologia ha tuttavia i suoi costi. Le nostre spese sono in particolare particolarmente rilevanti nel mantenimento dei nostri servizi AI e nelle risorse lato server. Al fine di riuscire a mantere il progetto attivo oltre agli annunci pubblicitari ed alla possibilità di donare abbiamo aggiunto la possibilità di abbonarsi a ParaLat. Nonostante ciò ParaLat rimane aperto a tutti. Non avrai infatti alcuna limitazione all\'interno dell\'app.L\'abbonamento possiamo definirlo come un modo di sostenere il nostro progetto con qualche piccola comodità in più.\nScegli il futuro. Scegli ParaLat.')         
-            
+            */
             ],
           ),
         ),
