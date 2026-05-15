@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/drawer_buttons/drawerButton.dart';
 import 'package:paralat/screens/terms.dart';
-import 'package:paralat/Components/level_user.dart';
 
 class InfoappPage extends StatelessWidget {
   const InfoappPage({super.key});
@@ -23,7 +23,7 @@ class InfoappPage extends StatelessWidget {
               style: TextStyle(fontSize: 24),
             ),
             FutureBuilder<String>(
-              future: Verify().getVersion(0),
+              future: Auth().getVersion(0),
               builder: (context, snapshot) {
                 final versionText = snapshot.connectionState == ConnectionState.done && snapshot.hasData
                     ? snapshot.data

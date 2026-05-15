@@ -5,8 +5,12 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:paralat/Components/custom_snackbar.dart';
-import 'package:paralat/Components/level_user.dart';
+import 'package:paralat/screens/impostazioni_page_2.dart';
+import 'package:paralat/screens/news_general_page.dart';
+import 'package:paralat/screens/paralatAI_page.dart';
+import 'package:paralat/screens/work_page.dart';
 import 'package:path_provider/path_provider.dart';
 // import 'package:battery_plus/battery_plus.dart';
 // import 'package:flutter/material.dart';
@@ -145,6 +149,31 @@ class Auth {
   //       .catchError((error) {});
   // }
 
+  String nameUser(int i) {
+    String? nome = Auth().getUserDisplayName();
+    List<String> nomeCognome = nome!.split(' ');
+
+    switch (i) {
+      case 0:
+        if (nomeCognome.length >= 2 && nomeCognome[0] != 'null') {
+          return nomeCognome[0];
+        } else {
+          return '';
+        }
+
+      case 1:
+        return nomeCognome[1];
+      case 2:
+        return ('${nomeCognome[1]} ${nomeCognome[2]}');
+      case 3:
+        return nome;
+      case 4:
+        return nome[0];
+      default:
+        return nome;
+    }
+  }
+
   Future<void> uploadVersione(
       String title, String versione, String autore, String traduzione) async {
     CollectionReference versioni =
@@ -156,7 +185,7 @@ class Auth {
           'autore': autore,
           'traduzione': traduzione,
           'data/ora': FieldValue.serverTimestamp(),
-          'caricatore': Verify().nameUser(4)
+          'caricatore': nameUser(4)
         })
         .then((value) {})
         .catchError((error) {
@@ -168,20 +197,16 @@ class Auth {
     String title = 'Ciao $nome, benvenuto su ParaLat!';
     String body =
         'Ciao $nome e benvenuto su ParaLat.\n\nSiamo lieti di accoglierti all’interno della nostra community. Con ParaLat avrai accesso a numerosi strumenti e funzionalità pensati per supportarti nello studio e nella produttività quotidiana.\n\nPer qualsiasi problema, dubbio o suggerimento siamo sempre a tua disposizione.\n\nUn saluto,\nIl team ParaLat';
-    CollectionReference reports = FirebaseFirestore.instance.collection('notifiche_personali');
-    return reports
-        .doc("Benvenuto_$uid")
-        .set({
-          'title': title,
-          'body': body,
-          'ora': FieldValue.serverTimestamp(),
-          'letto': false,
-        })
-        .then((value) {
-          incrementaCounter(uid, true);
-        })
-        .catchError((error) {});
-    
+    CollectionReference reports =
+        FirebaseFirestore.instance.collection('notifiche_personali');
+    return reports.doc("Benvenuto_$uid").set({
+      'title': title,
+      'body': body,
+      'ora': FieldValue.serverTimestamp(),
+      'letto': false,
+    }).then((value) {
+      incrementaCounter(uid, true);
+    }).catchError((error) {});
   }
 
   // Future<void> deleteDocument(DocumentSnapshot documentSnapshot) async {
@@ -334,6 +359,20 @@ class Auth {
       );
     }
     return null;
+  }
+
+  List<Widget>? funzioniBottAppBar(BuildContext context) {
+    return [
+      const GeminiApiPage(),
+      const WorkPage(),
+      const NewsGeneralPage(),
+      const ImpostazioniPage2()
+    ];
+  }
+
+  Future<String> getVersion(int type) async {
+    final info = await PackageInfo.fromPlatform();
+    return (type == 0) ? info.version.toString() : info.buildNumber.toString();
   }
 
   Future<void> creaNotifiche(String uid) async {

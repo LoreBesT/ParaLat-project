@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paralat/Components/drawer_buttons/drawerButton.dart';
 import 'package:paralat/Components/auth.dart';
-import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/socialLinks.dart';
 import 'package:paralat/screens/Faq_page.dart';
 import 'package:paralat/screens/info_page.dart';
@@ -45,7 +44,7 @@ class _AssistenzaPageState extends State<AssistenzaPage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          sendMail(context,'paralatstudy@gmail.com', 'Richiesta di supporto - ${Verify().nameUser(4)}', 'Non eliminare o modificare queste informazioni.\n\n______________________\n\nNome e Cognome: ${Verify().nameUser(4)}\n\nUID: ${Auth().getUID()}\n______________________\n\nDescrivi qui il tuo problema:\n');
+          sendMail(context,'paralatstudy@gmail.com', 'Richiesta di supporto - ${Auth().nameUser(4)}', 'Non eliminare o modificare queste informazioni.\n\n______________________\n\nNome e Cognome: ${Auth().nameUser(4)}\n\nUID: ${Auth().getUID()}\n______________________\n\nDescrivi qui il tuo problema:\n');
         },
         label: const Text('Contattaci'),
         icon: const Icon(Icons.chat),

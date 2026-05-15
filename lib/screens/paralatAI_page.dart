@@ -7,8 +7,8 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:http/http.dart';
 import 'package:open_file/open_file.dart';
 import 'package:paralat/Components/appUiStandards.dart';
+import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/drawer_buttons/drawerSwitchButton.dart';
-import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/rounded_buttons_new.dart';
 import 'package:paralat/Components/tipsChat.dart';
@@ -377,7 +377,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget>? funzioni = Verify().funzioniBottAppBar(context);
+    List<Widget>? funzioni = Auth().funzioniBottAppBar(context);
     return Scaffold(
       appBar: AppBar(
         title: Row(

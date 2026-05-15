@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:paralat/Components/auth.dart';
-import 'package:paralat/Components/space.dart';
 
 class SubPage extends StatefulWidget {
   const SubPage({super.key});

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/feedNewsCard.dart';
-import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 
 class NewsGeneralPage extends StatefulWidget {
@@ -48,7 +47,7 @@ class _NewsPageState extends State<NewsGeneralPage> {
   bool isToYou = false;
   @override
   Widget build(BuildContext context) {
-    List<Widget>? funzioni = Verify().funzioniBottAppBar(context);
+    List<Widget>? funzioni = Auth().funzioniBottAppBar(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lezioni e Notizie'),

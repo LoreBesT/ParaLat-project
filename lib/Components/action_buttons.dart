@@ -4,7 +4,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/custom_snackbar.dart';
-import 'package:paralat/Components/level_user.dart';
 import 'dart:io';
 
 class ActionButtons extends StatefulWidget {
@@ -54,7 +53,7 @@ class _ActionButtonsState extends State<ActionButtons> {
             _nomeFileSelezionato!.substring(_nomeFileSelezionato!.length - 4);
         DateTime now = DateTime.now();
         String newFileName =
-            '${_nomeVersione.text}_${_autore.text}_${now.day}-${now.month}-${now.year}_${now.hour}${now.minute}${now.second}${Verify().nameUser(4).replaceAll(' ', '_')}$estensione';
+            '${_nomeVersione.text}_${_autore.text}_${now.day}-${now.month}-${now.year}_${now.hour}${now.minute}${now.second}${Auth().nameUser(4).replaceAll(' ', '_')}$estensione';
         String nomeFile = newFileName;
         String percorso = 'Versioni/Community/$nomeFile';
         FirebaseStorage storage = FirebaseStorage.instance;

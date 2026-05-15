@@ -5,7 +5,6 @@ import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/drawer_buttons/drawerButtonfunction.dart';
 import 'package:paralat/Components/drawer_buttons/drawerSwitchButton.dart';
-import 'package:paralat/Components/level_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:paralat/Components/navfloatbar.dart';
 import 'package:paralat/Components/notificaCard.dart';
@@ -40,7 +39,7 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget>? funzioni = Verify().funzioniBottAppBar(context);
+    List<Widget>? funzioni = Auth().funzioniBottAppBar(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Impostazioni'),
@@ -60,13 +59,13 @@ class _ImpostazioniPage2State extends State<ImpostazioniPage2> {
               leading: CircleAvatar(
                   radius: 30,
                   backgroundColor: AppColors.gradientStart,
-                  child: Text(Verify().nameUser(4),
+                  child: Text(Auth().nameUser(4),
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           fontSize: 20))),
               title: Text(
-                Verify().nameUser(3),
+                Auth().nameUser(3),
                 style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
