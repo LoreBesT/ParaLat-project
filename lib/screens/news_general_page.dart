@@ -5,7 +5,6 @@ import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/feedNewsCard.dart';
 import 'package:paralat/Components/level_user.dart';
 import 'package:paralat/Components/navfloatbar.dart';
-import 'package:paralat/screens/HomePage.dart';
 
 class NewsGeneralPage extends StatefulWidget {
   const NewsGeneralPage({super.key});

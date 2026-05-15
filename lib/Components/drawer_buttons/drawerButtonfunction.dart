@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/custom_snackbar.dart';
-import 'package:paralat/Components/trans.dart';
 
 class ButtonFunction extends StatefulWidget {
   const ButtonFunction({

@@ -56,7 +56,7 @@ class _SubPageState extends State<SubPage> {
                 SliverList(
                   delegate: SliverChildListDelegate(
                     [
-                      const Space(heigth: 10),
+                      const SizedBox(height: 10),
                       RadioListTile<String>(
                         title: const Text('Abbonamento Annuale'),
                         secondary: const Text('2,08€/mese', style: TextStyle(fontSize: 14),),
@@ -132,7 +132,7 @@ class _SubPageState extends State<SubPage> {
                         subtitle: Text('Badge esclusivo per gli utenti premium'),
                       ),
                       const Text('*Commissioni sulle vendite ridotte dal 30% al 5%.\n**un giorno lavorativo.', textAlign: TextAlign.center, style: TextStyle(color: Colors.grey, fontSize: 12),),
-                      const Space(heigth: 65),
+                      const SizedBox(height: 65),
                     ],
                   ),
                 ),

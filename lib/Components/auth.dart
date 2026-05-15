@@ -126,24 +126,24 @@ class Auth {
     });
   }
 
-  Future<void> createReport(String title, String description, String userId,
-      BuildContext context) async {
-    CollectionReference reports =
-        FirebaseFirestore.instance.collection('reports');
-    return reports
-        .add({
-          'title': title,
-          'description': description,
-          'userId': userId,
-          'timestamp': FieldValue.serverTimestamp(),
-          'piattaforma':
-              '${Platform.operatingSystem} ${Platform.operatingSystemVersion}',
-          'processori': Platform.numberOfProcessors.toString(),
-          'lingua e regione': Platform.localeName,
-        })
-        .then((value) {})
-        .catchError((error) {});
-  }
+  // Future<void> createReport(String title, String description, String userId,
+  //     BuildContext context) async {
+  //   CollectionReference reports =
+  //       FirebaseFirestore.instance.collection('reports');
+  //   return reports
+  //       .add({
+  //         'title': title,
+  //         'description': description,
+  //         'userId': userId,
+  //         'timestamp': FieldValue.serverTimestamp(),
+  //         'piattaforma':
+  //             '${Platform.operatingSystem} ${Platform.operatingSystemVersion}',
+  //         'processori': Platform.numberOfProcessors.toString(),
+  //         'lingua e regione': Platform.localeName,
+  //       })
+  //       .then((value) {})
+  //       .catchError((error) {});
+  // }
 
   Future<void> uploadVersione(
       String title, String versione, String autore, String traduzione) async {

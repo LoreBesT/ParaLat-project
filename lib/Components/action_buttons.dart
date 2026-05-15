@@ -5,9 +5,7 @@ import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/custom_snackbar.dart';
 import 'package:paralat/Components/level_user.dart';
-import 'package:paralat/Components/space.dart';
 import 'dart:io';
-import 'package:paralat/Components/trans.dart';
 
 class ActionButtons extends StatefulWidget {
   const ActionButtons({
@@ -122,7 +120,7 @@ class _ActionButtonsState extends State<ActionButtons> {
                         label: Text('Traduzione'),
                       ),
                     ),
-                    const Space(heigth: 10),
+                    const SizedBox(height: 10),
                     TextButton(
                       onPressed: () => _selezionaDocumento(setState),
                       child: Text(
@@ -165,7 +163,8 @@ class _ActionButtonsState extends State<ActionButtons> {
                             }
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              customSnackBar("Errore, compilare tutti i campi!", type: SnackBarType.error),
+                              customSnackBar("Errore, compilare tutti i campi!",
+                                  type: SnackBarType.error),
                             );
                           }
                         },
@@ -196,8 +195,8 @@ class _ActionButtonsState extends State<ActionButtons> {
       child: SizedBox(
         height: 80,
         child: Card(
-          shape:
-              const RoundedRectangleBorder(borderRadius: AppRadius.circularBorder),
+          shape: const RoundedRectangleBorder(
+              borderRadius: AppRadius.circularBorder),
           child: InkWell(
             borderRadius: AppRadius.circularBorder,
             onTap: () {
@@ -205,7 +204,10 @@ class _ActionButtonsState extends State<ActionButtons> {
                   widget.icona == Icons.camera_alt ||
                   widget.icona == Icons.filter_alt_rounded ||
                   widget.icona == Icons.report) {
-                navigateWithCustomAnimation(context, widget.funzione);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => widget.funzione),
+                );
               } else if (widget.icona == Icons.upload) {
                 _mostraDialogCaricaVersione(context);
               }

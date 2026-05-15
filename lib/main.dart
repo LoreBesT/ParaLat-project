@@ -8,7 +8,6 @@ import 'firebase_options.dart';
 import 'package:paralat/Components/notifiche.dart';
 import 'Components/auth.dart';
 import 'screens/auth_page_2.dart';
-import 'screens/HomePage.dart';
 
 /// ✅ AdMob initializer con lazy loading automatico dopo l'avvio
 class AdManager {

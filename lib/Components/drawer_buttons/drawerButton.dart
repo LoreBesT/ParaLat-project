@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:paralat/Components/appUiStandards.dart';
-import 'package:paralat/Components/trans.dart';
 
 class Button extends StatefulWidget {
   ///Bottone per il drawer personalizzabile con icona, testo e pagina di destinazione
