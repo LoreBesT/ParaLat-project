@@ -1,24 +1,27 @@
-<!-- ### Modificare Drawer eliminando pulsanti per ParaLat AI ed Archivio Versioni DONE -->
-<!-- ### Implementare scadenze con firestore DONE-->
-### Implementare sanzioni con firestore
-<!-- ### Implementare funzione per il download dei file da Archivio Versioni DONE-->
-### Implementare l'arrivo di notizie solo ad un singolo utente o una porzione
+## implementare Markdown body per news e lezioni così da poter inserire elementi grafici più complessi
+## inserire il sistema di condivisione con un amico e crediti AI
+## fixare notifiche che se meno di 3 già lette non appaiono più nella impostazioni page
+## implementare gestione update in app con Google Play In-App Updates API
+
+# Monetization Plan
+### Implementare visualizzazione di inserzioni attraverso Google adMob
+## Posizionamento annunci
+### Annunci quadrati all'interno di ogni news/scadenza sotto il testo
+### News 'Annuncio' ogni 3/4 news ne sarà inviata una con sponsorizzazione. La news sponsorizzata avrà le stesse caratteristiche in HomePage di una non sponsorizzata
+### Nella chat di ParaLat AI apparirà un banner nella parte alta dello schermo fisso ad ogni accesso.
+### Implementare sistema di pagamento in-app e pubblicare attraverso Google Play Console
+
+# Upgrade da fare
 ### Implementare notifica per ogni nuova notizia
-### Sostituire Hamburger Menu con bottom appbar con 3 opzioni: Impostazioni, Home, Altro
-### Creare una color Palette unica per tutto il progetto
-### Implementare il salvataggio di file markdown da ParaLat AI e la conversione in .docx
-### Implementare la possibilità di scansionare documenti ed inviarli a paralat ai
-### Modificare e rendere più efficace il prompt da mandare a Gemini API
-### Realizzare da 0 ParaLat Cards
-### Implementare FotoBook: sistema di caricamento e sharing di foto del libro
+### Fixare bug pulsante esci
+## Impostazioni
 ### Implementare opzione per cambiare lingua
 ### Implementare opzioni per accessibilità
 ### Implementare opzioni per cambiare il tema + dark mode e white mode
-### Implementare opzione per segnalare un bug in profilo ed assistenza(invia segnalazione)
+### Implementare opzione per abilitare / disabilitare notifiche push
+
+# Upgrade non urgenti/facili
 ### Completare la stesura dei termini di servizio
 ### Completare la stesura delle FAQ
 ### Implementare una più sicura gestione delle eccezioni
 ### Refator del codice
-## Verificare compatibilità badge con telefono tramite APP 'TAG Writer'
-
-

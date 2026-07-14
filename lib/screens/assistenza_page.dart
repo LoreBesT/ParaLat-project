@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:paralat/Components/Drawer_buttons.dart';
-import 'package:paralat/Components/space.dart';
-import 'package:paralat/screens/chat_page.dart';
-import 'package:paralat/screens/faq_page.dart';
+import 'package:paralat/Components/drawer_buttons/drawerButton.dart';
+import 'package:paralat/Components/auth.dart';
+import 'package:paralat/Components/socialLinks.dart';
+import 'package:paralat/screens/Faq_page.dart';
+import 'package:paralat/screens/info_page.dart';
 import 'package:paralat/screens/infoapp_page.dart';
 import 'package:paralat/screens/terms.dart';
-import 'package:paralat/screens/work_page.dart';
 
 class AssistenzaPage extends StatefulWidget {
   const AssistenzaPage({super.key});
@@ -15,50 +15,40 @@ class AssistenzaPage extends StatefulWidget {
 }
 
 class _AssistenzaPageState extends State<AssistenzaPage> {
+  // bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Assistenza'),
+      appBar: AppBar(
+        title: const Text('Assistenza'),
+      ),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Button(
+                icona: Icons.help_center_outlined,
+                funzione: Faqpage(),
+                testo: 'FAQ'),
+            Button(
+                icona: Icons.privacy_tip_outlined,
+                funzione: TermsPage(),
+                testo: 'Termini e condizioni d\'uso'),
+            Button(
+                icona: Icons.person_outline_rounded,
+                funzione: InfoPage(),
+                testo: 'Credits'),    
+          ],
         ),
-        body: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Space(heigth: 10),
-              Button(
-                  icona: Icons.help_center_outlined,
-                  funzione: FaqPage(),
-                  testo: 'FAQ'),
-              Space(heigth: 10),
-              Button(
-                  icona: Icons.privacy_tip,
-                  funzione: TermsPage(),
-                  testo: 'Termini e Privacy'),
-              Space(heigth: 10),
-              Button(
-                  icona: Icons.feedback_outlined,
-                  funzione: WorkPage(),
-                  testo: 'Invia una segnalazione'),
-              Space(heigth: 10),
-              Button(
-                  icona: Icons.info_outline,
-                  funzione: InfoappPage(),
-                  testo: 'Info app'),
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (context) => const ChatPage(),
-              ),
-            );
-          },
-          label: const Text('Contattaci'),
-          icon: const Icon(Icons.chat),
-        ));
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          sendMail(context,'paralatstudy@gmail.com', 'Richiesta di supporto - ${Auth().nameUser(4)}', 'Non eliminare o modificare queste informazioni.\n\n______________________\n\nNome e Cognome: ${Auth().nameUser(4)}\n\nUID: ${Auth().getUID()}\n______________________\n\nDescrivi qui il tuo problema:\n');
+        },
+        label: const Text('Contattaci'),
+        icon: const Icon(Icons.chat),
+      ),
+    );
   }
 }

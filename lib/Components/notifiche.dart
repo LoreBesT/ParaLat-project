@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:paralat/screens/news_page.dart';
+import 'package:paralat/screens/news_general_page.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -48,7 +48,7 @@ void setupFirebaseMessaging(GlobalKey<NavigatorState> navigatorKey) {
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (context) => NewsPage()),
+      MaterialPageRoute(builder: (context) => const NewsGeneralPage()),
     );
   });
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:paralat/Components/socialLinks.dart';
 
 class InfoPage extends StatelessWidget {
   const InfoPage({super.key});
@@ -6,24 +8,63 @@ class InfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String riconoscimenti =
-        'Un rigranziamento a tutti coloro che hanno collaborato e che vorrano contribuire con feedback e segnalazioni.\n\nCredits:\n● Lorenzo Della Bona: Android Developer\n● Marco Della Bona: Official Beta Tester\n● Francesca Bariletto - 25/05/2023\n● Letizia Marzo - 25/05/2023\n● Nicole Pastore - 25/05/2023 \n● Annamaria Alba - 29/09/2023\n● Luca Martella - 29/09/2023\n● Mario Accogli - 28/02/2024\n● Jacopo Leo - 14/03/2024\n';
+        'ParaLat è un progetto ideato e realizzato da Lorenzo Della Bona.\nUn rigranziamento a chiunque voglia collaborare con feedback, donazioni o segnalazioni.\n\nCredits:\n● Lorenzo Della Bona: Android/Ios Developer, ideatore e realizzatore di ParaLat \n';
     return Scaffold(
       appBar: AppBar(
         title: const Text('Credits'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: [
-              Text(
-                riconoscimenti,
-                style: const TextStyle(fontSize: 16),
-                textAlign: TextAlign.justify,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                Text(
+                  riconoscimenti,
+                  style: const TextStyle(fontSize: 16),
+                  // textAlign: TextAlign.justify,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Image.asset('assets/images/ParaLat.png'),
+                ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: Image.asset(r'assets\images\ParaLat.png'),
+            ),
+          ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 16, top: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ClipOval(
+                child: IconButton(
+                  onPressed: () {
+                    openIg('paralatstudy');
+                  },
+                  icon: const Icon(FontAwesomeIcons.instagram),
+                ),
+              ),
+              ClipOval(
+                child: IconButton(
+                  onPressed: () {
+                    openTikTok('paralatstudy');
+                  },
+                  icon: const Icon(Icons.tiktok),
+                ),
+              ),
+              ClipOval(
+                child: IconButton(
+                  onPressed: () {
+                    openYt('UCtBXof55sNXZrUGkbN4VQqA');
+                  },
+                  icon: const Icon(FontAwesomeIcons.youtube),
+                ),
               ),
             ],
           ),

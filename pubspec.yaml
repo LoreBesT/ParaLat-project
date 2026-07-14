@@ -1,5 +1,5 @@
 name: paralat
-description: "A new Flutter project."
+description: "Il latino in un click"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 2.0.1+21 #NUOVA VERSIONE
 
 environment:
   sdk: '>=3.4.3 <4.0.0'
@@ -44,13 +44,34 @@ dependencies:
   firebase_messaging: ^14.9.4
   flutter_local_notifications: ^17.2.1+1
   open_file: ^3.3.2
-  dio: ^5.5.0+1
   http: ^1.2.2
   google_generative_ai: ^0.4.3
-  markdown: ^7.2.2
-  docx_template: ^0.4.0
+  cleartec_docx_template: ^0.4.1
+  # archive: ^3.6.1
   floating_bottom_navigation_bar: ^1.5.2
+  flutter_launcher_icons: ^0.14.4
+  # google_mobile_ads: ^5.1.0
+  file_picker: ^8.0.7
+  url_launcher: ^6.3.2
+  font_awesome_flutter: ^10.8.0
+  image_picker: ^1.1.2
+  dio: ^5.8.0+1
+  share_plus: ^10.0.0
+  package_info_plus: ^9.0.1
+  # shared_preferences: ^2.5.3
   # google_sign_in: ^6.1.0
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  min_sdk_android: 21
+
+  # Icona base (necessaria per evitare l'errore)
+  image_path: "assets/images/logoApp.png"
+
+  # Adaptive icons (solo per Android 8+)
+  adaptive_icon_foreground: "assets/images/logoApp.png"
+  adaptive_icon_background: "#00055E"
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +86,10 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+# flutter_icons:
+#   image_path: "assets/images/ParaLat.png"
+#   android: true
+#   ios: true
 
 # The following section is specific to Flutter packages.
 flutter:
@@ -76,8 +101,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets\audios\ParaLat.mp3
    - assets\images\ParaLat.png
+   - assets\images\logo.png
+   - assets\images\icon.png
+   - assets\images\logoApp.png
+   - assets/docs/template.docx
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
