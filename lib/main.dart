@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/screens/paralatAI_page.dart';
 
@@ -10,22 +10,22 @@ import 'Components/auth.dart';
 import 'screens/auth_page_2.dart';
 
 /// ✅ AdMob initializer con lazy loading automatico dopo l'avvio
-class AdManager {
-  static bool _isInitialized = false;
+// class AdManager {
+//   static bool _isInitialized = false;
 
-  static Future<void> init() async {
-    if (_isInitialized) return;
+//   static Future<void> init() async {
+//     if (_isInitialized) return;
 
-    await MobileAds.instance.initialize();
+//     await MobileAds.instance.initialize();
 
-    RequestConfiguration requestConfiguration =
-        RequestConfiguration(testDeviceIds: ['1FA165CFB0DE351CE0C523D8FDA31AB3']);
-    MobileAds.instance.updateRequestConfiguration(requestConfiguration);
+//     RequestConfiguration requestConfiguration =
+//         RequestConfiguration(testDeviceIds: ['1FA165CFB0DE351CE0C523D8FDA31AB3']);
+//     MobileAds.instance.updateRequestConfiguration(requestConfiguration);
 
-    _isInitialized = true;
-    debugPrint("✅ AdMob inizializzato.");
-  }
-}
+//     _isInitialized = true;
+//     debugPrint("✅ AdMob inizializzato.");
+//   }
+// }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,13 +51,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState() {
-    super.initState();
+  // void initState() {
+  //   super.initState();
 
-    Future.microtask(() async {
-      await AdManager.init();
-    });
-  }
+  //   Future.microtask(() async {
+  //     await AdManager.init();
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
