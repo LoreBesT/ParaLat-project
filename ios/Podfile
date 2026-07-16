@@ -56,14 +56,14 @@ post_install do |installer|
   end
 
   # Workaround for 'Parse Issue' in gRPC-Core basic_seq.h on Xcode 16+ / Clang 16+
-  grpc_file_path = "Pods/gRPC-Core/src/core/lib/promise/detail/basic_seq.h"
+  grpc_file_path = File.join(installer.sandbox.root, 'gRPC-Core', 'src/core/lib/promise/detail/basic_seq.h')
   if File.exist?(grpc_file_path)
     file_content = File.read(grpc_file_path)
-    problematic_line = 'return Traits::template CallSeqFactory(f_, *cur_, std::move(arg));'
-    correct_line = 'return Traits::template CallSeqFactory<>(f_, *cur_, std::move(arg));'
-    if file_content.include?(problematic_line)
+    problematic_pattern = 'Traits::template CallSeqFactory(f_, *cur_, std::move(arg))'
+    correct_pattern = 'Traits::template CallSeqFactory<>(f_, *cur_, std::move(arg))'
+    if file_content.include?(problematic_pattern)
       puts "Patching gRPC-Core basic_seq.h for Xcode 16 compatibility..."
-      new_content = file_content.sub(problematic_line, correct_line)
+      new_content = file_content.gsub(problematic_pattern, correct_pattern)
       File.write(grpc_file_path, new_content)
     end
   end
