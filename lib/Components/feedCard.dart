@@ -33,7 +33,7 @@ class _FeedcardState extends State<Feedcard> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Image.asset(
-                r'assets\images\logo.png',
+                'assets/images/logo.png',
               ),
               ListTile(
                   title: Text(widget.text),

@@ -39,7 +39,7 @@ class _SubPageState extends State<SubPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          r'assets\images\ParaLat.png',
+                          'assets/images/ParaLat.png',
                           fit: BoxFit.cover,
                         ),
                       ],
