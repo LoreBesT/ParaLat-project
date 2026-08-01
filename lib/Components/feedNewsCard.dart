@@ -125,6 +125,18 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
       tag: widget.snapshot.id,
       child: Image.network(
         imageUrl,
+        loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        }
+        return SizedBox.shrink();
+        // return Image.asset(
+        //   'assets/images/logo.png',
+        //   scale: 2.3,
+        //   fit: BoxFit.cover,
+        // );
+      },
+
         errorBuilder: (context, error, stackTrace) {
           return Image.asset('assets/images/logo.png', scale: 2.3);
         },

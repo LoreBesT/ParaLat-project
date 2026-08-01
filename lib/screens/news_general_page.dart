@@ -16,34 +16,9 @@ class _NewsPageState extends State<NewsGeneralPage> {
   @override
   void initState() {
     super.initState();
-    // initBannerAd();
   }
 
   final int _index = 2;
-  // late BannerAd bannerAd;
-  // bool isAdLoaded = false;
-  // var adUnit =
-  //     "ca-app-pub-3940256099942544/9214589741"; //Questo ID è DI TEST. IN PRODUZIONE SOSTITUIRE CON IL REALE ID DI ADMOB!
-
-  // initBannerAd() {
-  //   bannerAd = BannerAd(
-  //       size: AdSize.banner,
-  //       adUnitId: adUnit,
-  //       listener: BannerAdListener(
-  //         onAdLoaded: (ad) {
-  //           setState(() {
-  //             isAdLoaded = true;
-  //           });
-  //         },
-  //         onAdFailedToLoad: (ad, error) {
-  //           ad.dispose();
-  //           print(error);
-  //         },
-  //       ),
-  //       request: AdRequest());
-
-  //   bannerAd.load();
-  // }
   bool isToYou = false;
   @override
   Widget build(BuildContext context) {
