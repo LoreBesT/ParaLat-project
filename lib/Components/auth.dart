@@ -71,12 +71,14 @@ class Auth {
 
     await FirebaseFirestore.instance.collection('users').doc(uid).set({
       'toRead': 0,
+      'isPremium': false,
     });
   }
 
   Future<void> creaProfiloSeNonEsiste(String uid) async {
     await FirebaseFirestore.instance.collection('users').doc(uid).set({
       'toRead': 0,
+      'isPremium': false,
     });
   }
 

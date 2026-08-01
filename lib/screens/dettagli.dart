@@ -5,6 +5,7 @@ import 'package:paralat/Components/aiFunction.dart';
 import 'package:paralat/Components/appUiStandards.dart';
 import 'package:paralat/Components/auth.dart';
 import 'package:paralat/Components/socialLinks.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
 class NewsDetailPage extends StatelessWidget {
   final DocumentSnapshot news;
@@ -21,21 +22,12 @@ class NewsDetailPage extends StatelessWidget {
 
     final autore = news['autore'];
     dynamic image;
-    bool isToYou = false;
-
-    final address = news['to'];
-    if (address.toString() == Auth().getUID() || address.toString() == 'avviso') {
-      isToYou = true;
-      image = 'null'; // Non mostrare l'immagine se è per te
-    } else {
-      isToYou = false;
-      image = news['image'];
-    }
+    image = news['image'];
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60,
         centerTitle: true,
-        title: Text(isToYou ? 'Avviso' : 'ParaLat News'),
+        title: Text('ParaLat News'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -45,9 +37,9 @@ class NewsDetailPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildTitle(title),
-                _buildDetailImage(image, isToYou, news.id),
+                _buildDetailImage(image, news.id),
                 const Divider(),
-                _buildAuthorAndDate(autore, isToYou),
+                _buildAuthorAndDate(autore),
                 const Divider(),
                 _buildBody(body),
               ],
@@ -56,7 +48,7 @@ class NewsDetailPage extends StatelessWidget {
         ),
       ),
       floatingActionButton:
-          isToYou ? null : _buildFloatingActionButton(context, body, autore, title),
+        _buildFloatingActionButton(context, body, autore, title),
     );
   }
 }
@@ -68,12 +60,10 @@ Widget _buildTitle(String title) {
   );
 }
 
-Widget _buildDetailImage(String imageUrl, bool isToYou, String docId) {
+Widget _buildDetailImage(String imageUrl, String docId) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 10),
-    child: isToYou
-        ? const SizedBox.shrink()
-        : ClipRRect(
+    child: ClipRRect(
             borderRadius: AppRadius.circularBorder,
             child: Hero(
               tag: docId, // 👈 stesso tag della card
@@ -88,7 +78,7 @@ Widget _buildDetailImage(String imageUrl, bool isToYou, String docId) {
   );
 }
 
-Widget _buildAuthorAndDate(String autore, bool isToYou) {
+Widget _buildAuthorAndDate(String autore) {
   return Column(
     children: [
       Row(
@@ -96,14 +86,7 @@ Widget _buildAuthorAndDate(String autore, bool isToYou) {
         children: [
           Padding(
             padding: const EdgeInsets.all(1.0),
-            child: isToYou
-                ? const Text('Per te',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800,
-                    ))
-                : Text(
+            child: Text(
                     "di $autore",
                     style: const TextStyle(
                       color: Color.fromARGB(255, 246, 58, 76),
@@ -119,7 +102,7 @@ Widget _buildAuthorAndDate(String autore, bool isToYou) {
 }
 
 Widget _buildBody(String body) {
-  return Text(body, style: const TextStyle(fontSize: 18),);
+  return MarkdownBody(data: body, selectable: true, styleSheet: MarkdownStyleSheet(p: TextStyle(fontSize: 18)),);
 }
 
 Widget _buildFloatingActionButton(

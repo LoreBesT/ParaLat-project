@@ -7,21 +7,22 @@ import 'package:paralat/screens/dettagli.dart';
 import 'package:paralat/Components/socialLinks.dart';
 
 class FeedNewsCard extends StatefulWidget {
-  const FeedNewsCard(
-      {super.key,
-      required this.title,
-      required this.autore,
-      required this.body,
-      required this.image, //Togliere required ad image
-      required this.snapshot,
-      required this.toYou});
+  const FeedNewsCard({
+    super.key,
+    required this.title,
+    required this.autore,
+    required this.body,
+    required this.image,
+    required this.snapshot,
+    required this.islesson,
+  });
 
   final String title;
   final String autore;
   final String body;
   final String image;
   final DocumentSnapshot snapshot;
-  final bool toYou;
+  final bool islesson;
 
   @override
   State<FeedNewsCard> createState() => _FeedNewsCardState();
@@ -47,16 +48,63 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
             shape: RoundedRectangleBorder(
               borderRadius: AppRadius.circularBorder,
             ),
-            // elevation: 2,
             clipBehavior: Clip.hardEdge,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
+            child: Stack(
               children: [
-                widget.toYou
-                    ? const SizedBox.shrink()
-                    : _buildImage(widget.image),
-                _buildCardContent(),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _buildImage(widget.image),
+                    _buildCardContent(),
+                  ],
+                ),
+
+                // Badge in alto a destra
+                Positioned(
+                  top: 12,
+                  left: 12,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
+                    decoration: BoxDecoration(
+                      color: widget.islesson
+                          ? Colors.deepPurple
+                          : Colors.blue,
+                      borderRadius: AppRadius.circularBorder,
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          widget.islesson
+                              ? Icons.school
+                              : Icons.newspaper,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          widget.islesson ? "Lezione" : "Notizia",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -89,14 +137,9 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
       title: Text(
         widget.title,
         overflow: TextOverflow.ellipsis,
-        maxLines: widget.toYou ? 3 : 4,
+        maxLines: 4,
       ),
-      subtitle: widget.toYou
-          ? const Text(
-              'Per te',
-              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w800),
-            )
-          : Text("di ${widget.autore}"),
+      subtitle: Text("di ${widget.autore}"),
       isThreeLine: true,
       leading: IconButton(
         onPressed: () {
@@ -104,10 +147,10 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
             isLikePressed = !isLikePressed;
           });
         },
-        icon: widget.toYou
-            ? Icon(Icons.notifications, color: Colors.yellow[600], size: 32)
-            : Icon(
-                isLikePressed ? Icons.favorite : Icons.favorite_border,
+        icon: Icon(
+                isLikePressed
+                    ? Icons.favorite
+                    : Icons.favorite_border,
                 color: isLikePressed ? Colors.red : null,
                 size: 32,
               ),
@@ -115,15 +158,12 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
         iconSize: 32,
         padding: const EdgeInsets.all(0),
       ),
-      trailing: widget.toYou
-          ? const SizedBox.shrink()
-          : IconButton(
-              icon: const Icon(
-                Icons.share,
-              ),
+      trailing: IconButton(
+              icon: const Icon(Icons.share),
               onPressed: () {
                 share(
-                    '${widget.title}\nScopri questa e tante altre notizie solo su ParaLat.\n⬇️Scaricala ora⬇️\n\nhttps://play.google.com/store/apps/details?id=com.paralat.app');
+                  '${widget.title}\nScopri questa e tante altre notizie solo su ParaLat.\n⬇️Scaricala ora⬇️\n\nhttps://play.google.com/store/apps/details?id=com.paralat.app',
+                );
               },
             ),
     );

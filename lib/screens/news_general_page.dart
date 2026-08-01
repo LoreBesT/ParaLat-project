@@ -67,14 +67,6 @@ class _NewsPageState extends State<NewsGeneralPage> {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var news = snapshot.data!.docs[index];
-              if (news['to'] != 'news' && news['to'] != Auth().getUID() && news['to'] != 'avviso') {
-                return const SizedBox.shrink();
-              }
-              if (news['to'] == Auth().getUID() || news['to'] == 'avviso') {
-                isToYou = true;
-              } else {
-                isToYou = false;
-              }
               return isToYou
                   ? const SizedBox.shrink()
                   : FeedNewsCard(
@@ -83,7 +75,7 @@ class _NewsPageState extends State<NewsGeneralPage> {
                       body: news['body'],
                       snapshot: news,
                       image: isToYou ? 'null' : news['image'],
-                      toYou: news['to'] == Auth().getUID() ? true : false,
+                      islesson: news['islesson'],
                     );
             },
           );

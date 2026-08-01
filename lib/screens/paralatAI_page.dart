@@ -32,6 +32,15 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
   String? models;
   String? input;
   bool isMessage = false;
+  
+  //RICORDA
+
+
+  bool isTest = true; //MODIFICARE IN FALSE PRIMA DELLA PRODUZIONE!!!!!!!!!!!!!!!!!!!!
+
+
+  //RICORDA
+
   @override
   void initState() {
     super.initState();
@@ -50,7 +59,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
 
       if (doc.exists && doc.data() != null) {
         setState(() {
-          apiKey = doc['value'];
+          apiKey = isTest ? "AQ.Ab8RN6JA8yUfCFrc-mJeIq1gniBEVY1pNYcLT31MCTCWfO1CBA" : doc['value'];
         });
         // print("✅✅✅Chiave API caricata correttamente.");
       } else {
@@ -564,6 +573,7 @@ class _GeminiApiPageState extends State<GeminiApiPage> {
                         borderRadius: AppRadius.circularBorder,
                       ),
                       child: TextField(
+                        maxLength: 500,
                         controller: _controller,
                         autocorrect: false,
                         decoration: InputDecoration(
