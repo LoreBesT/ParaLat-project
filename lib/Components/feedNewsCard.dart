@@ -36,7 +36,7 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
   void initState() {
     super.initState();
   }
-
+//RICORDA METTERE LIMITAZIONE TIPO CARICA MASSIMO 5 NOTIZIE CONTEMPORANEAMTE
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -126,17 +126,16 @@ class _FeedNewsCardState extends State<FeedNewsCard> {
       child: Image.network(
         imageUrl,
         loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) {
-          return child;
-        }
-        return SizedBox.shrink();
-        // return Image.asset(
-        //   'assets/images/logo.png',
-        //   scale: 2.3,
-        //   fit: BoxFit.cover,
-        // );
-      },
-
+          if (loadingProgress == null) {
+            return child;
+          }
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 24.0),
+              child: CircularProgressIndicator(),
+            ),
+          );
+        },
         errorBuilder: (context, error, stackTrace) {
           return Image.asset('assets/images/logo.png', scale: 2.3);
         },
